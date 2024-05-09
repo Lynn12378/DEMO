@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Fusion;
 using Fusion.Addons.Physics;
@@ -11,25 +12,25 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PlayerMovementHandler movementHandler = null;
     [SerializeField] private PlayerAttackHandler attackHandler = null;
 
-    [SerializeField] private float moveSpeed = 5f;
-    //[SerializeField] private Image hpBar = null;
 
-    [Networked] public int Hp { get; set; } //(OnChanged = nameof(OnHpChanged)),Networked, OnChangedRender(nameof(OnColorChanged))
     [Networked] private NetworkButtons buttonsPrevious { get; set; }
 
     private int maxHp = 100;
+    private HealthPoint healthPoint = null;
 
-    public override void Spawned()//初始化
+    public override void Spawned() // Initialize
     {
         if (Object.HasStateAuthority)
         {
-            Hp = maxHp;
+            healthPoint =  /*FindObjectOfType*/GetComponentInChildren<HealthPoint>();
+            healthPoint.Hp = maxHp;
         }
     }
-    private void Respawn()//重生
+
+    private void Respawn() // When restart
     {
         playerNetworkRigidbody.transform.position = Vector3.zero;
-        Hp = maxHp;
+        healthPoint.Hp = maxHp;
     }
 
     public override void FixedUpdateNetwork()
@@ -39,7 +40,7 @@ public class PlayerController : NetworkBehaviour
             ApplyInput(data);
         }
 
-        if (Hp <= 0)
+        if (healthPoint.Hp <= 0)
         {
             Respawn();
         }
@@ -52,10 +53,16 @@ public class PlayerController : NetworkBehaviour
         buttonsPrevious = buttons;
 
         movementHandler.Move(data);
+        movementHandler.SetRotation(data.rotation);
 
         if (pressed.IsSet(InputButtons.FIRE))
         {
-            attackHandler.Shoot(data.mousePosition);
+            attackHandler.Shoot();
+        }
+
+        if (pressed.IsSet(InputButtons.SPACE))
+        {
+            TakeDamage(20);
         }
     }
 
@@ -63,13 +70,8 @@ public class PlayerController : NetworkBehaviour
     {
         if (Object.HasStateAuthority)
         {
-            Hp -= damage;
+            healthPoint.Hp -= damage;
         }
     }
-    
-    /*private static void OnHpChanged(Changed<PlayerController> changed)
-    {
-        changed.Behaviour.hpBar.fillAmount = (float)changed.Behaviour.Hp / changed.Behaviour.maxHp;
-    }*/
 }
 

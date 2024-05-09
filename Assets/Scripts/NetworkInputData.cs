@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
-public enum InputButtons//¦Û­q¸q«ö¶s
+public enum InputButtons//ï¿½Û­qï¿½qï¿½ï¿½ï¿½s
 {
-    FIRE
+    FIRE,
+    SPACE
 }
 
 public struct NetworkInputData : INetworkInput
@@ -14,5 +15,5 @@ public struct NetworkInputData : INetworkInput
 
     public Vector2 movementInput;
 
-    public Vector3 mousePosition;
+    public float rotation;
 }

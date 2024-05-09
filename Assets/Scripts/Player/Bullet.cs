@@ -5,7 +5,7 @@ using UnityEngine;
 using Fusion;
 using Fusion.Addons.Physics;
 
-public class Bullet : NetworkBehaviour//, IPredictedSpawnBehaviour
+public class Bullet : NetworkBehaviour
 {
     [SerializeField] private NetworkRigidbody2D networkRigidbody = null;
 
@@ -16,9 +16,6 @@ public class Bullet : NetworkBehaviour//, IPredictedSpawnBehaviour
     [Networked] private TickTimer life { get; set; }
 
     public Vector3 mousePosition;
-    private List<LagCompensatedHit> hits = new List<LagCompensatedHit>();
-    private Vector3 interpolateFrom;
-    private Vector3 interpolateTo;
 
     public override void Spawned()
     {
@@ -26,13 +23,12 @@ public class Bullet : NetworkBehaviour//, IPredictedSpawnBehaviour
 
         networkRigidbody.InterpolationTarget.gameObject.SetActive(true);
 
-        networkRigidbody.Rigidbody.velocity = Vector2.zero;
+        //networkRigidbody.Rigidbody.velocity = Vector2.zero;
     }
 
     public override void FixedUpdateNetwork()
     {
-        Vector2 mouseVector = mousePosition.normalized;
-        networkRigidbody.Rigidbody.velocity = mouseVector * bulletSpeed;
+        networkRigidbody.Rigidbody.velocity = Vector3.forward  * bulletSpeed;
 
         if (life.Expired(Runner))
         {
@@ -40,15 +36,15 @@ public class Bullet : NetworkBehaviour//, IPredictedSpawnBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        var player = collision.GetComponent<PlayerController>();
+        Enemy enemy = collision.GetComponent<Enemy>();
 
-        if (collision != null)
+        if (enemy != null)
         {
-            player.TakeDamage(damage);
+            enemy.TakeDamage(damage);
+            Runner.Despawn(Object);
         }
-
-        Runner.Despawn(Object);
     }
 }

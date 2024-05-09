@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1511358415232668666}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2814246, y: -0.17382751, z: -0.009791919}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -92,9 +92,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkRigidbody: {fileID: 1834830856782735943}
   bulletSpeed: 20
-  bulletTime: 0.5
+  bulletTime: 2
   damage: 10
-  mousePosition: {x: 2.3162227, y: 1.0120481, z: -10}
+  mousePosition: {x: -7.40851, y: -3.456633, z: -10}
 --- !u!50 &1581886057022738642
 Rigidbody2D:
   serializedVersion: 4
@@ -109,8 +109,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -155,7 +155,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.2, y: 0.3}
+  m_Size: {x: 0.3, y: 0.45}
   m_Direction: 0
 --- !u!1 &4656218194118173633
 GameObject:

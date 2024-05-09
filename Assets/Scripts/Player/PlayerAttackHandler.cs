@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 using Fusion;
 
@@ -11,8 +12,8 @@ public class PlayerAttackHandler : NetworkBehaviour
 
     public void Shoot(Vector3 mousePosition)
     {
+        Quaternion rotation = Quaternion.Euler(shootPoint.rotation.eulerAngles - Vector3.forward * 90);
         bulletPrefab.mousePosition = mousePosition;
-   
-        Runner.Spawn(bulletPrefab, shootPoint.position, transform.rotation, Object.InputAuthority);
+        Runner.Spawn(bulletPrefab, shootPoint.position, rotation, Object.InputAuthority);
     }
 }
