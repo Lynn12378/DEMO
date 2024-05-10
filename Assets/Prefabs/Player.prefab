@@ -529,6 +529,7 @@ GameObject:
   - component: {fileID: 1797281051025650655}
   - component: {fileID: 4119776355522196519}
   - component: {fileID: 1475834049703138947}
+  - component: {fileID: 237223312784963901}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -573,6 +574,7 @@ MonoBehaviour:
   - {fileID: 5423383696020471926}
   - {fileID: 4119776355522196519}
   - {fileID: 1475834049703138947}
+  - {fileID: 237223312784963901}
 --- !u!50 &4199331920531775570
 Rigidbody2D:
   serializedVersion: 4
@@ -672,6 +674,7 @@ MonoBehaviour:
   playerNetworkRigidbody: {fileID: 397606304458726309}
   movementHandler: {fileID: 1797281051025650655}
   attackHandler: {fileID: 4119776355522196519}
+  playerStats: {fileID: 237223312784963901}
 --- !u!114 &1797281051025650655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,6 +718,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   networkHealthSlider: {fileID: 1422947231120268285}
   _Hp: 0
+--- !u!114 &237223312784963901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630666624398672265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e934ac0c2f49d4aa42cc43acf5d9f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNetworkRigidbody: {fileID: 397606304458726309}
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &8943649637524690950
 GameObject:
   m_ObjectHideFlags: 0

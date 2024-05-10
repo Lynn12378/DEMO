@@ -9,7 +9,6 @@ public class PlayerAttackHandler : NetworkBehaviour
     [SerializeField] private Bullet bulletPrefab = null;
     [SerializeField] private Transform shootPoint = null;
 
-
     public void Shoot(Vector3 mousePosition)
     {
         Quaternion rotation = Quaternion.Euler(shootPoint.rotation.eulerAngles - Vector3.forward * 90);

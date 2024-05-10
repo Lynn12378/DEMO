@@ -28,7 +28,7 @@ public class Bullet : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        networkRigidbody.Rigidbody.velocity = Vector3.forward  * bulletSpeed;
+        networkRigidbody.Rigidbody.velocity = mousePosition  * bulletSpeed;
 
         if (life.Expired(Runner))
         {
