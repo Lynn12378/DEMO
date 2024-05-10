@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using Fusion;
 using Fusion.Addons.Physics;
+using Unity.VisualScripting;
 
 public class Enemy : NetworkBehaviour
 {
@@ -16,6 +17,7 @@ public class Enemy : NetworkBehaviour
     [SerializeField] private float maxDistance;
     private Vector2 wayPoint;
     private bool patrolAlongXAxis;
+    private float lastDestinationChangeTime;
 
     // Initialize
     public override void Spawned() 
@@ -26,13 +28,20 @@ public class Enemy : NetworkBehaviour
         // Pick an axis to patrol
         patrolAlongXAxis = Random.Range(0, 2) == 0 ? true : false;
         SetNewDestination();
+        // Set lastDestinationChangeTime
+        lastDestinationChangeTime = Time.time;
     }
 
     public override void FixedUpdateNetwork()
     { 
         if(Vector2.Distance(transform.position, wayPoint) < range)
         {
-            SetNewDestination();   
+            if (Time.time - lastDestinationChangeTime > 1f)
+            {
+                SetNewDestination();
+                // Update lastDestinationChangeTime
+                lastDestinationChangeTime = Time.time;
+            } 
         }
 
         // Calculate direction from transform to destination

@@ -597,8 +597,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyNetworkRigidbody: {fileID: 397606304458726309}
   moveSpeed: 0.5
-  range: 0.2
-  maxDistance: 1
+  range: 1
+  maxDistance: 3
 --- !u!70 &4119756921958231451
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
