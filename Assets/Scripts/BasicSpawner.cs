@@ -71,6 +71,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
         data.movementInput = new Vector2(xInput, yInput);
         data.buttons.Set(InputButtons.FIRE, Input.GetKey(KeyCode.Mouse0));//����NetworkButton����J
+        data.buttons.Set(InputButtons.PICKUP, Input.GetKey(KeyCode.Mouse1));// Network Button
  
         input.Set(data);
     }

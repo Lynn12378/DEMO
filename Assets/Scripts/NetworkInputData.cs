@@ -6,7 +6,7 @@ using Fusion;
 public enum InputButtons//�ۭq�q���s
 {
     FIRE,
-    SPACE
+    PICKUP
 }
 
 public struct NetworkInputData : INetworkInput

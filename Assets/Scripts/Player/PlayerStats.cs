@@ -22,36 +22,53 @@ public class PlayerStats : NetworkBehaviour
     Rigidbody2D rb;
     Animator animator;
 
-    void Start()
+    /*void Start()
     {
-        healthBar = FindObjectOfType<HealthBar>();
-        if (healthBar != null)
+        if (Object.HasStateAuthority)
         {
-            healthBar.setMaxHealth(maxHealth);
-        }
-        else
-        {
-            Debug.LogError("HealthBar not found!");
-        }
+            healthBar = FindObjectOfType<HealthBar>();
+            if (healthBar != null)
+            {
+                healthBar.setMaxHealth(maxHealth);
+            }
+            else
+            {
+                Debug.LogError("HealthBar not found!");
+            }
 
-        currentHealth = maxHealth;
-    }
+            currentHealth = maxHealth;
+        }
+    }*/
 
-    private void Update() //////////////////////////////////// Test
+    /*private void Update() //////////////////////////////////// Test
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(Object.HasStateAuthority)
         {
-            TakeDamage(20);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TakeDamage(20);
+            }
         }
-
         //healthPoint.ShowNetworkHealthBar();
-    }
+    }*/
 
     // Initialize healthPoint
     public override void Spawned() 
     {
         if (Object.HasStateAuthority)
         {
+            healthBar = FindObjectOfType<HealthBar>();
+            if (healthBar != null)
+            {
+                healthBar.setMaxHealth(maxHealth);
+            }
+            else
+            {
+                Debug.LogError("HealthBar not found!");
+            }
+
+            currentHealth = maxHealth;
+
             healthPoint =  GetComponentInChildren<HealthPoint>();
             healthPoint.Hp = maxHealth;
         }
@@ -69,6 +86,14 @@ public class PlayerStats : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if(Object.HasStateAuthority)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                TakeDamage(20);
+            }
+        }
+        
         if (healthPoint.Hp <= 0)
         {
             Respawn();
