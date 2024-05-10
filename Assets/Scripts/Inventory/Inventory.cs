@@ -17,7 +17,6 @@ public class Inventory : MonoBehaviour {
 		}
 
 		instance = this;
-		Debug.Log("Inventory created.");
 	}
 
 	#endregion

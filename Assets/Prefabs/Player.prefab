@@ -413,7 +413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b4d98b8c0ba750d41bc7741d1f636fb7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -452,8 +452,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5927718120400185500}
   - {fileID: 8483989786841270961}
+  - {fileID: 5927718120400185500}
   m_Father: {fileID: 7469725357629796279}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -671,10 +671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ac81dc35e11a24286e9006c80d3df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNetworkRigidbody: {fileID: 397606304458726309}
   movementHandler: {fileID: 1797281051025650655}
   attackHandler: {fileID: 4119776355522196519}
-  playerStats: {fileID: 237223312784963901}
 --- !u!114 &1797281051025650655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,6 +702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4280969757316509552, guid: c6818a84a16b03f44998b3a5c4e6ef2c, type: 3}
   shootPoint: {fileID: 6831657814407364924}
+  maxBullet: 30
 --- !u!114 &1475834049703138947
 MonoBehaviour:
   m_ObjectHideFlags: 0

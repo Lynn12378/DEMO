@@ -8,14 +8,51 @@ using Fusion.Addons.Physics;
 
 public class Enemy : NetworkBehaviour
 {
+    [SerializeField] private NetworkRigidbody2D enemyNetworkRigidbody = null;
     private int maxHp = 50;
     private HealthPoint healthPoint = null;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float range;
+    [SerializeField] private float maxDistance;
+    private Vector2 wayPoint;
+    private bool patrolAlongXAxis;
 
     // Initialize
     public override void Spawned() 
     {
         healthPoint = GetComponentInChildren<HealthPoint>();
         healthPoint.Hp = maxHp;
+
+        // Pick an axis to patrol
+        patrolAlongXAxis = Random.Range(0, 2) == 0 ? true : false;
+        SetNewDestination();
+    }
+
+    public override void FixedUpdateNetwork()
+    { 
+        if(Vector2.Distance(transform.position, wayPoint) < range)
+        {
+            SetNewDestination();   
+        }
+
+        // Calculate direction from transform to destination
+        Vector2 direction = (wayPoint - (Vector2)transform.position).normalized;
+        // Set velocity
+        enemyNetworkRigidbody.Rigidbody.velocity = direction * moveSpeed;
+    }
+
+    void SetNewDestination()
+    {
+        if (patrolAlongXAxis)
+        {
+            // Patrol on X axis
+            wayPoint = new Vector2(Random.Range(-maxDistance, maxDistance), transform.position.y);
+        }
+        else
+        {
+            // Patrol on Y axis
+            wayPoint = new Vector2(transform.position.x, Random.Range(-maxDistance, maxDistance));
+        }
     }
 
     public void TakeDamage(int damage)

@@ -39,10 +39,12 @@ public class Bullet : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Collision detected.");
         Enemy enemy = collision.GetComponent<Enemy>();
 
         if (enemy != null)
         {
+            Debug.Log("Enemy detected.");
             enemy.TakeDamage(damage);
             Runner.Despawn(Object);
         }
