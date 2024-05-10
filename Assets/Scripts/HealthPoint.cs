@@ -17,8 +17,8 @@ public class HealthPoint : NetworkBehaviour
 
     public void HandleHpChanged(NetworkBehaviourBuffer previous)
     {
-        var prevValue = GetPropertyReader<int>(nameof(Hp)).Read(previous);
-        Debug.Log($"Health changed: {Hp}, prev: {prevValue}");
+        //var prevValue = GetPropertyReader<int>(nameof(Hp)).Read(previous);
+        //Debug.Log($"Health changed: {Hp}, prev: {prevValue}");
 
         networkHealthSlider.value = Hp;
     }

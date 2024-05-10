@@ -11,7 +11,8 @@ public class Enemy : NetworkBehaviour
     private int maxHp = 50;
     private HealthPoint healthPoint = null;
 
-    public override void Spawned() // Initialize
+    // Initialize
+    public override void Spawned() 
     {
         healthPoint = GetComponentInChildren<HealthPoint>();
         healthPoint.Hp = maxHp;

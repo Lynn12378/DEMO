@@ -62,6 +62,9 @@ public class PlayerStats : NetworkBehaviour
     {
         playerNetworkRigidbody.transform.position = Vector3.zero;
         healthPoint.Hp = maxHealth;
+
+        healthBar.setMaxHealth(maxHealth);
+        currentHealth = maxHealth;
     }
 
     public override void FixedUpdateNetwork()
