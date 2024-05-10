@@ -22,7 +22,7 @@ public class PlayerStats : NetworkBehaviour
     Rigidbody2D rb;
     Animator animator;
 
-    /*void Start()
+    private void Start()
     {
         if (Object.HasStateAuthority)
         {
@@ -38,9 +38,9 @@ public class PlayerStats : NetworkBehaviour
 
             currentHealth = maxHealth;
         }
-    }*/
+    }
 
-    /*private void Update() //////////////////////////////////// Test
+    private void Update() //////////////////////////////////// Test
     {
         if(Object.HasStateAuthority)
         {
@@ -50,25 +50,13 @@ public class PlayerStats : NetworkBehaviour
             }
         }
         //healthPoint.ShowNetworkHealthBar();
-    }*/
+    }
 
     // Initialize healthPoint
     public override void Spawned() 
     {
         if (Object.HasStateAuthority)
         {
-            healthBar = FindObjectOfType<HealthBar>();
-            if (healthBar != null)
-            {
-                healthBar.setMaxHealth(maxHealth);
-            }
-            else
-            {
-                Debug.LogError("HealthBar not found!");
-            }
-
-            currentHealth = maxHealth;
-
             healthPoint =  GetComponentInChildren<HealthPoint>();
             healthPoint.Hp = maxHealth;
         }
@@ -86,14 +74,6 @@ public class PlayerStats : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if(Object.HasStateAuthority)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                TakeDamage(20);
-            }
-        }
-        
         if (healthPoint.Hp <= 0)
         {
             Respawn();
