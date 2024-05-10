@@ -18,9 +18,9 @@ public class PlayerMovementHandler : MonoBehaviour
         playerNetworkRigidbody.Rigidbody.velocity = moveVector * moveSpeed;
     }
 
-    public void SetRotation(float rotation)
+    public void SetRotation(Vector2 mousePosition)
     {
-        
+        float rotation = Vector2.SignedAngle(Vector2.up, mousePosition - new Vector2(transform.position.x, transform.position.y));
         Weapon.rotation = Quaternion.Euler(Vector3.forward * (rotation + 90));
     }
 }

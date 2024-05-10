@@ -15,20 +15,22 @@ public class Bullet : NetworkBehaviour
 
     [Networked] private TickTimer life { get; set; }
 
-    public Vector3 mousePosition;
+    public Vector2 mousePosition;
 
     public override void Spawned()
     {
         life = TickTimer.CreateFromSeconds(Runner, bulletTime);
 
         networkRigidbody.InterpolationTarget.gameObject.SetActive(true);
-
-        //networkRigidbody.Rigidbody.velocity = Vector2.zero;
+        
+        networkRigidbody.Rigidbody.velocity = Vector2.zero;
     }
 
     public override void FixedUpdateNetwork()
     {
-        networkRigidbody.Rigidbody.velocity = mousePosition  * bulletSpeed;
+        Vector2 mouseVector = mousePosition.normalized;
+        Debug.Log(mouseVector);
+        networkRigidbody.Rigidbody.velocity = mouseVector * bulletSpeed;
 
         if (life.Expired(Runner))
         {
@@ -39,12 +41,10 @@ public class Bullet : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collision detected.");
         Enemy enemy = collision.GetComponent<Enemy>();
 
         if (enemy != null)
         {
-            Debug.Log("Enemy detected.");
             enemy.TakeDamage(damage);
             Runner.Despawn(Object);
         }

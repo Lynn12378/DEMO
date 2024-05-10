@@ -22,33 +22,28 @@ public class PlayerStats : NetworkBehaviour
     Rigidbody2D rb;
     Animator animator;
 
-    private void Start()
+    void Start()
     {
-        if (Object.HasStateAuthority)
+        healthBar = FindObjectOfType<HealthBar>();
+        if (healthBar != null)
         {
-            healthBar = FindObjectOfType<HealthBar>();
-            if (healthBar != null)
-            {
-                healthBar.setMaxHealth(maxHealth);
-            }
-            else
-            {
-                Debug.LogError("HealthBar not found!");
-            }
-
-            currentHealth = maxHealth;
+            healthBar.setMaxHealth(maxHealth);
         }
+        else
+        {
+            Debug.LogError("HealthBar not found!");
+        }
+
+        currentHealth = maxHealth;
     }
 
     private void Update() //////////////////////////////////// Test
     {
-        if(Object.HasStateAuthority)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                TakeDamage(20);
-            }
+            TakeDamage(20);
         }
+
         //healthPoint.ShowNetworkHealthBar();
     }
 

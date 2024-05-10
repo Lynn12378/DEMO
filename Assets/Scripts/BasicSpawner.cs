@@ -64,14 +64,11 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         float xInput = Input.GetAxisRaw("Horizontal");
         float yInput = Input.GetAxisRaw("Vertical");
 
-        Vector2 mouseToWorldPoint = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-
-        float angle = Vector2.SignedAngle(Vector2.up, mouseToWorldPoint - new Vector2(transform.position.x, transform.position.y));
-        data.rotation = angle;
+        Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);//mouseInput
 
         data.movementInput = new Vector2(xInput, yInput);
-        data.buttons.Set(InputButtons.FIRE, Input.GetKey(KeyCode.Mouse0));//����NetworkButton����J
-        data.buttons.Set(InputButtons.PICKUP, Input.GetKey(KeyCode.Mouse1));// Network Button
+        data.mousePosition = mousePosition;
+        data.buttons.Set(InputButtons.FIRE, Input.GetKey(KeyCode.Mouse0));//Set NetworkButton
  
         input.Set(data);
     }

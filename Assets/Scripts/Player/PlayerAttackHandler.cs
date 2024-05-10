@@ -12,7 +12,7 @@ public class PlayerAttackHandler : NetworkBehaviour
     [SerializeField] private int maxBullet = 30;
     private int currentBullet;
 
-    public override void Spawned() 
+    private void Start()
     {
         playerStatsUI = FindObjectOfType<PlayerStatsUI>();
         if (playerStatsUI != null)
@@ -26,24 +26,21 @@ public class PlayerAttackHandler : NetworkBehaviour
         }
     }
 
-    public void Shoot(Vector3 mousePosition)
+    public void Shoot(Vector2 mousePosition)
     {
-        if(Object.HasStateAuthority)
+        if(currentBullet > 0)
         {
-            if(currentBullet > 0)
-            {
-                Quaternion rotation = Quaternion.Euler(shootPoint.rotation.eulerAngles - Vector3.forward * 90);
-                bulletPrefab.mousePosition = mousePosition;
-                Runner.Spawn(bulletPrefab, shootPoint.position, rotation, Object.InputAuthority);
+            bulletPrefab.mousePosition = mousePosition - new Vector2(transform.position.x, transform.position.y);
+            Quaternion rotation = Quaternion.Euler(shootPoint.rotation.eulerAngles - Vector3.forward * 90);
+            Runner.Spawn(bulletPrefab, shootPoint.position, rotation, Object.InputAuthority);
 
-                currentBullet -= 1;
-                playerStatsUI.UpdateBulletAmount(currentBullet);
-            }
-            else
-            {
-                Debug.Log("Not enough bullet.");
-                // Show message: Not enough bullet
-            }
+            currentBullet -= 1;
+            playerStatsUI.UpdateBulletAmount(currentBullet);
+        }
+        else
+        {
+            Debug.Log("Not enough bullet.");
+            // Show message: Not enough bullet
         }
     }
 

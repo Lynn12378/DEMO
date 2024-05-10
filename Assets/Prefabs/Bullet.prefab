@@ -91,10 +91,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkRigidbody: {fileID: 1834830856782735943}
-  bulletSpeed: 20
-  bulletTime: 2
+  bulletSpeed: 5
+  bulletTime: 1
   damage: 10
-  mousePosition: {x: -7.40851, y: -3.456633, z: -10}
+  mousePosition: {x: 127.19999, y: 382.69998}
 --- !u!50 &1581886057022738642
 Rigidbody2D:
   serializedVersion: 4
@@ -155,7 +155,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 0.8}
+  m_Size: {x: 0.2, y: 0.2}
   m_Direction: 0
 --- !u!1 &4656218194118173633
 GameObject:
@@ -230,7 +230,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: -537537479, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+  m_Sprite: {fileID: 154122315, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

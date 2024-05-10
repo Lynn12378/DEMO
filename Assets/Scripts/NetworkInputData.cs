@@ -6,14 +6,13 @@ using Fusion;
 public enum InputButtons//�ۭq�q���s
 {
     FIRE,
-    PICKUP
+    SPACE
 }
 
 public struct NetworkInputData : INetworkInput
-{
+{    
     public NetworkButtons buttons;
 
     public Vector2 movementInput;
-
-    public float rotation;
+    public Vector2 mousePosition;
 }
