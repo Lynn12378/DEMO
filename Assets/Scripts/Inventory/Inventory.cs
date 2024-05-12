@@ -34,8 +34,8 @@ public class Inventory : MonoBehaviour {
 	public bool Add (Item item)
 	{
 		// Don't do anything if it's a default item
-		if (!item.isDefaultItem)
-		{
+		//if (!item.isDefaultItem)
+		//{
 			// Check if out of space
 			if (items.Count >= space)
 			{
@@ -48,7 +48,7 @@ public class Inventory : MonoBehaviour {
 			// Trigger callback
 			if (onItemChangedCallback != null)
 				onItemChangedCallback.Invoke();
-		}
+		//}
 
 		return true;
 	}

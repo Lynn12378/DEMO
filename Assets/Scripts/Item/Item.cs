@@ -8,7 +8,7 @@ public class Item
 {
     public enum ItemType
     {
-        HealthPill,
+        Health,
         Food,
         Coin,
         Wood,
@@ -25,7 +25,7 @@ public class Item
         switch(itemType)
         {
             default:
-            case ItemType.HealthPill:   return "HealthPill";
+            case ItemType.Health:       return "Health";
             case ItemType.Food:         return "Food";
             case ItemType.Coin:         return "Coin";
             case ItemType.Wood:         return "Wood";
@@ -38,7 +38,7 @@ public class Item
         switch(itemType)
         {
             default:
-            case ItemType.HealthPill:   return ItemAssets.Instance.healthPillSprite;
+            case ItemType.Health:   return ItemAssets.Instance.healthSprite;
             case ItemType.Food:         return ItemAssets.Instance.foodSprite;
             case ItemType.Coin:         return ItemAssets.Instance.coinSprite;
             case ItemType.Wood:         return ItemAssets.Instance.woodSprite;

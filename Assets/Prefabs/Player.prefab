@@ -610,7 +610,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8630666624398672265}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -674,6 +674,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementHandler: {fileID: 1797281051025650655}
   attackHandler: {fileID: 4119776355522196519}
+  itemsLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &1797281051025650655
 MonoBehaviour:
   m_ObjectHideFlags: 0

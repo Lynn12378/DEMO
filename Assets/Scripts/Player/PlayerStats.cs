@@ -43,8 +43,6 @@ public class PlayerStats : NetworkBehaviour
         {
             TakeDamage(20);
         }
-
-        //healthPoint.ShowNetworkHealthBar();
     }
 
     // Initialize healthPoint

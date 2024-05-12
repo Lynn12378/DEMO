@@ -12,17 +12,13 @@ public class ItemWorld : MonoBehaviour
         ItemWorld itemWorld = transform.GetComponent<ItemWorld>();
         itemWorld.SetItem(item);
 
-        /*
-        NetworkObject networkObject = NetworkManager.Singleton.Spawn(ItemAssets.Instance.pfItemWorld, position, Quaternion.identity);
-        GameObject gameObject = networkObject.gameObject;
-        ItemWorld itemWorld = gameObject.GetComponent<ItemWorld>();*/
-
         return itemWorld;
     }
 
     private Item item;
     private SpriteRenderer spriteRenderer;
     private TextMeshPro textMeshPro;
+
 
     private void Awake()
     {
@@ -47,10 +43,5 @@ public class ItemWorld : MonoBehaviour
     public Item GetItem()
     {
         return item;
-    }
-
-    public void DestroySelf()
-    {
-        Destroy(gameObject);
     }
 }
