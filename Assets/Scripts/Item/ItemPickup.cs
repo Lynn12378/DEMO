@@ -1,7 +1,7 @@
 using UnityEngine;
 using Fusion;
 
-public class ItemPickup : MonoBehaviour {
+public class ItemPickup : NetworkBehaviour {
 
 	// Pick up the item
 	public void PickUp (Item item)
@@ -10,7 +10,7 @@ public class ItemPickup : MonoBehaviour {
 
 		// If successfully picked up
 		if (wasPickedUp)
-			Destroy(gameObject);	// Destroy item from scene
+			Runner.Despawn(Object);	// Destroy item from scene
 	}
 
 }

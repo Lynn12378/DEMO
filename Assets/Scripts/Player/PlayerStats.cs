@@ -48,7 +48,7 @@ public class PlayerStats : NetworkBehaviour
     // Initialize healthPoint
     public override void Spawned() 
     {
-        if (Object.HasStateAuthority)
+        if (HasStateAuthority)
         {
             healthPoint =  GetComponentInChildren<HealthPoint>();
             healthPoint.Hp = maxHealth;
@@ -75,7 +75,7 @@ public class PlayerStats : NetworkBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (Object.HasStateAuthority)
+        if (HasInputAuthority)
         {
             currentHealth -= damage;
             healthBar.setHealth(currentHealth);
