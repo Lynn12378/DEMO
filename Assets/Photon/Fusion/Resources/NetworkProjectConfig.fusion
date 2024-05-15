@@ -1,7 +1,7 @@
 {
     "Version": 1,
     "TypeId": "NetworkProjectConfig",
-    "PeerMode": 1,
+    "PeerMode": 0,
     "LagCompensation": {
         "Enabled": false,
         "HitboxBufferLengthInMs": 200,
@@ -10,8 +10,8 @@
     },
     "EnqueueIncompleteSynchronousSpawns": false,
     "InvokeRenderInBatchMode": true,
-    "NetworkIdIsObjectName": false,
-    "HideNetworkObjectInactivityGuard": false,
+    "NetworkIdIsObjectName": true,
+    "HideNetworkObjectInactivityGuard": true,
     "Simulation": {
         "InputDataWordCount": 0,
         "ReplicationFeatures": 1,

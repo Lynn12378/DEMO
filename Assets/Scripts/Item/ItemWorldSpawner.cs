@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
-public class ItemWorldSpawner : MonoBehaviour
+public class ItemWorldSpawner : NetworkBehaviour
 {
     public Item item;
 
-    private void Start()
+    public override void Spawned()
     {
         ItemWorld.SpawnItemWorld(transform.position, item);
-        Destroy(gameObject);
+
+        Runner.Despawn(Object);
     }
 }
+

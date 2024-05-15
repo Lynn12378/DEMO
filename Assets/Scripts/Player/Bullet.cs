@@ -5,48 +5,51 @@ using UnityEngine;
 using Fusion;
 using Fusion.Addons.Physics;
 
-public class Bullet : NetworkBehaviour
+namespace DEMO.Player
 {
-    [SerializeField] private NetworkRigidbody2D networkRigidbody = null;
-
-    [SerializeField] private float bulletSpeed = 20f;
-    [SerializeField] private float bulletTime = 0.5f;
-    [SerializeField] private int damage = 10;
-
-    [Networked] private TickTimer life { get; set; }
-
-    public Vector2 mousePosition;
-
-    public override void Spawned()
+    public class Bullet : NetworkBehaviour
     {
-        life = TickTimer.CreateFromSeconds(Runner, bulletTime);
+        [SerializeField] private NetworkRigidbody2D networkRigidbody = null;
 
-        networkRigidbody.InterpolationTarget.gameObject.SetActive(true);
-        
-        networkRigidbody.Rigidbody.velocity = Vector2.zero;
-    }
+        [SerializeField] private float bulletSpeed = 20f;
+        [SerializeField] private float bulletTime = 0.5f;
+        [SerializeField] private int damage = 10;
 
-    public override void FixedUpdateNetwork()
-    {
-        Vector2 mouseVector = mousePosition.normalized;
-        Debug.Log(mouseVector);
-        networkRigidbody.Rigidbody.velocity = mouseVector * bulletSpeed;
+        [Networked] private TickTimer life { get; set; }
 
-        if (life.Expired(Runner))
+        public Vector2 mousePosition;
+
+        public override void Spawned()
         {
-            Runner.Despawn(Object);
+            life = TickTimer.CreateFromSeconds(Runner, bulletTime);
+
+            networkRigidbody.InterpolationTarget.gameObject.SetActive(true);
+            
+            networkRigidbody.Rigidbody.velocity = Vector2.zero;
         }
-    }
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Enemy enemy = collision.GetComponent<Enemy>();
-
-        if (enemy != null)
+        public override void FixedUpdateNetwork()
         {
-            enemy.TakeDamage(damage);
-            Runner.Despawn(Object);
+            Vector2 mouseVector = mousePosition.normalized;
+            Debug.Log(mouseVector);
+            networkRigidbody.Rigidbody.velocity = mouseVector * bulletSpeed;
+
+            if (life.Expired(Runner))
+            {
+                Runner.Despawn(Object);
+            }
+        }
+
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+                Runner.Despawn(Object);
+            }
         }
     }
 }

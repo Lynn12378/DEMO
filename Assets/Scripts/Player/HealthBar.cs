@@ -4,31 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class HealthBar : MonoBehaviour
+namespace DEMO.Player
 {
-    public Slider healthSlider;
-    public TextMeshProUGUI textMeshPro;
-
-    public void setMaxHealth(int maxHealth)
+    public class HealthBar : MonoBehaviour
     {
-        healthSlider.maxValue = maxHealth;
-        healthSlider.value = maxHealth;
+        public Slider healthSlider;
+        public TextMeshProUGUI textMeshPro;
 
-        UpdateText();
-    }
-
-    public void setHealth(int health)
-    {
-        healthSlider.value = health;
-
-        UpdateText();
-    }
-
-    private void UpdateText()
-    {
-        if (textMeshPro != null)
+        public void setMaxHealth(int maxHealth)
         {
-            textMeshPro.text = healthSlider.value.ToString();
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = maxHealth;
+
+            UpdateText();
+        }
+
+        public void setHealth(int health)
+        {
+            healthSlider.value = health;
+
+            UpdateText();
+        }
+
+        private void UpdateText()
+        {
+            if (textMeshPro != null)
+            {
+                textMeshPro.text = healthSlider.value.ToString();
+            }
         }
     }
 }

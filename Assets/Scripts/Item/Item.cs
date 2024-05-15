@@ -38,7 +38,7 @@ public class Item
         switch(itemType)
         {
             default:
-            case ItemType.Health:   return ItemAssets.Instance.healthSprite;
+            case ItemType.Health:       return ItemAssets.Instance.healthSprite;
             case ItemType.Food:         return ItemAssets.Instance.foodSprite;
             case ItemType.Coin:         return ItemAssets.Instance.coinSprite;
             case ItemType.Wood:         return ItemAssets.Instance.woodSprite;

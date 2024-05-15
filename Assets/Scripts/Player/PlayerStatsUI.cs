@@ -1,15 +1,18 @@
 using UnityEngine;
 using TMPro;
 
-public class PlayerStatsUI : MonoBehaviour
+namespace DEMO.Player
 {
-    public TextMeshProUGUI bulletAmountText;
-
-    public void UpdateBulletAmount(int amount)
+    public class PlayerStatsUI : MonoBehaviour
     {
-        if (bulletAmountText != null)
+        public TextMeshProUGUI bulletAmountText;
+
+        public void UpdateBulletAmount(int amount)
         {
-            bulletAmountText.text = amount.ToString();
+            if (bulletAmountText != null)
+            {
+                bulletAmountText.text = amount.ToString();
+            }
         }
     }
 }
