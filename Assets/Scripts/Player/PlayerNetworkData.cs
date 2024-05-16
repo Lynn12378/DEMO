@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Fusion;
 
@@ -9,9 +10,11 @@ namespace DEMO.Player
     {
 		private GameManager gameManager = null;
         private ChangeDetector changes;
+        //private PlayerStats playerStats = null;
 
 		[Networked] public string PlayerName { get; set; }
 		[Networked] public NetworkBool IsReady { get; set; }
+        [Networked] public int Hp { get; set; }
 	
         public override void Spawned()
         {
@@ -42,6 +45,7 @@ namespace DEMO.Player
 		{
 			IsReady = isReady;
 		}
+
         #endregion
 
         #region - OnChanged Events -
@@ -58,9 +62,13 @@ namespace DEMO.Player
                     case nameof(IsReady):
                         GameManager.Instance.UpdatePlayerList();
                         break;
+                    /*case nameof(Hp):
+                        GameManager.Instance.UpdateHealth();
+                        break;*/
                 }
             }
         }
+
         #endregion
     }
 }

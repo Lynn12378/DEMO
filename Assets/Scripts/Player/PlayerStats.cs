@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 using Fusion;
 using Fusion.Addons.Physics;
 
@@ -14,19 +16,17 @@ namespace DEMO.Player
     public class PlayerStats : NetworkBehaviour
     {
         [SerializeField] private NetworkRigidbody2D playerNetworkRigidbody = null;
-
+        [SerializeField] private Slider healthPointSlider = null;
+        
         private HealthBar healthBar = null;
-        private HealthPoint healthPoint = null;
         public int maxHealth = 100;
         public int currentHealth;
 
 
-        Rigidbody2D rb;
-        Animator animator;
-
-        void Start()
+        // Initialize
+        public override void Spawned()
         {
-            healthBar = FindObjectOfType<HealthBar>();
+            healthBar = FindFirstObjectByType<HealthBar>();
             if (healthBar != null)
             {
                 healthBar.setMaxHealth(maxHealth);
@@ -37,44 +37,29 @@ namespace DEMO.Player
             }
 
             currentHealth = maxHealth;
-        }
 
-        // Initialize healthPoint
-        public override void Spawned() 
-        {
-            if (Object.HasStateAuthority)
-            {
-                healthPoint =  GetComponentInChildren<HealthPoint>();
-                healthPoint.Hp = maxHealth;
-            }
+            GameManager.Instance.SetPlayerNetworkHealth(healthPointSlider, maxHealth);
         }
 
         // When restart
         private void Respawn() 
         {
             playerNetworkRigidbody.transform.position = Vector3.zero;
-            healthPoint.Hp = maxHealth;
+            //healthPoint.Hp = maxHealth;
 
             healthBar.setMaxHealth(maxHealth);
             currentHealth = maxHealth;
-        }
-
-        public override void FixedUpdateNetwork()
-        {
-            /*if (healthPoint.Hp <= 0)
-            {
-                Respawn();
-            }*/
         }
 
         public void TakeDamage(int damage)
         {
             if (Object.HasInputAuthority)
             {
+                Debug.Log("Take damage once by "+GameManager.Instance.Runner.LocalPlayer);
                 currentHealth -= damage;
                 healthBar.setHealth(currentHealth);
 
-                healthPoint.Hp -= damage;
+                GameManager.Instance.SetPlayerNetworkHealth(healthPointSlider, currentHealth);
 
                 if (currentHealth <= 0)
                 {

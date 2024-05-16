@@ -24,7 +24,7 @@ namespace DEMO.Player
             life = TickTimer.CreateFromSeconds(Runner, bulletTime);
             this.mousePosition = mousePosition.normalized;
 
-            Debug.Log($"Init Bullet");
+            //Debug.Log($"Init Bullet");
             // networkRigidbody.InterpolationTarget.gameObject.SetActive(true);
             networkRigidbody.Rigidbody.velocity = Vector2.zero;
         }
@@ -32,7 +32,7 @@ namespace DEMO.Player
         public override void FixedUpdateNetwork()
         {
             networkRigidbody.Rigidbody.velocity = mousePosition * bulletSpeed;
-            Debug.Log($"mousePosition from bullet{mousePosition}");
+            //Debug.Log($"mousePosition from bullet{mousePosition}");
             
             if (life.Expired(Runner))
             {

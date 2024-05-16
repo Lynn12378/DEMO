@@ -6,6 +6,7 @@ using Fusion;
 
 using DEMO.Lobby;
 using DEMO.Player;
+using UnityEngine.UI;
 
 namespace DEMO
 {
@@ -81,6 +82,15 @@ namespace DEMO
             if (playerList.TryGetValue(runner.LocalPlayer, out PlayerNetworkData playerNetworkData))
             {
                 playerNetworkData.SetPlayerName_RPC(PlayerName);
+            }
+        }
+
+        public void SetPlayerNetworkHealth(Slider slider, int newHp)
+        {
+            if (playerList.TryGetValue(runner.LocalPlayer, out PlayerNetworkData playerNetworkData))
+            {
+                playerNetworkData.Hp = newHp;
+                slider.value = newHp;
             }
         }
     }

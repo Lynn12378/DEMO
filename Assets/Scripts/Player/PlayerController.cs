@@ -19,6 +19,7 @@ namespace DEMO.Player
 
         [Networked] private NetworkButtons buttonsPrevious { get; set; }
 
+
         public override void FixedUpdateNetwork()
         {
             if (GetInput(out NetworkInputData data))
@@ -46,8 +47,15 @@ namespace DEMO.Player
 
             if (pressed.IsSet(InputButtons.TESTDAMAGE))
             {
-                playerStats.TakeDamage(20);
+                Debug.Log("TESTDAMAGE pressed once.");
+                playerStats.TakeDamage(10);
             }
+
+            /*if (buttons.IsSet(InputButtons.TESTDAMAGE)) 
+            { 
+                Debug.Log("TESTDAMAGE pressed once.");
+                playerStats.TakeDamage(10);
+            }*/
 
             if (pressed.IsSet(InputButtons.PICKUP))
             {
