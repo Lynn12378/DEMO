@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour {
 
-	#region Singleton
+	/*#region Singleton
 
 	public static Inventory instance;
 
@@ -19,13 +19,13 @@ public class Inventory : MonoBehaviour {
 		instance = this;
 	}
 
-	#endregion
+	#endregion*/
 
 	// Callback which is triggered when an item gets added or removed
 	public delegate void OnItemChanged();
 	public OnItemChanged onItemChangedCallback;
 
-	public int space = 10;	// Amount of slots in inventory
+	public int capacity = 10;	// Amount of slots in inventory
 
 	// Current list of items in inventory
 	public List<Item> items = new List<Item>();
@@ -37,7 +37,7 @@ public class Inventory : MonoBehaviour {
 		//if (!item.isDefaultItem)
 		//{
 			// Check if out of space
-			if (items.Count >= space)
+			if (items.Count >= capacity)
 			{
 				Debug.Log("Not enough room.");
 				return false;

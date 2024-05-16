@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Fusion;
+using DEMO;
 
 /* Sits on all InventorySlots. */
 
@@ -11,6 +13,12 @@ public class InventorySlot : MonoBehaviour {
 	public Button removeButton;			// Reference to the remove button
 
 	Item item;  // Current item in the slot
+	Inventory inventory;
+
+	public void Initialize()
+	{
+		inventory = PlayerInventoryManager.instance.GetPlayerInventory(GameManager.Instance.Runner.LocalPlayer);
+	}
 
 	// Add item to the slot
 	public void AddItem (Item newItem)
@@ -60,7 +68,7 @@ public class InventorySlot : MonoBehaviour {
 			}
 			else
 			{
-				Inventory.instance.Remove(item);
+				inventory.Remove(item);
 			}
 	}
 
@@ -82,7 +90,7 @@ public class InventorySlot : MonoBehaviour {
 			}
 			else
 			{
-				item.RemoveFromInventory();
+				inventory.Remove(item);
 			}
 		}
 	}

@@ -46,8 +46,8 @@ public class Item
         }
     }
 
-    public void RemoveFromInventory()
+    /*public void RemoveFromInventory()
     {
         Inventory.instance.Remove(this);
-    }
+    }*/
 }

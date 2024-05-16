@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using Fusion;
+using DEMO;
 
 public class InventoryUI : MonoBehaviour {
 
@@ -12,8 +14,9 @@ public class InventoryUI : MonoBehaviour {
 
 	InventorySlot[] slots;	// List of all the slots
 
-	void Start () {
-		inventory = Inventory.instance;
+	public void Initialize()
+	{
+		inventory = PlayerInventoryManager.instance.GetPlayerInventory(GameManager.Instance.Runner.LocalPlayer);
 		inventory.onItemChangedCallback += UpdateUI;	// Subscribe to the onItemChanged callback
 
 		itemUseManager = ItemUseManager.instance;

@@ -61,10 +61,10 @@ namespace DEMO.Player
 
         public override void FixedUpdateNetwork()
         {
-            if (healthPoint.Hp <= 0)
+            /*if (healthPoint.Hp <= 0)
             {
                 Respawn();
-            }
+            }*/
         }
 
         public void TakeDamage(int damage)

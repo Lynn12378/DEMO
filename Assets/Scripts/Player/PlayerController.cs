@@ -70,7 +70,8 @@ namespace DEMO.Player
 
                 if (itemPickup != null)
                 {
-                    itemPickup.PickUp(item);
+                    Debug.Log(GameManager.Instance.Runner.LocalPlayer);
+                    itemPickup.PickUp(GameManager.Instance.Runner.LocalPlayer, item);
                 }
             }
         }

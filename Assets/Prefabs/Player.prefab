@@ -673,7 +673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementHandler: {fileID: 1797281051025650655}
   attackHandler: {fileID: 4119776355522196519}
-  playerStats: {fileID: 0}
+  playerStats: {fileID: 237223312784963901}
 --- !u!114 &1797281051025650655
 MonoBehaviour:
   m_ObjectHideFlags: 0
