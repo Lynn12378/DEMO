@@ -19,8 +19,8 @@ namespace DEMO.Player
         [SerializeField] private Slider healthPointSlider = null;
         
         private HealthBar healthBar = null;
-        public int maxHealth = 100;
-        public int currentHealth;
+        private int maxHealth = 100;
+        private int currentHealth;
 
 
         // Initialize
@@ -66,6 +66,15 @@ namespace DEMO.Player
                     //animator.SetTrigger("playerDeath");
                     //FindObjectOfType<GameManager>().EndGame();
                 }
+            }
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.collider.tag == "Enemy")
+            {
+                TakeDamage(5);
+                //isCollidingWithEnemy = true;
             }
         }
     }

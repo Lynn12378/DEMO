@@ -32,6 +32,7 @@ namespace DEMO.Player
         {
             NetworkButtons buttons = data.buttons;
             var pressed = buttons.GetPressed(buttonsPrevious);
+            var released = buttons.GetReleased(buttonsPrevious);
             buttonsPrevious = buttons;
 
             movementHandler.Move(data);
@@ -45,14 +46,8 @@ namespace DEMO.Player
                 }
             }
 
-            if (pressed.IsSet(InputButtons.TESTDAMAGE))
+            /*if (pressed.IsSet(InputButtons.TESTDAMAGE))
             {
-                Debug.Log("TESTDAMAGE pressed once.");
-                playerStats.TakeDamage(10);
-            }
-
-            /*if (buttons.IsSet(InputButtons.TESTDAMAGE)) 
-            { 
                 Debug.Log("TESTDAMAGE pressed once.");
                 playerStats.TakeDamage(10);
             }*/
@@ -68,7 +63,7 @@ namespace DEMO.Player
             }
         }
 
-        private void OnTriggerStay2D(Collider2D collider)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.CompareTag("ItemsInteractable") && isPickupKeyPressed)
             {
