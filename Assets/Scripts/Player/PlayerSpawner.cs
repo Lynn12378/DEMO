@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System;
 using UnityEngine.SceneManagement;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace DEMO.Player
 
         private Dictionary<PlayerRef, NetworkObject> playerList = new Dictionary<PlayerRef, NetworkObject>();
 
-        private void Start()
+        private async void Start()
         {
             gameManager = GameManager.Instance;
 
@@ -31,15 +32,15 @@ namespace DEMO.Player
 
             networkRunner.AddCallbacks(this);
 
-            SpawnAllPlayers();
+            await SpawnAllPlayers();
         }
 
-        private void SpawnAllPlayers()
+        private async Task SpawnAllPlayers()
         {
             foreach(var player in gameManager.playerList.Keys)
             {
                 Vector3 spawnPosition = Vector3.zero;
-                NetworkObject networkPlayerObject = networkRunner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
+                NetworkObject networkPlayerObject = await networkRunner.SpawnAsync(playerPrefab, spawnPosition, Quaternion.identity, player);
 
                 networkRunner.SetPlayerObject(player, networkPlayerObject);
 

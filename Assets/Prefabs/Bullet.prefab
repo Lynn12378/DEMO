@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 1521825746
   ObjectInterest: 1
-  Flags: 262145
+  Flags: 524289
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 1834830856782735943}
@@ -94,7 +94,7 @@ MonoBehaviour:
   bulletSpeed: 5
   bulletTime: 1
   damage: 10
-  mousePosition: {x: 127.19999, y: 382.69998}
+  mousePosition: {x: 4.825773, y: -0.54902107}
 --- !u!50 &1581886057022738642
 Rigidbody2D:
   serializedVersion: 4

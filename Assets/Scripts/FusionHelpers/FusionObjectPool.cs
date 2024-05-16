@@ -49,7 +49,8 @@ namespace FusionHelpers
 				}
 			}
 
-			_free.Clear();
+			_free = new List<NetworkObject>();
+
 		}
 
 		public void ReturnToPool(NetworkObject no)

@@ -11,7 +11,7 @@ namespace DEMO.Player
     {
         [SerializeField] private NetworkRigidbody2D networkRigidbody = null;
 
-        [SerializeField] private float bulletSpeed = 20f;
+        [SerializeField] private float bulletSpeed = 15f;
         [SerializeField] private float bulletTime = 0.5f;
         [SerializeField] private int damage = 10;
 
@@ -19,21 +19,21 @@ namespace DEMO.Player
 
         public Vector2 mousePosition;
 
-        public override void Spawned()
+        public void Init(Vector2 mousePosition)
         {
             life = TickTimer.CreateFromSeconds(Runner, bulletTime);
+            this.mousePosition = mousePosition.normalized;
 
-            networkRigidbody.InterpolationTarget.gameObject.SetActive(true);
-            
+            Debug.Log($"Init Bullet");
+            // networkRigidbody.InterpolationTarget.gameObject.SetActive(true);
             networkRigidbody.Rigidbody.velocity = Vector2.zero;
         }
 
         public override void FixedUpdateNetwork()
         {
-            Vector2 mouseVector = mousePosition.normalized;
-            //Debug.Log(mouseVector);
-            networkRigidbody.Rigidbody.velocity = mouseVector * bulletSpeed;
-
+            networkRigidbody.Rigidbody.velocity = mousePosition * bulletSpeed;
+            Debug.Log($"mousePosition from bullet{mousePosition}");
+            
             if (life.Expired(Runner))
             {
                 Runner.Despawn(Object);
