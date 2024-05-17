@@ -1,76 +1,80 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 using Fusion;
 using Fusion.Addons.Physics;
 
-public class PlayerController : NetworkBehaviour
+namespace DEMO.Player
 {
-    [SerializeField] private NetworkRigidbody2D playerNetworkRigidbody = null;
-    [SerializeField] private PlayerMovementHandler movementHandler = null;
-    [SerializeField] private PlayerAttackHandler attackHandler = null;
-
-    [SerializeField] private float moveSpeed = 5f;
-    //[SerializeField] private Image hpBar = null;
-
-    [Networked] public int Hp { get; set; } //(OnChanged = nameof(OnHpChanged)),Networked, OnChangedRender(nameof(OnColorChanged))
-    [Networked] private NetworkButtons buttonsPrevious { get; set; }
-
-    private int maxHp = 100;
-
-    public override void Spawned()//初始化
+    public class PlayerController : NetworkBehaviour
     {
-        if (Object.HasStateAuthority)
+        [SerializeField] private PlayerMovementHandler movementHandler = null;
+        [SerializeField] private PlayerAttackHandler attackHandler = null;
+        [SerializeField] private PlayerStats playerStats = null;
+        private bool isPickupKeyPressed = false;
+
+
+        [Networked] private NetworkButtons buttonsPrevious { get; set; }
+
+        public override void FixedUpdateNetwork()
         {
-            Hp = maxHp;
-        }
-    }
-    private void Respawn()//重生
-    {
-        playerNetworkRigidbody.transform.position = Vector3.zero;
-        Hp = maxHp;
-    }
-
-    public override void FixedUpdateNetwork()
-    {
-        if (GetInput(out NetworkInputData data))
-        {
-            ApplyInput(data);
+            if (GetInput(out NetworkInputData data))
+            {
+                ApplyInput(data);
+            }
         }
 
-        if (Hp <= 0)
+        private void ApplyInput(NetworkInputData data)
         {
-            Respawn();
+            NetworkButtons buttons = data.buttons;
+            var pressed = buttons.GetPressed(buttonsPrevious);
+            buttonsPrevious = buttons;
+
+            movementHandler.Move(data);
+            movementHandler.SetRotation(data.mousePosition);
+
+            if (pressed.IsSet(InputButtons.FIRE))
+            {
+                if(!EventSystem.current.IsPointerOverGameObject())
+                {
+                    attackHandler.Shoot(data.mousePosition);
+                }
+            }
+
+            if (pressed.IsSet(InputButtons.TESTDAMAGE))
+            {
+                playerStats.TakeDamage(20);
+            }
+
+            if (pressed.IsSet(InputButtons.PICKUP))
+            {
+                isPickupKeyPressed = true;
+            }
+            else
+            {
+                // Reset state
+                isPickupKeyPressed = false;
+            }
+        }
+
+        private void OnTriggerStay2D(Collider2D collider)
+        {
+            if (collider.CompareTag("ItemsInteractable") && isPickupKeyPressed)
+            {
+                ItemPickup itemPickup = collider.GetComponent<ItemPickup>();
+                ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+                Item item = itemWorld.GetItem();
+
+                if (itemPickup != null)
+                {
+                    Debug.Log(GameManager.Instance.Runner.LocalPlayer);
+                    itemPickup.PickUp(GameManager.Instance.Runner.LocalPlayer, item);
+                }
+            }
         }
     }
-
-    private void ApplyInput(NetworkInputData data)
-    {
-        NetworkButtons buttons = data.buttons;
-        var pressed = buttons.GetPressed(buttonsPrevious);
-        buttonsPrevious = buttons;
-
-        movementHandler.Move(data);
-        movementHandler.SetRotation(data.mousePosition);
-
-        if (pressed.IsSet(InputButtons.FIRE))
-        {
-            attackHandler.Shoot(data.mousePosition);
-        }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        if (Object.HasStateAuthority)
-        {
-            Hp -= damage;
-        }
-    }
-    
-    /*private static void OnHpChanged(Changed<PlayerController> changed)
-    {
-        changed.Behaviour.hpBar.fillAmount = (float)changed.Behaviour.Hp / changed.Behaviour.maxHp;
-    }*/
 }
 
