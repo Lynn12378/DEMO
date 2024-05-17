@@ -12,15 +12,30 @@ public class Shelter : NetworkBehaviour
     public Slider DurabilitySlider;
     public TextMeshProUGUI textMeshPro;
 
+    [SerializeField] private float decreaseRate = 1f;
+    [SerializeField] private float lastDecreaseTime;
+
     public override void Spawned()
     {
         Durability = MaxDurability; 
         UpdateDurabilityUI();
+        lastDecreaseTime = Time.time;
     }
 
     public override void FixedUpdateNetwork()
     {
+        if (Time.time - lastDecreaseTime >= 1f)
+        {
+            Durability -= decreaseRate;
+            lastDecreaseTime = Time.time;
+
+            if (Durability <= 0)
+            {
+                Durability = 0;
+                //EndGame();
+            }
         UpdateDurabilityUI();
+        }
     }
 
     public void SetMaxDurability(int maxDurability)
