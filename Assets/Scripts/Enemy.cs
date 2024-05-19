@@ -13,7 +13,11 @@ namespace DEMO
     {
         [SerializeField] private NetworkRigidbody2D enemyNetworkRigidbody = null;
         private int maxHp = 50;
-        private HealthPoint healthPoint = null;
+        [SerializeField] private EnemyHealthPoint healthPoint = null;
+
+        private List<LagCompensatedHit> hits = new List<LagCompensatedHit>();
+        private int causeDamage = 20;
+
         [SerializeField] private float moveSpeed;
         [SerializeField] private float range;
         [SerializeField] private float maxDistance;
@@ -24,7 +28,6 @@ namespace DEMO
         // Initialize
         public override void Spawned() 
         {
-            healthPoint = GetComponentInChildren<HealthPoint>();
             healthPoint.Hp = maxHp;
 
             // Pick an axis to patrol
@@ -52,7 +55,7 @@ namespace DEMO
             enemyNetworkRigidbody.Rigidbody.velocity = direction * moveSpeed;
         }
 
-        void SetNewDestination()
+        private void SetNewDestination()
         {
             if (patrolAlongXAxis)
             {
@@ -73,6 +76,24 @@ namespace DEMO
             {
                 Runner.Despawn(Object);
             }
+        }
+
+        public void OnCollisionEnter2D(Collision2D collision)
+        {
+            var netObj = collision.collider.GetComponent<NetworkBehaviour>().Object;
+
+                if (netObj == null) return;
+
+                var damagable = collision.collider.GetComponent<IDamagable>();
+
+                if (damagable != null && netObj.InputAuthority != Object.InputAuthority)
+                {
+                    if(netObj.CompareTag("Player"))
+                    {
+                        Debug.Log(netObj + "player take damage.");
+                        damagable.TakeDamage(causeDamage);
+                    }
+                }
         }
     }
 }

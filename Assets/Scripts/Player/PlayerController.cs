@@ -13,12 +13,22 @@ namespace DEMO.Player
     {
         [SerializeField] private PlayerMovementHandler movementHandler = null;
         [SerializeField] private PlayerAttackHandler attackHandler = null;
-        [SerializeField] private PlayerStats playerStats = null;
+        [SerializeField] private PlayerStatsUI playerStatsUI = null;
+        [SerializeField] private PlayerHealthPoint healthPoint = null;
         private bool isPickupKeyPressed = false;
 
 
         [Networked] private NetworkButtons buttonsPrevious { get; set; }
 
+        public override void Spawned()
+        {
+            healthPoint.Subscribe(OnHPChanged);
+        }
+
+        public override void Despawned(NetworkRunner runner, bool hasState)
+        {
+            healthPoint.Unsubscribe(OnHPChanged);
+        }
 
         public override void FixedUpdateNetwork()
         {
@@ -32,7 +42,6 @@ namespace DEMO.Player
         {
             NetworkButtons buttons = data.buttons;
             var pressed = buttons.GetPressed(buttonsPrevious);
-            var released = buttons.GetReleased(buttonsPrevious);
             buttonsPrevious = buttons;
 
             movementHandler.Move(data);
@@ -45,12 +54,6 @@ namespace DEMO.Player
                     attackHandler.Shoot(data.mousePosition);
                 }
             }
-
-            /*if (pressed.IsSet(InputButtons.TESTDAMAGE))
-            {
-                Debug.Log("TESTDAMAGE pressed once.");
-                playerStats.TakeDamage(10);
-            }*/
 
             if (pressed.IsSet(InputButtons.PICKUP))
             {
@@ -77,6 +80,12 @@ namespace DEMO.Player
                     itemPickup.PickUp(GameManager.Instance.Runner.LocalPlayer, item);
                 }
             }
+        }
+
+        private void OnHPChanged(int value)
+        {
+            playerStatsUI.SetHPBarValue(value);
+
         }
     }
 }

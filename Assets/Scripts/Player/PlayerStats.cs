@@ -16,7 +16,6 @@ namespace DEMO.Player
     public class PlayerStats : NetworkBehaviour
     {
         [SerializeField] private NetworkRigidbody2D playerNetworkRigidbody = null;
-        [SerializeField] private Slider healthPointSlider = null;
         
         private HealthBar healthBar = null;
         private int maxHealth = 100;
@@ -37,9 +36,9 @@ namespace DEMO.Player
             }
 
             currentHealth = maxHealth;
-
-            GameManager.Instance.SetPlayerNetworkHealth(healthPointSlider, maxHealth);
         }
+
+
 
         // When restart
         private void Respawn() 
@@ -51,15 +50,13 @@ namespace DEMO.Player
             currentHealth = maxHealth;
         }
 
-        public void TakeDamage(int damage)
+        /*public void TakeDamage(int damage)
         {
-            if (Object.HasInputAuthority)
+            if (Object.HasStateAuthority)
             {
                 Debug.Log("Take damage once by "+GameManager.Instance.Runner.LocalPlayer);
                 currentHealth -= damage;
                 healthBar.setHealth(currentHealth);
-
-                GameManager.Instance.SetPlayerNetworkHealth(healthPointSlider, currentHealth);
 
                 if (currentHealth <= 0)
                 {
@@ -67,13 +64,13 @@ namespace DEMO.Player
                     //FindObjectOfType<GameManager>().EndGame();
                 }
             }
-        }
+        }*/
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.tag == "Enemy")
             {
-                TakeDamage(5);
+                //TakeDamage(5);
                 //isCollidingWithEnemy = true;
             }
         }

@@ -595,6 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNetworkRigidbody: {fileID: 397606304458726309}
+  healthPoint: {fileID: 1475834049703138947}
   moveSpeed: 0
   range: 0
   maxDistance: 0
