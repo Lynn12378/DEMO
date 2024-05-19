@@ -7,7 +7,6 @@ namespace DEMO.Player
 {
     public class PlayerStatsUI : MonoBehaviour
     {
-        [SerializeField] private CanvasUI canvasUI = null;
         [SerializeField] private Slider healthPointSlider = null;
 
 
@@ -19,12 +18,6 @@ namespace DEMO.Player
         public void SetHealthUI(int newValue)
         {
             healthPointSlider.value = newValue;
-            canvasUI.SetCanvasHealth(newValue);
-        }
-
-        public void SetBulletUI(int amount)
-        {
-            canvasUI.SetCanvasBullet(amount);
         }
     }
 }

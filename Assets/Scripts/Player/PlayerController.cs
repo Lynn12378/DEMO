@@ -19,8 +19,7 @@ namespace DEMO.Player
         private bool isPickupKeyPressed = false;
 
         private int maxHealth = 100;
-        private int currentHealth;
-
+        private int currentHealth { get; set; }
 
         [Networked] private NetworkButtons buttonsPrevious { get; set; }
 

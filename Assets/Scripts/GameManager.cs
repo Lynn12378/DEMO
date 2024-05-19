@@ -34,6 +34,7 @@ namespace DEMO
         public Dictionary<PlayerRef, PlayerNetworkData> playerList = new Dictionary<PlayerRef, PlayerNetworkData>();
 
         public event Action OnPlayerListUpdated = null;
+        public event Action OnPlayerUIUpdated = null;
         private void Awake()
         {
             Runner.ProvideInput = true;
@@ -77,20 +78,16 @@ namespace DEMO
             }
         }
 
+        public void UpdatePlayerUI()
+        {
+            OnPlayerUIUpdated?.Invoke();
+        }
+
         public void SetPlayerNetworkData()
         {
             if (playerList.TryGetValue(runner.LocalPlayer, out PlayerNetworkData playerNetworkData))
             {
                 playerNetworkData.SetPlayerName_RPC(PlayerName);
-            }
-        }
-
-        public void SetPlayerNetworkHealth(Slider slider, int newHp)
-        {
-            if (playerList.TryGetValue(runner.LocalPlayer, out PlayerNetworkData playerNetworkData))
-            {
-                playerNetworkData.Hp = newHp;
-                slider.value = newHp;
             }
         }
     }

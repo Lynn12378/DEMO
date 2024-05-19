@@ -12,7 +12,7 @@ namespace DEMO.Player
         [SerializeField] private Bullet bulletPrefab = null;
         [SerializeField] private Transform shootPoint = null;
         private int maxBullet = 30;
-        private int currentBullet;
+        private int currentBullet { get; set; }
 
         private void Start()
         {
@@ -29,7 +29,7 @@ namespace DEMO.Player
                     (Runner, NO) => NO.GetComponent<Bullet>().Init(mousePosition));
 
                 currentBullet -= 1;
-                playerStatsUI.SetBulletUI(currentBullet);
+                //playerStatsUI.SetBulletUI(currentBullet);
             }
             else
             {
@@ -42,13 +42,13 @@ namespace DEMO.Player
         public void AddBullet(int amount)
         {
             currentBullet += amount;
-            playerStatsUI.SetBulletUI(currentBullet);
+            //playerStatsUI.SetBulletUI(currentBullet);
         }
 
         public void SetMaxBullet()
         {
             currentBullet = maxBullet;
-            playerStatsUI.SetBulletUI(currentBullet);
+            //playerStatsUI.SetBulletUI(currentBullet);
         }
     }
 }

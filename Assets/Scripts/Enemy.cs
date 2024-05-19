@@ -90,7 +90,6 @@ namespace DEMO
                 {
                     if(netObj.CompareTag("Player"))
                     {
-                        Debug.Log(netObj + "player take damage.");
                         damagable.TakeDamage(causeDamage);
                     }
                 }

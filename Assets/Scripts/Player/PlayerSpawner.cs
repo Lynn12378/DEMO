@@ -18,6 +18,7 @@ namespace DEMO.Player
         private GameManager gameManager = null;
         private NetworkRunner networkRunner = null;
 
+        [SerializeField] private GameUI gameUI = null;
         [SerializeField] private NetworkPrefabRef playerPrefab;
         [SerializeField] private Camera mainCamera = null;
         [SerializeField] private Inventory playerInventoryPrefab = null;
