@@ -9,24 +9,22 @@ namespace DEMO.Player
     {
         [SerializeField] private CanvasUI canvasUI = null;
         [SerializeField] private Slider healthPointSlider = null;
-        public TextMeshProUGUI bulletAmountText;
+
 
         public void SetPlayerNameUI(String name)
         {
 
         }
 
-        public void SetHPBarValue(int newValue)
+        public void SetHealthUI(int newValue)
         {
             healthPointSlider.value = newValue;
+            canvasUI.SetCanvasHealth(newValue);
         }
 
-        public void UpdateBulletAmount(int amount)
+        public void SetBulletUI(int amount)
         {
-            if (bulletAmountText != null)
-            {
-                bulletAmountText.text = amount.ToString();
-            }
+            canvasUI.SetCanvasBullet(amount);
         }
     }
 }

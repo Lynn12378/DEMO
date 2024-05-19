@@ -11,18 +11,24 @@ namespace DEMO.Player
 {
     public class PlayerController : NetworkBehaviour
     {
+        [SerializeField] private NetworkRigidbody2D playerNetworkRigidbody = null;
         [SerializeField] private PlayerMovementHandler movementHandler = null;
         [SerializeField] private PlayerAttackHandler attackHandler = null;
         [SerializeField] private PlayerStatsUI playerStatsUI = null;
         [SerializeField] private PlayerHealthPoint healthPoint = null;
         private bool isPickupKeyPressed = false;
 
+        private int maxHealth = 100;
+        private int currentHealth;
+
 
         [Networked] private NetworkButtons buttonsPrevious { get; set; }
 
         public override void Spawned()
         {
+            currentHealth = maxHealth;
             healthPoint.Subscribe(OnHPChanged);
+            healthPoint.HP = maxHealth;
         }
 
         public override void Despawned(NetworkRunner runner, bool hasState)
@@ -30,11 +36,28 @@ namespace DEMO.Player
             healthPoint.Unsubscribe(OnHPChanged);
         }
 
+        // When restart
+        private void Respawn() 
+        {
+            playerNetworkRigidbody.transform.position = Vector3.zero;
+
+            currentHealth = maxHealth;
+            healthPoint.Subscribe(OnHPChanged);
+            healthPoint.HP = maxHealth;
+
+            attackHandler.SetMaxBullet();
+        }
+
         public override void FixedUpdateNetwork()
         {
             if (GetInput(out NetworkInputData data))
             {
                 ApplyInput(data);
+            }
+
+            if(currentHealth <= 0)
+            {
+                Respawn();
             }
         }
 
@@ -84,8 +107,8 @@ namespace DEMO.Player
 
         private void OnHPChanged(int value)
         {
-            playerStatsUI.SetHPBarValue(value);
-
+            currentHealth = value;
+            playerStatsUI.SetHealthUI(value);
         }
     }
 }

@@ -580,7 +580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f5a728cd223f045824d110764a5821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkHealthSlider: {fileID: 1422947231120268285}
+  healthPointSlider: {fileID: 1422947231120268285}
   _Hp: 0
 --- !u!114 &1666197289363832700
 MonoBehaviour:

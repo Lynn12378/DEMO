@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 2729055418520702057}
   - component: {fileID: 1422947231120268285}
   m_Layer: 5
-  m_Name: Health
+  m_Name: Health Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -528,7 +528,6 @@ GameObject:
   - component: {fileID: 5423383696020471926}
   - component: {fileID: 1797281051025650655}
   - component: {fileID: 4119776355522196519}
-  - component: {fileID: 237223312784963901}
   - component: {fileID: 2435222850279086967}
   - component: {fileID: 1709384685506267253}
   m_Layer: 0
@@ -574,7 +573,6 @@ MonoBehaviour:
   - {fileID: 397606304458726309}
   - {fileID: 5423383696020471926}
   - {fileID: 4119776355522196519}
-  - {fileID: 237223312784963901}
   - {fileID: 1709384685506267253}
 --- !u!50 &4199331920531775570
 Rigidbody2D:
@@ -672,6 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ac81dc35e11a24286e9006c80d3df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNetworkRigidbody: {fileID: 397606304458726309}
   movementHandler: {fileID: 1797281051025650655}
   attackHandler: {fileID: 4119776355522196519}
   playerStatsUI: {fileID: 2435222850279086967}
@@ -703,22 +702,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 139ae690532be124aafa3133889964ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStatsUI: {fileID: 2435222850279086967}
   bulletPrefab: {fileID: 4280969757316509552, guid: c6818a84a16b03f44998b3a5c4e6ef2c, type: 3}
   shootPoint: {fileID: 6831657814407364924}
-  maxBullet: 30
---- !u!114 &237223312784963901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630666624398672265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4e934ac0c2f49d4aa42cc43acf5d9f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerNetworkRigidbody: {fileID: 397606304458726309}
 --- !u!114 &2435222850279086967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,9 +717,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc2464679e0b33841b4fcb1bfd009e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasUI: {fileID: 0}
+  canvasUI: {fileID: 3558888610655812083, guid: d3c2d4a6a4bf60d40a395671ac2e48b6, type: 3}
   healthPointSlider: {fileID: 1422947231120268285}
-  bulletAmountText: {fileID: 0}
 --- !u!114 &1709384685506267253
 MonoBehaviour:
   m_ObjectHideFlags: 0

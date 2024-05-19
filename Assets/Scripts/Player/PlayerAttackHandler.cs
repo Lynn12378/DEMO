@@ -8,24 +8,15 @@ namespace DEMO.Player
 {
     public class PlayerAttackHandler : NetworkBehaviour
     {
-        private PlayerStatsUI playerStatsUI = null;
+        [SerializeField] private PlayerStatsUI playerStatsUI = null;
         [SerializeField] private Bullet bulletPrefab = null;
         [SerializeField] private Transform shootPoint = null;
-        [SerializeField] private int maxBullet = 30;
+        private int maxBullet = 30;
         private int currentBullet;
 
         private void Start()
         {
-            playerStatsUI = FindObjectOfType<PlayerStatsUI>();
-            if (playerStatsUI != null)
-            {
-                currentBullet = maxBullet;
-                playerStatsUI.UpdateBulletAmount(currentBullet);
-            }
-            else
-            {
-                Debug.LogError("PlayerStatsUI not found!");
-            }
+            SetMaxBullet();
         }
 
         public void Shoot(Vector2 mousePosition)
@@ -38,7 +29,7 @@ namespace DEMO.Player
                     (Runner, NO) => NO.GetComponent<Bullet>().Init(mousePosition));
 
                 currentBullet -= 1;
-                playerStatsUI.UpdateBulletAmount(currentBullet);
+                playerStatsUI.SetBulletUI(currentBullet);
             }
             else
             {
@@ -51,7 +42,13 @@ namespace DEMO.Player
         public void AddBullet(int amount)
         {
             currentBullet += amount;
-            playerStatsUI.UpdateBulletAmount(currentBullet);
+            playerStatsUI.SetBulletUI(currentBullet);
+        }
+
+        public void SetMaxBullet()
+        {
+            currentBullet = maxBullet;
+            playerStatsUI.SetBulletUI(currentBullet);
         }
     }
 }
