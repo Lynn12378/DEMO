@@ -139,6 +139,10 @@ PrefabInstance:
       propertyPath: SortKey
       value: 1003572131
       objectReference: {fileID: 0}
+    - target: {fileID: 1263651178058119883, guid: 9e737ff6ee9476a42a3a6e55262cfd4b, type: 3}
+      propertyPath: m_text
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1838917426272398588, guid: 9e737ff6ee9476a42a3a6e55262cfd4b, type: 3}
       propertyPath: m_Name
       value: GameUI

@@ -31,6 +31,8 @@ namespace DEMO
         }
     
         public string PlayerName = null;
+        public int currentHealth;
+        public int currentBullet;
         public Dictionary<PlayerRef, PlayerNetworkData> playerList = new Dictionary<PlayerRef, PlayerNetworkData>();
 
         public event Action OnPlayerListUpdated = null;
@@ -88,6 +90,22 @@ namespace DEMO
             if (playerList.TryGetValue(runner.LocalPlayer, out PlayerNetworkData playerNetworkData))
             {
                 playerNetworkData.SetPlayerName_RPC(PlayerName);
+            }
+        }
+
+        public void SetPlayerNetworkHealth()
+        {
+            if (playerList.TryGetValue(runner.LocalPlayer, out PlayerNetworkData playerNetworkData))
+            {
+                playerNetworkData.SetHealth_RPC(currentHealth);
+            }
+        }
+
+        public void SetPlayerNetworkBullet()
+        {
+            if (playerList.TryGetValue(runner.LocalPlayer, out PlayerNetworkData playerNetworkData))
+            {
+                playerNetworkData.SetBullet_RPC(currentBullet);
             }
         }
     }

@@ -10,10 +10,11 @@ public class GameUI : NetworkBehaviour
 {
     [SerializeField] private CanvasUI canvasUI = null;
     [SerializeField] private InventoryUI inventoryUI = null;
-    //private NetworkObject playerObject = null;
+    private NetworkObject playerObject = null;
     
-    private void Start()
+    public void Initialize()
     {
+        playerObject = Runner.GetPlayerObject(Runner.LocalPlayer);
         GameManager.Instance.OnPlayerUIUpdated += UpdatePlayerUI;
     }
 
@@ -26,10 +27,14 @@ public class GameUI : NetworkBehaviour
     {
         foreach(var player in GameManager.Instance.playerList)
         {
-            var playerData = player.Value;
+            if(player.Key == playerObject.InputAuthority)
+            {
+                var playerRef = player.Key;
+                var playerData = player.Value;
 
-            canvasUI.SetCanvasBullet(playerData.CurrentBullet);
-            canvasUI.SetCanvasHealth(playerData.CurrentHealth);
+                canvasUI.UpdateUI(playerRef, playerData);
+                Debug.Log("Update UI for "+ playerRef + " with playerData: " + playerData);
+            }
         }
     }
 

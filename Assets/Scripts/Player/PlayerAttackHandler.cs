@@ -16,7 +16,7 @@ namespace DEMO.Player
 
         private void Start()
         {
-            SetMaxBullet();
+            currentBullet = maxBullet;
         }
 
         public void Shoot(Vector2 mousePosition)
@@ -42,12 +42,6 @@ namespace DEMO.Player
         public void AddBullet(int amount)
         {
             currentBullet += amount;
-            //playerStatsUI.SetBulletUI(currentBullet);
-        }
-
-        public void SetMaxBullet()
-        {
-            currentBullet = maxBullet;
             //playerStatsUI.SetBulletUI(currentBullet);
         }
     }

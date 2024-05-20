@@ -13,8 +13,8 @@ namespace DEMO.Player
 
 		[Networked] public string PlayerName { get; set; }
 		[Networked] public NetworkBool IsReady { get; set; }
-        [Networked] public int CurrentHealth { get; set; }
-        [Networked] public int CurrentBullet { get; set; }
+        [Networked] public int currentHealth { get; set; }
+        [Networked] public int currentBullet { get; set; }
 	
         public override void Spawned()
         {
@@ -29,6 +29,8 @@ namespace DEMO.Player
 			if (Object.HasInputAuthority)
 			{
 				SetPlayerName_RPC(gameManager.PlayerName);
+                //SetHealth_RPC(gameManager.currentHealth);
+                //SetBullet_RPC(gameManager.currentBullet);
 			}
 		}
 
@@ -49,13 +51,13 @@ namespace DEMO.Player
         [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
 		public void SetHealth_RPC(int health)
 		{
-			CurrentHealth = health;
+			currentHealth = health;
 		}
 
         [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
 		public void SetBullet_RPC(int bullet)
 		{
-			CurrentBullet = bullet;
+			currentBullet = bullet;
 		}
 
         #endregion
@@ -74,10 +76,10 @@ namespace DEMO.Player
                     case nameof(IsReady):
                         GameManager.Instance.UpdatePlayerList();
                         break;
-                    case nameof(CurrentHealth):
+                    case nameof(currentHealth):
                         GameManager.Instance.UpdatePlayerUI();
                         break;
-                    case nameof(CurrentBullet):
+                    case nameof(currentBullet):
                         GameManager.Instance.UpdatePlayerUI();
                         break;
                 }

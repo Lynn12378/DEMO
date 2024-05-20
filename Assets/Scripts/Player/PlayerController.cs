@@ -43,8 +43,6 @@ namespace DEMO.Player
             currentHealth = maxHealth;
             healthPoint.Subscribe(OnHPChanged);
             healthPoint.HP = maxHealth;
-
-            attackHandler.SetMaxBullet();
         }
 
         public override void FixedUpdateNetwork()
@@ -108,6 +106,12 @@ namespace DEMO.Player
         {
             currentHealth = value;
             playerStatsUI.SetHealthUI(value);
+            if(Object.InputAuthority == Runner.LocalPlayer)
+            {
+                GameManager.Instance.currentHealth = value;
+                GameManager.Instance.SetPlayerNetworkHealth();
+                //Debug.Log("Current health for local player: "+ Object.InputAuthority + GameManager.Instance.currentHealth);
+            }
         }
     }
 }

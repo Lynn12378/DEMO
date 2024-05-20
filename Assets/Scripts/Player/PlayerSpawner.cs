@@ -44,12 +44,13 @@ namespace DEMO.Player
                 NetworkObject networkPlayerObject = await networkRunner.SpawnAsync(playerPrefab, spawnPosition, Quaternion.identity, player);
 
                 networkRunner.SetPlayerObject(player, networkPlayerObject);
+                gameUI.Initialize();
 
-                Inventory playerInventory = Instantiate(playerInventoryPrefab);
+                /*Inventory playerInventory = Instantiate(playerInventoryPrefab);
                 PlayerInventoryManager.instance.SetPlayerInventory(player, playerInventory);
                 Debug.Log("Inventory for player "+ player +" created.");
                 PlayerInventoryManager.instance.InitializeInventory();
-                Debug.Log("Inventory slot and UI initialized.");
+                Debug.Log("Inventory slot and UI initialized.");*/
 
                 playerList.Add(player, networkPlayerObject);
             }

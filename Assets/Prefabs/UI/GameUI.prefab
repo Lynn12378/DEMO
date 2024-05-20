@@ -118,9 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214a296f5b6dcc34b845c47a232c4dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatsUI: {fileID: 0}
-  inventoryUI: {fileID: 6325325734224742498}
   canvasUI: {fileID: 721751333304174997}
+  inventoryUI: {fileID: 6325325734224742498}
 --- !u!114 &402325793570606967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +138,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 7116706037613909635}
+  - {fileID: 721751333304174997}
 --- !u!1 &2070136135105119948
 GameObject:
   m_ObjectHideFlags: 0

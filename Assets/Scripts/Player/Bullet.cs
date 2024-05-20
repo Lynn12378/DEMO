@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 using Fusion;
@@ -16,7 +17,6 @@ namespace DEMO.Player
         [SerializeField] private int damage = 10;
 
         [Networked] private TickTimer life { get; set; }
-
         public Vector2 mousePosition;
 
         public void Init(Vector2 mousePosition)
