@@ -7,8 +7,8 @@ using TMPro;
 
 public class Shelter : NetworkBehaviour
 {
-    [Networked] public float Durability { get; set; } 
-    [SerializeField] private int MaxDurability = 100; 
+    [Networked] public float Durability { get; set; }
+    [SerializeField] private int MaxDurability = 100;
     public Slider DurabilitySlider;
     public TextMeshProUGUI textMeshPro;
 
@@ -16,19 +16,34 @@ public class Shelter : NetworkBehaviour
     [SerializeField] private float lastDecreaseTime;
 
     private BoxCollider2D boxCollider;
+    private Rigidbody2D rb;
     private bool playerInRange = false;
 
     private void Awake()
     {
-        boxCollider = gameObject.AddComponent<BoxCollider2D>();
+        // 添加和配置 BoxCollider2D
+        boxCollider = gameObject.GetComponent<BoxCollider2D>();
+        if (boxCollider == null)
+        {
+            boxCollider = gameObject.AddComponent<BoxCollider2D>();
+        }
         boxCollider.size = new Vector2(25f, 25f); // 设置为你需要的大小
-        boxCollider.offset = Vector2.zero; 
-        boxCollider.isTrigger = true; 
-    }   
+        boxCollider.offset = Vector2.zero;
+        boxCollider.isTrigger = true;
+
+        // 确保添加了 Rigidbody2D 并设置为 Kinematic
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody2D>();
+        }
+        rb.bodyType = RigidbodyType2D.Kinematic; // 设置为 Kinematic
+        rb.simulated = true;
+    }
 
     public override void Spawned()
     {
-        Durability = MaxDurability; 
+        Durability = MaxDurability;
         UpdateDurabilityUI();
         lastDecreaseTime = Time.time;
     }
@@ -110,4 +125,3 @@ public class Shelter : NetworkBehaviour
         return playerInRange;
     }
 }
-

@@ -17,8 +17,6 @@ namespace DEMO.Player
         private bool isPickupKeyPressed = false;
         private Shelter currentShelter = null; // 当前接触到的 Shelter 对象
 
-
-
         [Networked] private NetworkButtons buttonsPrevious { get; set; }
 
         public override void FixedUpdateNetwork()
@@ -40,7 +38,7 @@ namespace DEMO.Player
 
             if (pressed.IsSet(InputButtons.FIRE))
             {
-                if(!EventSystem.current.IsPointerOverGameObject())
+                if (!EventSystem.current.IsPointerOverGameObject())
                 {
                     attackHandler.Shoot(data.mousePosition);
                 }
@@ -60,12 +58,11 @@ namespace DEMO.Player
                 // Reset state
                 isPickupKeyPressed = false;
             }
-            
+
             if (pressed.IsSet(InputButtons.REPAIR) && currentShelter != null && currentShelter.IsPlayerInRange())
             {
                 currentShelter.Repair(20);
             }
-
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -85,4 +82,3 @@ namespace DEMO.Player
         }
     }
 }
-
