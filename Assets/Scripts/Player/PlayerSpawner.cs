@@ -87,6 +87,7 @@ namespace DEMO.Player
             data.buttons.Set(InputButtons.FIRE, Input.GetKey(KeyCode.Mouse0)); //Set NetworkButton
             data.buttons.Set(InputButtons.PICKUP, Input.GetKey(KeyCode.Mouse1)); // Set NetworkButton
             data.buttons.Set(InputButtons.TESTDAMAGE, Input.GetKey(KeyCode.Space)); // Set NetworkButton
+            data.buttons.Set(InputButtons.REPAIR, Input.GetKey(KeyCode.LeftShift)); // Set NetworkButton
     
             input.Set(data);
         }

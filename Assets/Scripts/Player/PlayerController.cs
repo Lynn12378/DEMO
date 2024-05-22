@@ -15,6 +15,8 @@ namespace DEMO.Player
         [SerializeField] private PlayerAttackHandler attackHandler = null;
         [SerializeField] private PlayerStats playerStats = null;
         private bool isPickupKeyPressed = false;
+        private Shelter currentShelter = null; // 当前接触到的 Shelter 对象
+
 
 
         [Networked] private NetworkButtons buttonsPrevious { get; set; }
@@ -58,21 +60,27 @@ namespace DEMO.Player
                 // Reset state
                 isPickupKeyPressed = false;
             }
+            
+            if (pressed.IsSet(InputButtons.REPAIR) && currentShelter != null && currentShelter.IsPlayerInRange())
+            {
+                currentShelter.Repair(20);
+            }
+
         }
 
-        private void OnTriggerStay2D(Collider2D collider)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            if (collider.CompareTag("ItemsInteractable") && isPickupKeyPressed)
+            if (other.CompareTag("Shelter"))
             {
-                ItemPickup itemPickup = collider.GetComponent<ItemPickup>();
-                ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
-                Item item = itemWorld.GetItem();
+                currentShelter = other.GetComponent<Shelter>();
+            }
+        }
 
-                if (itemPickup != null)
-                {
-                    Debug.Log(GameManager.Instance.Runner.LocalPlayer);
-                    itemPickup.PickUp(GameManager.Instance.Runner.LocalPlayer, item);
-                }
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag("Shelter"))
+            {
+                currentShelter = null;
             }
         }
     }

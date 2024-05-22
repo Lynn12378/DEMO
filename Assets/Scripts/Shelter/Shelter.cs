@@ -15,6 +15,17 @@ public class Shelter : NetworkBehaviour
     [SerializeField] private float decreaseRate = 1f;
     [SerializeField] private float lastDecreaseTime;
 
+    private BoxCollider2D boxCollider;
+    private bool playerInRange = false;
+
+    private void Awake()
+    {
+        boxCollider = gameObject.AddComponent<BoxCollider2D>();
+        boxCollider.size = new Vector2(25f, 25f); // 设置为你需要的大小
+        boxCollider.offset = Vector2.zero; 
+        boxCollider.isTrigger = true; 
+    }   
+
     public override void Spawned()
     {
         Durability = MaxDurability; 
@@ -34,8 +45,18 @@ public class Shelter : NetworkBehaviour
                 Durability = 0;
                 //EndGame();
             }
-        UpdateDurabilityUI();
+            UpdateDurabilityUI();
         }
+    }
+
+    public void Repair(float amount)
+    {
+        Durability += amount;
+        if (Durability > MaxDurability)
+        {
+            Durability = MaxDurability;
+        }
+        UpdateDurabilityUI();
     }
 
     public void SetMaxDurability(int maxDurability)
@@ -67,4 +88,26 @@ public class Shelter : NetworkBehaviour
             UpdateText();
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+
+    public bool IsPlayerInRange()
+    {
+        return playerInRange;
+    }
 }
+
