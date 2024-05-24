@@ -11,7 +11,8 @@ namespace DEMO.Player
         FIRE,
         TESTDAMAGE,
         PICKUP,
-        REPAIR
+        REPAIR,
+        REBLOOD
     }
 
     public struct NetworkInputData : INetworkInput
