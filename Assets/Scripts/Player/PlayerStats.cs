@@ -83,5 +83,21 @@ namespace DEMO.Player
                 }
             }
         }
+
+        public void Heal(int amount)
+        {
+            if(HasInputAuthority)
+            {
+                currentHealth += amount;
+                if (currentHealth > maxHealth)
+                {
+                    currentHealth = maxHealth;
+                }
+                healthBar.setHealth(currentHealth);
+
+                healthPoint.Hp = currentHealth;
+            }
+
+        }
     }
 }

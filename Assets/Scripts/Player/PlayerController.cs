@@ -63,6 +63,18 @@ namespace DEMO.Player
             {
                 currentShelter.Repair(20);
             }
+
+            if (pressed.IsSet(InputButtons.REBLOOD) && currentShelter != null && currentShelter.IsPlayerInRange())
+            {
+                HealPlayer(20); // 调用恢复血量的方法
+            }
+
+        }
+
+        private void HealPlayer(int amount)
+        {
+            // 确保 playerStats 和 health 逻辑的正确性
+            playerStats.Heal(amount);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
