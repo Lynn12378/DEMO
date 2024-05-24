@@ -523,13 +523,12 @@ GameObject:
   - component: {fileID: 5105427102533241871}
   - component: {fileID: 3200382009352126582}
   - component: {fileID: 4199331920531775570}
+  - component: {fileID: 9157328312114646552}
   - component: {fileID: -1909304560376316178}
-  - component: {fileID: 397606304458726309}
-  - component: {fileID: 5423383696020471926}
-  - component: {fileID: 1797281051025650655}
-  - component: {fileID: 4119776355522196519}
-  - component: {fileID: 2435222850279086967}
-  - component: {fileID: 1709384685506267253}
+  - component: {fileID: -4064871499084093950}
+  - component: {fileID: 1266491825495956988}
+  - component: {fileID: 2276876569288350233}
+  - component: {fileID: -4807198383816978885}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -567,13 +566,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SortKey: 175864686
   ObjectInterest: 1
-  Flags: 262145
+  Flags: 786433
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 397606304458726309}
-  - {fileID: 5423383696020471926}
-  - {fileID: 4119776355522196519}
-  - {fileID: 1709384685506267253}
+  - {fileID: 9157328312114646552}
+  - {fileID: -4064871499084093950}
+  - {fileID: 1266491825495956988}
+  - {fileID: 2276876569288350233}
+  - {fileID: -4807198383816978885}
 --- !u!50 &4199331920531775570
 Rigidbody2D:
   serializedVersion: 4
@@ -601,6 +601,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &9157328312114646552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630666624398672265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 0
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
 --- !u!70 &-1909304560376316178
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -636,7 +658,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.016108274, y: -0.021477818}
   m_Size: {x: 0.6670947, y: 1.0704455}
   m_Direction: 0
---- !u!114 &397606304458726309
+--- !u!114 &-4064871499084093950
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -645,20 +667,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8630666624398672265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
+  m_Script: {fileID: 11500000, guid: ee03171e3e9126d43a81aea7d5ff9a6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SyncScale: 0
-  SyncParent: 1
-  _interpolationTarget: {fileID: 0}
-  UsePreciseRotation: 0
-  UseRenderSleepThresholds: 1
-  RenderThresholds:
-    UseEnergy: 1
-    Position: 0.01
-    Rotation: 0.01
-    Scale: 0.01
---- !u!114 &5423383696020471926
+  healthPointSlider: {fileID: 1422947231120268285}
+  _currentHealth: 100
+--- !u!114 &1266491825495956988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -670,12 +684,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ac81dc35e11a24286e9006c80d3df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNetworkRigidbody: {fileID: 397606304458726309}
-  movementHandler: {fileID: 1797281051025650655}
-  attackHandler: {fileID: 4119776355522196519}
-  playerStatsUI: {fileID: 2435222850279086967}
-  healthPoint: {fileID: 1709384685506267253}
---- !u!114 &1797281051025650655
+  playerNetworkRigidbody: {fileID: 9157328312114646552}
+  movementHandler: {fileID: 0}
+--- !u!114 &2276876569288350233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -684,13 +695,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8630666624398672265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eb4bdbd5f5138a498d5849d4cee34a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a3cdfa31e0a7a247914d4e2f7ed54db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNetworkRigidbody: {fileID: 397606304458726309}
-  Weapon: {fileID: 2981778478385212528}
-  moveSpeed: 5
---- !u!114 &4119776355522196519
+  _networkRigidbody: {fileID: 9157328312114646552}
+  PlayerSpeed: 5
+--- !u!114 &-4807198383816978885
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -699,40 +709,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8630666624398672265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 139ae690532be124aafa3133889964ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd32aeffdfedcf4fb9997565a134296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStatsUI: {fileID: 2435222850279086967}
-  bulletPrefab: {fileID: 4280969757316509552, guid: c6818a84a16b03f44998b3a5c4e6ef2c, type: 3}
-  shootPoint: {fileID: 6831657814407364924}
---- !u!114 &2435222850279086967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630666624398672265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc2464679e0b33841b4fcb1bfd009e2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasUI: {fileID: 3558888610655812083, guid: d3c2d4a6a4bf60d40a395671ac2e48b6, type: 3}
-  healthPointSlider: {fileID: 1422947231120268285}
---- !u!114 &1709384685506267253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630666624398672265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9814f1acb07f13e419c5a9297581d34c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 100
-  _HP: 100
+  _currentHealth: 100
+  _currentBullet: 30
 --- !u!1 &8943649637524690950
 GameObject:
   m_ObjectHideFlags: 0

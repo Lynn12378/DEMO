@@ -9,7 +9,6 @@ namespace DEMO.Player
     public enum InputButtons
     {
         FIRE,
-        TESTDAMAGE,
         PICKUP
     }
 

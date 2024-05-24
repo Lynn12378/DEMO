@@ -6,27 +6,27 @@ using DEMO;
 
 public class InventoryUI : MonoBehaviour {
 
-	public Transform itemsParent;	// The parent object of all the items
+	/*public Transform itemsParent;	// The parent object of all the items
 	public GameObject inventoryUI;	// The entire UI
 
 	Inventory inventory;	// Current inventory
 	ItemUseManager itemUseManager;
 
-	InventorySlot[] slots;	// List of all the slots
+	//InventorySlot[] slots;	// List of all the slots
 
 	public void Initialize()
 	{
-		inventory = PlayerInventoryManager.instance.GetPlayerInventory(GameManager.Instance.Runner.LocalPlayer);
-		inventory.onItemChangedCallback += UpdateUI;	// Subscribe to the onItemChanged callback
+		//inventory = PlayerInventoryManager.instance.GetPlayerInventory(GameManager.Instance.Runner.LocalPlayer);
+		//inventory.onItemChangedCallback += UpdateUI;	// Subscribe to the onItemChanged callback
 
 		itemUseManager = ItemUseManager.instance;
 
 		// Populate our slots array
-		slots = itemsParent.GetComponentsInChildren<InventorySlot>();
+		//slots = itemsParent.GetComponentsInChildren<InventorySlot>();
 	}
 
 	// Using a delegate on the Inventory.
-	void UpdateUI ()
+	/*void UpdateUI ()
 	{
 		// Loop through all the slots
 		for (int i = 0; i < slots.Length; i++)
@@ -62,5 +62,5 @@ public class InventoryUI : MonoBehaviour {
 	public void OnInventoryButton()
 	{
 		inventoryUI.SetActive(!inventoryUI.activeSelf);
-	}
+	}*/
 }

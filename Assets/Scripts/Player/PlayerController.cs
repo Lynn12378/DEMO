@@ -13,17 +13,27 @@ namespace DEMO.Player
     {
         [SerializeField] private NetworkRigidbody2D playerNetworkRigidbody = null;
         [SerializeField] private PlayerMovementHandler movementHandler = null;
-        [SerializeField] private PlayerAttackHandler attackHandler = null;
+        /*[SerializeField] private PlayerAttackHandler attackHandler = null;
         [SerializeField] private PlayerStatsUI playerStatsUI = null;
-        [SerializeField] private PlayerHealthPoint healthPoint = null;
+        [SerializeField] private PlayerHealthPoint healthPoint = null;*/
         private bool isPickupKeyPressed = false;
-
-        private int maxHealth = 100;
-        private int currentHealth { get; set; }
 
         [Networked] private NetworkButtons buttonsPrevious { get; set; }
 
+        
+        private Camera followCamera = null;
+
         public override void Spawned()
+        {
+            if (HasStateAuthority)
+            {
+                followCamera = Camera.main;
+                followCamera.GetComponent<FollowCamera>().Target = transform;
+            }
+        }
+
+
+        /*public override void Spawned()
         {
             currentHealth = maxHealth;
             healthPoint.Subscribe(OnHPChanged);
@@ -43,7 +53,7 @@ namespace DEMO.Player
             currentHealth = maxHealth;
             healthPoint.Subscribe(OnHPChanged);
             healthPoint.HP = maxHealth;
-        }
+        }*/
 
         public override void FixedUpdateNetwork()
         {
@@ -52,10 +62,10 @@ namespace DEMO.Player
                 ApplyInput(data);
             }
 
-            if(currentHealth <= 0)
+            /*if(currentHealth <= 0)
             {
                 Respawn();
-            }
+            }*/
         }
 
         private void ApplyInput(NetworkInputData data)
@@ -71,7 +81,7 @@ namespace DEMO.Player
             {
                 if(!EventSystem.current.IsPointerOverGameObject())
                 {
-                    attackHandler.Shoot(data.mousePosition);
+                    //attackHandler.Shoot(data.mousePosition);
                 }
             }
 
@@ -86,7 +96,7 @@ namespace DEMO.Player
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collider)
+        /*private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.CompareTag("ItemsInteractable") && isPickupKeyPressed)
             {
@@ -100,19 +110,7 @@ namespace DEMO.Player
                     itemPickup.PickUp(GameManager.Instance.Runner.LocalPlayer, item);
                 }
             }
-        }
-
-        private void OnHPChanged(int value)
-        {
-            currentHealth = value;
-            playerStatsUI.SetHealthUI(value);
-            if(Object.InputAuthority == Runner.LocalPlayer)
-            {
-                GameManager.Instance.currentHealth = value;
-                GameManager.Instance.SetPlayerNetworkHealth();
-                //Debug.Log("Current health for local player: "+ Object.InputAuthority + GameManager.Instance.currentHealth);
-            }
-        }
+        }*/
     }
 }
 
