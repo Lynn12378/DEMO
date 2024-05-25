@@ -1,34 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
-using DEMO.Player;
 using UnityEngine;
 using UnityEngine.UI;
 using Fusion;
 using TMPro;
 
-public class PlayerStatsUI : NetworkBehaviour
+namespace DEMO.UI
 {
-    private PlayerNetworkData _playerNetworkData = null;
-    [SerializeField] private Slider healthBarSlider = null;
-    public TextMeshProUGUI healthBarText;
-    public TextMeshProUGUI bulletAmountText;
-
-
-    public void Initialize(PlayerNetworkData playerNetworkData)
+    public class PlayerStatsUI : NetworkBehaviour
     {
-        _playerNetworkData = playerNetworkData;
-        _playerNetworkData.RegisterHealthChangedCallback(UpdateHealthBar);
-        _playerNetworkData.RegisterBulletChangedCallback(UpdateBulletAmount);
-    }
+        [SerializeField] private Slider healthBarSlider = null;
+        public TextMeshProUGUI healthBarText;
+        public TextMeshProUGUI bulletAmountText;
 
-    public void UpdateHealthBar(int health)
-    {
-        healthBarSlider.value = health;
-        healthBarText.text = health.ToString();
-    }
+        public void UpdateHealthBar(int health)
+        {
+            healthBarSlider.value = health;
+            healthBarText.text = health.ToString();
+        }
 
-    public void UpdateBulletAmount(int amount)
-    {
-        bulletAmountText.text = amount.ToString();
+        public void UpdateBulletAmount(int amount)
+        {
+            bulletAmountText.text = amount.ToString();
+        }
     }
 }

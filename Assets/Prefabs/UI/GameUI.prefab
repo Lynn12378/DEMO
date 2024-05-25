@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1632709184187793573}
   - component: {fileID: 7165409066918306085}
   - component: {fileID: 402325793570606967}
-  - component: {fileID: 3282621640223990469}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -122,21 +121,7 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 3282621640223990469}
   - {fileID: 1485540546254474067}
---- !u!114 &3282621640223990469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838917426272398588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f880609c30451854aa77e1a168a936ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerStatsUI: {fileID: 1485540546254474067}
 --- !u!1 &2070136135105119948
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,6 +405,10 @@ PrefabInstance:
     - target: {fileID: 1960570580957100241, guid: 494486493a79d5e4f9ce8642ac105ced, type: 3}
       propertyPath: m_Name
       value: PlayerStatsUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1960570580957100241, guid: 494486493a79d5e4f9ce8642ac105ced, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

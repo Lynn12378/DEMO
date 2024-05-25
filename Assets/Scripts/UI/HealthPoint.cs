@@ -11,13 +11,13 @@ public class HealthPoint : NetworkBehaviour
     [Networked, OnChangedRender(nameof(HealthPointChanged))]
     public int currentHealth { get; set; }
 
-    void Update()
+    /*void Update()
     {
         if(HasStateAuthority && Input.GetKeyDown(KeyCode.Z))
         {
             UpdateHealthPointUI(10);
         }
-    }
+    }*/
 
     public void UpdateHealthPointUI(int damage)
     {
