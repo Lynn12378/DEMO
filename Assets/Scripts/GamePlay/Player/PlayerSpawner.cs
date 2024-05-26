@@ -28,7 +28,7 @@ namespace DEMO.GamePlay.Player
             // Use UIManager to handle the GameUI instantiation and display
             if (UIManager.Instance != null)
             {
-                UIManager.Instance.ShowGameUI(player);
+                UIManager.Instance.InitializeGameUI(player);
             }
 
             if (player == Runner.LocalPlayer)

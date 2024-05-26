@@ -15,7 +15,6 @@ namespace DEMO.GamePlay.Player
         [SerializeField] private PlayerAttackHandler attackHandler = null;
         [SerializeField] private PlayerNetworkData playerNetworkDataPrefab;
         private PlayerNetworkData playerNetworkData;
-        private HealthPoint healthPoint = null;
         private GameObject obj;
         private NetworkButtons buttonsPrevious;
 

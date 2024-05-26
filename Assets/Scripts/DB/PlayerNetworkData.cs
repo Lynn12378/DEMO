@@ -15,7 +15,8 @@ namespace DEMO.DB
         [SerializeField] private Slider healthPointSlider = null;
 
         [Networked] public int playerId { get; private set; }
-        [Networked] public string playerRef { get; private set; }
+        [Networked] public PlayerRef playerRef { get; private set; }
+        [Networked] public string playerRefString { get; private set; }
         [Networked] public string playerName { get; private set; }
         [Networked] public int HP { get; set; }
         [Networked] public int bulletAmount { get; set; }
@@ -36,7 +37,7 @@ namespace DEMO.DB
 
             if (Object.HasStateAuthority)
             {
-                SetPlayerInfo_RPC(0,"TEST");
+                SetPlayerInfo_RPC(0,"TEST", Runner.LocalPlayer);
                 SetPlayerHP_RPC(MaxHP);
                 SetPlayerBullet_RPC(MaxBullet);
                 SetPlayerTeamID_RPC(-1);
@@ -53,12 +54,13 @@ namespace DEMO.DB
         #region - RPCs -
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-		public void SetPlayerInfo_RPC(int id, string name)
+		public void SetPlayerInfo_RPC(int id, string name, PlayerRef playerRef)
         {
             playerId = id;
 			playerName = name;
             // obj.name = "LocalPlayer";
-            playerRef = Runner.LocalPlayer.ToString();
+            playerRefString = playerRef.ToString();
+            this.playerRef = playerRef;
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -90,12 +92,12 @@ namespace DEMO.DB
                     switch (change)
                     {
                         case nameof(HP):
-                            UIManager.Instance?.UpdateHealthSlider(HP);
+                            UIManager.Instance?.UpdateHealthSlider(playerRef, HP);
                             UpdateHealthPointSlider(HP);
                             break;
 
                         case nameof(bulletAmount):
-                            UIManager.Instance?.UpdateBulletAmount(bulletAmount);
+                            UIManager.Instance?.UpdateBulletAmount(playerRef, bulletAmount);
                             break;
 
                         case nameof(teamID):

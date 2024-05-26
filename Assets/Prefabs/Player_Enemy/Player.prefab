@@ -559,9 +559,9 @@ GameObject:
   - component: {fileID: 9157328312114646552}
   - component: {fileID: 4199331920531775570}
   - component: {fileID: -1909304560376316178}
-  - component: {fileID: -7842243522824088635}
-  - component: {fileID: 7644333482875661869}
+  - component: {fileID: 723907579051755181}
   - component: {fileID: 3935815838663998337}
+  - component: {fileID: 7523426437674528838}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -598,14 +598,14 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SortKey: 175864686
+  SortKey: 1550118987
   ObjectInterest: 1
   Flags: 786433
   NestedObjects:
   - {fileID: 4406522784257541338}
   NetworkedBehaviours:
   - {fileID: 9157328312114646552}
-  - {fileID: -7842243522824088635}
+  - {fileID: 723907579051755181}
   - {fileID: 3935815838663998337}
   - {fileID: 6117460724289071087}
   - {fileID: 7283074233037312908}
@@ -693,7 +693,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.016108274, y: -0.021477818}
   m_Size: {x: 0.6670947, y: 1.0704455}
   m_Direction: 0
---- !u!114 &-7842243522824088635
+--- !u!114 &723907579051755181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -702,27 +702,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8630666624398672265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ac81dc35e11a24286e9006c80d3df7, type: 3}
+  m_Script: {fileID: 11500000, guid: b365fc2536418ca48ab5a0018ddb24ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementHandler: {fileID: 7644333482875661869}
+  movementHandler: {fileID: 7523426437674528838}
   attackHandler: {fileID: 3935815838663998337}
   playerNetworkDataPrefab: {fileID: 4796105495841460358}
---- !u!114 &7644333482875661869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630666624398672265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eb4bdbd5f5138a498d5849d4cee34a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerNetworkRigidbody: {fileID: 9157328312114646552}
-  Weapon: {fileID: 2981778478385212528}
-  moveSpeed: 10
 --- !u!114 &3935815838663998337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,8 +720,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ca3e3913ec7b544be065cc3ab10df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8938813885195360581, guid: c6818a84a16b03f44998b3a5c4e6ef2c, type: 3}
+  bulletPrefab: {fileID: 8938813885195360581, guid: 9fcf513318ee94b429e741d55bb7d512, type: 3}
   shootPoint: {fileID: 6831657814407364924}
+--- !u!114 &7523426437674528838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630666624398672265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0afada6685678ba44a1bca00b3eeac85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNetworkRigidbody: {fileID: 9157328312114646552}
+  Weapon: {fileID: 2981778478385212528}
+  moveSpeed: 5
 --- !u!1 &8943649637524690950
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,7 +826,7 @@ PrefabInstance:
       objectReference: {fileID: 1422947231120268285}
     - target: {fileID: 4695744124385218042, guid: ed14ee6a7013e8c4cad20df0ce9975b3, type: 3}
       propertyPath: SortKey
-      value: 3231925284
+      value: 311212289
       objectReference: {fileID: 0}
     - target: {fileID: 7490621295302069716, guid: ed14ee6a7013e8c4cad20df0ce9975b3, type: 3}
       propertyPath: m_Name
