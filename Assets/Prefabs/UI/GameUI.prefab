@@ -119,9 +119,9 @@ MonoBehaviour:
   SortKey: 736660212
   ObjectInterest: 1
   Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 1485540546254474067}
+  NestedObjects:
+  - {fileID: 4950891629240009274}
+  NetworkedBehaviours: []
 --- !u!1 &2070136135105119948
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,6 +434,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 75
       objectReference: {fileID: 0}
+    - target: {fileID: 4541532308131267610, guid: 494486493a79d5e4f9ce8642ac105ced, type: 3}
+      propertyPath: SortKey
+      value: 1405085583
+      objectReference: {fileID: 0}
     - target: {fileID: 5460202821669011422, guid: 494486493a79d5e4f9ce8642ac105ced, type: 3}
       propertyPath: m_fontSize
       value: 18
@@ -471,15 +475,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 494486493a79d5e4f9ce8642ac105ced, type: 3}
---- !u!114 &1485540546254474067 stripped
+--- !u!114 &4950891629240009274 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8011456679426231667, guid: 494486493a79d5e4f9ce8642ac105ced, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4541532308131267610, guid: 494486493a79d5e4f9ce8642ac105ced, type: 3}
   m_PrefabInstance: {fileID: 8913707947600741920}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbe29146d72c5444db5f12d111ba14b5, type: 3}
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &8194221648297216204 stripped
