@@ -42,72 +42,12 @@ namespace DEMO.Manager
 
             // Store the references in a dictionary for each player
             playerGameUIs[playerRef] = new PlayerUIComponents(playerGameUI, playerStatsUI/*, inventoryUI*/);
-
-            /*// Method 1: Subscribe to event
-            // Subscribe to the OnHealthSliderUpdated and OnBulletAmountUpdated events
-            OnHealthSliderUpdated += (PlayerRef refPlayer, int health) => 
-            {
-                if (refPlayer == playerRef)
-                {
-                    playerStatsUI.UpdateHealthBar(health);
-                }
-            };
-
-            OnBulletAmountUpdated += (PlayerRef refPlayer, int amount) => 
-            {
-                if (refPlayer == playerRef)
-                {
-                    playerStatsUI.UpdateBulletAmount(amount);
-                }
-            };*/
         }
-
-        /*// Method 1
-        private void OnDestroy()
-        {
-            // Unsubscribe events to prevent memory leaks
-            foreach (var entry in playerGameUIs)
-            {
-                var playerRef = entry.Key;
-                var uiComponents = entry.Value;
-                if (uiComponents.PlayerStatsUI != null)
-                {
-                    OnHealthSliderUpdated -= (PlayerRef refPlayer, int health) => 
-                    {
-                        if (refPlayer == playerRef)
-                        {
-                            uiComponents.PlayerStatsUI.UpdateHealthBar(health);
-                        }
-                    };
-
-                    OnBulletAmountUpdated -= (PlayerRef refPlayer, int amount) => 
-                    {
-                        if (refPlayer == playerRef)
-                        {
-                            uiComponents.PlayerStatsUI.UpdateBulletAmount(amount);
-                        }
-                    };
-                }
-            }
-        }*/
 
 
         #region - playerNetworkData -
-            
-        /*// Method 1
-        public event Action<PlayerRef, int> OnHealthSliderUpdated = null;
-        public void UpdateHealthSlider(PlayerRef playerRef, int health)
-        {
-            OnHealthSliderUpdated?.Invoke(playerRef, health);
-        }
 
-        public event Action<PlayerRef, int> OnBulletAmountUpdated = null;
-        public void UpdateBulletAmount(PlayerRef playerRef, int amount)
-        {
-            OnBulletAmountUpdated?.Invoke(playerRef, amount);
-        }*/
-
-        // Method 2: Direct update for specific player's UI component
+        // Direct update for specific player's UI component
         public void UpdateHealthSlider(PlayerRef playerRef, int health)
         {
             if (playerGameUIs.TryGetValue(playerRef, out PlayerUIComponents uiComponents))

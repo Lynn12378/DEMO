@@ -17,12 +17,6 @@ namespace DEMO.GamePlay.Player
             if (player == Runner.LocalPlayer)
             {
                 SpawnPlayer(player);
-
-                // Only the first player to join spawns the items
-                if (Runner.ActivePlayers.Count() == 1)
-                {
-                    itemSpawnerManager.SpawnItems();
-                }
             }
         }
 

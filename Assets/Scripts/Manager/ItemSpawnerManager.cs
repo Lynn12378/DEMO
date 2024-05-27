@@ -1,23 +1,34 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-using DEMO.Item;
 using Fusion;
+using Fusion.Sockets;
+
+using DEMO.Item;
 
 namespace DEMO.Manager
 {
-    public class ItemSpawnerManager : MonoBehaviour
+    public class ItemSpawnerManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         [SerializeField] private NetworkRunner runner;
         [SerializeField] private int itemCount = 500; // Number of items to spawn
         [SerializeField] private GameObject itemsContainer; // Container for spawned items
 
-        // Random seed for generating random numbers
-        private int randomSeed = 23;
-
-        private void Awake()
+        private void Start()
         {
-            runner = GetComponent<NetworkRunner>();
-            // Set random seed
-            Random.InitState(randomSeed);
+            runner.AddCallbacks(this);
+            Debug.Log("Runner Add Callbacks.");
+        }
+
+        public void OnSceneLoadStart(NetworkRunner runner)
+        {
+            Debug.Log("Runner in sceneload.");
+            // Ensure items are only spawned by the shared mode master
+            if (runner.IsServer)
+            {
+                Debug.Log("Runner is server.");
+                SpawnItems();
+            }
         }
 
         public void SpawnItems()
@@ -31,7 +42,7 @@ namespace DEMO.Manager
         private void SpawnRandomItem()
         {
             // Generate a random item type
-            ItemClass.ItemType randomItemType = (ItemClass.ItemType)Random.Range(0, System.Enum.GetValues(typeof(ItemClass.ItemType)).Length);
+            ItemClass.ItemType randomItemType = (ItemClass.ItemType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ItemClass.ItemType)).Length);
             ItemClass newItem = new ItemClass { itemType = randomItemType, amount = 1 };
 
             // Select the item prefab from ItemAssets
@@ -58,11 +69,32 @@ namespace DEMO.Manager
             float maxY = 45f;
 
             // Generate random coordinates within the boundaries
-            float randomX = Random.Range(minX, maxX);
-            float randomY = Random.Range(minY, maxY);
+            float randomX = UnityEngine.Random.Range(minX, maxX);
+            float randomY = UnityEngine.Random.Range(minY, maxY);
 
             // Return the random position
             return new Vector3(randomX, randomY, 0);
         }
+
+        #region /-- Unused Function --/
+            public void OnPlayerJoined(NetworkRunner runner, PlayerRef player){}
+            public void OnPlayerLeft(NetworkRunner runner, PlayerRef player){}
+            public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason){}
+            public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player){}
+            public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player){}
+            public void OnInput(NetworkRunner runner, NetworkInput input){}
+            public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input){}
+            public void OnConnectedToServer(NetworkRunner runner){}
+            public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason){}
+            public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request,byte[] token){}
+            public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason){}
+            public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message){}
+            public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList){}
+            public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data){}
+            public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken){}
+            public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data){}
+            public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress){}
+            public void OnSceneLoadDone(NetworkRunner runner){}
+        #endregion
     }
 }
