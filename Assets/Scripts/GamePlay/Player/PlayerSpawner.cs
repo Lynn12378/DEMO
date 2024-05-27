@@ -3,18 +3,26 @@ using Fusion;
 
 using DEMO.Manager;
 using DEMO.UI;
+using System.Linq;
 
 namespace DEMO.GamePlay.Player
 {
     public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
     {
         [SerializeField] public GameObject playerPrefab;
+        [SerializeField] public ItemSpawnerManager itemSpawnerManager;
 
         public void PlayerJoined(PlayerRef player)
         {
             if (player == Runner.LocalPlayer)
             {
                 SpawnPlayer(player);
+
+                // Only the first player to join spawns the items
+                if (Runner.ActivePlayers.Count() == 1)
+                {
+                    itemSpawnerManager.SpawnItems();
+                }
             }
         }
 

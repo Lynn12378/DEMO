@@ -2,95 +2,98 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Fusion;
-using DEMO;
-
-/* Sits on all InventorySlots. */
-
-public class InventorySlot : MonoBehaviour {
-
-	public Image icon;					// Reference to the icon image
-	public TextMeshProUGUI amountText;	// Reference to the amount text
-	public Button removeButton;			// Reference to the remove button
-
-	Item item;  // Current item in the slot
-	Inventory inventory;
-
-	public void Initialize()
-	{
-		//inventory = PlayerInventoryManager.instance.GetPlayerInventory(GameManager.Instance.Runner.LocalPlayer);
-	}
-
-	// Add item to the slot
-	public void AddItem (Item newItem)
-	{
-		item = newItem;
-
-		icon.sprite = item.GetSprite();
-		icon.enabled = true;
-		removeButton.interactable = true;
-	}
-
-	public void ShowAmountText()
-	{
-		amountText.SetText(item.amount.ToString());
-		amountText.enabled = true;
-	}
-
-	public void HideAmountText()
-	{
-		amountText.enabled = false;
-	}
+using DEMO.Item;
 
 
-	// Clear the slot
-	public void ClearSlot ()
-	{
-		item = null;
+namespace DEMO.Inventory
+{
+	/* Sits on all InventorySlots. */
+	public class InventorySlot : MonoBehaviour {
 
-		icon.sprite = null;
-		icon.enabled = false;
-		removeButton.interactable = false;
+		public Image icon;					// Reference to the icon image
+		public TextMeshProUGUI amountText;	// Reference to the amount text
+		public Button removeButton;			// Reference to the remove button
 
-		HideAmountText();
-	}
+		ItemClass item;  // Current item in the slot
+		Inventory inventory;
 
-	// Called when the remove button is pressed
-	public void OnRemoveButton ()
-	{
-		if(item.amount > 1)
-			{
-				item.amount -= 1;
-				amountText.SetText(item.amount.ToString());
-				if(item.amount == 1)
-				{
-					amountText.SetText("");
-				}
-			}
-			else
-			{
-				inventory.Remove(item);
-			}
-	}
-
-	// Called when the item is pressed
-	public void UseItem ()
-	{
-		if (item != null && ItemUseManager.instance != null)
+		public void Initialize()
 		{
-			ItemUseManager.instance.UseItemByManager(item.GetName());
+			//inventory = PlayerInventoryManager.instance.GetPlayerInventory(GameManager.Instance.Runner.LocalPlayer);
+		}
 
+		// Add item to the slot
+		public void AddItem (ItemClass newItem)
+		{
+			item = newItem;
+
+			icon.sprite = item.GetSprite();
+			icon.enabled = true;
+			removeButton.interactable = true;
+		}
+
+		public void ShowAmountText()
+		{
+			amountText.SetText(item.amount.ToString());
+			amountText.enabled = true;
+		}
+
+		public void HideAmountText()
+		{
+			amountText.enabled = false;
+		}
+
+
+		// Clear the slot
+		public void ClearSlot ()
+		{
+			item = null;
+
+			icon.sprite = null;
+			icon.enabled = false;
+			removeButton.interactable = false;
+
+			HideAmountText();
+		}
+
+		// Called when the remove button is pressed
+		public void OnRemoveButton ()
+		{
 			if(item.amount > 1)
-			{
-				item.amount -= 1;
-				amountText.SetText(item.amount.ToString());
-				if(item.amount == 1)
 				{
-					amountText.SetText("");
+					item.amount -= 1;
+					amountText.SetText(item.amount.ToString());
+					if(item.amount == 1)
+					{
+						amountText.SetText("");
+					}
 				}
-			}
-			else
+				else
+				{
+					inventory.Remove(item);
+				}
+		}
+
+		// Called when the item is pressed
+		public void UseItem ()
+		{
+			if (item != null && ItemUseManager.instance != null)
 			{
-				inventory.Remove(item);
+				ItemUseManager.instance.UseItemByManager(item.GetName());
+
+				if(item.amount > 1)
+				{
+					item.amount -= 1;
+					amountText.SetText(item.amount.ToString());
+					if(item.amount == 1)
+					{
+						amountText.SetText("");
+					}
+				}
+				else
+				{
+					inventory.Remove(item);
+				}
 			}
 		}
 	}

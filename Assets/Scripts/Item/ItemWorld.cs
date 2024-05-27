@@ -4,47 +4,26 @@ using UnityEngine;
 using TMPro;
 using Fusion;
 
-using DEMO;
+using DEMO.Manager;
 
-public class ItemWorld : NetworkBehaviour
+namespace DEMO.Item
 {
-    /*public static ItemWorld SpawnItemWorld(Vector3 position, Item item)
+    public class ItemWorld : NetworkBehaviour
     {
-        var obj = GameManager.Instance.Runner.Spawn(ItemAssets.Instance.pfItemWorld, position, Quaternion.identity);
+        // Set public for checking Item
+        public ItemClass item;
 
-        ItemWorld itemWorld = obj.GetComponent<ItemWorld>();
-        itemWorld.SetItem(item);
-
-        return itemWorld;
-    }*/
-
-    private Item item;
-    private SpriteRenderer spriteRenderer;
-    private TextMeshPro textMeshPro;
-
-
-    private void Awake()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
-    }
-
-    public void SetItem(Item item)
-    {
-        this.item = item;
-        spriteRenderer.sprite = item.GetSprite();
-        if(item.amount > 1)
+        public void SetItem(ItemClass newItem)
         {
-            textMeshPro.SetText(item.amount.ToString());
+            item = newItem;
+            
+            // Set the sprite or other visual properties based on the item
+            GetComponent<SpriteRenderer>().sprite = item.GetSprite();
         }
-        else
-        {
-            textMeshPro.SetText("");
-        }
-    }
 
-    public Item GetItem()
-    {
-        return item;
+        public ItemClass GetItem()
+        {
+            return item;
+        }
     }
 }

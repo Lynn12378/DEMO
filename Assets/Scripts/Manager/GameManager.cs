@@ -11,6 +11,7 @@ namespace DEMO.Manager
     {
         public static GameManager Instance { get; private set; }
         [SerializeField] private NetworkRunner runner = null;
+        
 
          public NetworkRunner Runner
         {
@@ -40,6 +41,7 @@ namespace DEMO.Manager
 
             DontDestroyOnLoad(gameObject);
         }
+
 
         #region - playerInfo -
 

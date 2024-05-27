@@ -11,30 +11,14 @@ namespace DEMO.Manager
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance { get; private set; }
-        [SerializeField] private NetworkRunner runner = null;
+        [SerializeField] private NetworkRunner runner;
         [SerializeField] private GameObject gameUIPrefab = null;
-        private GameObject gameUIObject;
-        private PlayerStatsUI playerStatsUI;
-        private InventoryUI inventoryUI;
         private Dictionary<PlayerRef, PlayerUIComponents> playerGameUIs = new Dictionary<PlayerRef, PlayerUIComponents>();
-        
-
-         public NetworkRunner Runner
-        {
-            get
-            {
-                if (runner == null)
-                {
-                    runner = gameObject.AddComponent<NetworkRunner>();
-                    runner.ProvideInput = true;
-                }
-                return runner;
-            }
-        }
+    
 
         private void Awake()
         {
-            Runner.ProvideInput = true;
+            runner.ProvideInput = true;
 
             if (Instance == null)
             {
@@ -57,7 +41,7 @@ namespace DEMO.Manager
             //InventoryUI inventoryUI = playerGameUI.GetComponentInChildren<InventoryUI>();
 
             // Store the references in a dictionary for each player
-            playerGameUIs[playerRef] = new PlayerUIComponents(playerGameUI, playerStatsUI, inventoryUI);
+            playerGameUIs[playerRef] = new PlayerUIComponents(playerGameUI, playerStatsUI/*, inventoryUI*/);
 
             /*// Method 1: Subscribe to event
             // Subscribe to the OnHealthSliderUpdated and OnBulletAmountUpdated events
@@ -148,11 +132,11 @@ namespace DEMO.Manager
             public PlayerStatsUI PlayerStatsUI { get; }
             public InventoryUI InventoryUI { get; }
 
-            public PlayerUIComponents(GameObject playerGameUI, PlayerStatsUI playerStatsUI, InventoryUI inventoryUI)
+            public PlayerUIComponents(GameObject playerGameUI, PlayerStatsUI playerStatsUI/*, InventoryUI inventoryUI*/)
             {
                 PlayerGameUI = playerGameUI;
                 PlayerStatsUI = playerStatsUI;
-                InventoryUI = inventoryUI;
+                //InventoryUI = inventoryUI;
             }
         }
     }
