@@ -8,7 +8,7 @@ using DEMO;
 
 public class ItemWorld : NetworkBehaviour
 {
-    public static ItemWorld SpawnItemWorld(Vector3 position, Item item)
+    /*public static ItemWorld SpawnItemWorld(Vector3 position, Item item)
     {
         var obj = GameManager.Instance.Runner.Spawn(ItemAssets.Instance.pfItemWorld, position, Quaternion.identity);
 
@@ -16,7 +16,7 @@ public class ItemWorld : NetworkBehaviour
         itemWorld.SetItem(item);
 
         return itemWorld;
-    }
+    }*/
 
     private Item item;
     private SpriteRenderer spriteRenderer;

@@ -221,8 +221,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.03999999, y: -0.059999995}
+  m_AnchoredPosition: {x: 0, y: 0.02}
+  m_SizeDelta: {x: -0.03999999, y: -0.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8491361687469238608
 CanvasRenderer:
@@ -540,7 +540,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.016108274, y: -0.021477818}
@@ -580,7 +580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f5a728cd223f045824d110764a5821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkHealthSlider: {fileID: 1422947231120268285}
+  healthPointSlider: {fileID: 1422947231120268285}
   _Hp: 0
 --- !u!114 &1666197289363832700
 MonoBehaviour:
@@ -595,6 +595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNetworkRigidbody: {fileID: 397606304458726309}
+  healthPoint: {fileID: 1475834049703138947}
   moveSpeed: 0
   range: 0
   maxDistance: 0

@@ -17,7 +17,7 @@ public class InventorySlot : MonoBehaviour {
 
 	public void Initialize()
 	{
-		inventory = PlayerInventoryManager.instance.GetPlayerInventory(GameManager.Instance.Runner.LocalPlayer);
+		//inventory = PlayerInventoryManager.instance.GetPlayerInventory(GameManager.Instance.Runner.LocalPlayer);
 	}
 
 	// Add item to the slot

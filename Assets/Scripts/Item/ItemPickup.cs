@@ -4,7 +4,7 @@ using Fusion;
 public class ItemPickup : NetworkBehaviour 
 {
 	// Pick up the item
-	public void PickUp (PlayerRef player, Item item)
+	/*public void PickUp (PlayerRef player, Item item)
     {
 		Debug.Log(player);
 		Inventory playerInventory = PlayerInventoryManager.instance.GetPlayerInventory(player);
@@ -13,6 +13,6 @@ public class ItemPickup : NetworkBehaviour
 		// If successfully picked up
 		if (wasPickedUp)
 			Runner.Despawn(Object);	// Destroy item from scene
-	}
+	}*/
 
 }

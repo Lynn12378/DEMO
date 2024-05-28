@@ -7,11 +7,11 @@ public class ItemWorldSpawner : NetworkBehaviour
 {
     public Item item;
 
-    public override void Spawned()
+    /*public override void Spawned()
     {
         ItemWorld.SpawnItemWorld(transform.position, item);
 
         Runner.Despawn(Object);
-    }
+    }*/
 }
 
