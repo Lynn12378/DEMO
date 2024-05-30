@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Fusion;
+using Fusion.Addons.Physics;
 
 using DEMO.Manager;
 
@@ -12,8 +13,11 @@ namespace DEMO.DB
     {
         private ChangeDetector changes;
         private UIManager uIManager = null;
+
         [Networked] public int Durability{ get; set; }
         public int MaxDurability = 100;
+
+        [Networked] private TickTimer durabilityTicker { get; set; }
 
         public void SetUIManager(UIManager uIManager)
         {
@@ -23,7 +27,7 @@ namespace DEMO.DB
         public override void Spawned()
         {
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
-            transform.SetParent(Runner.transform);
+            durabilityTicker = TickTimer.CreateFromSeconds(Runner,0);
             
             if (Object.HasStateAuthority)
             {
@@ -39,6 +43,20 @@ namespace DEMO.DB
             Durability = durability;
         }
 
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void DropDurability_RPC()
+        {
+            if(durabilityTicker.Expired(Runner))
+            {
+                if(Durability > 0){
+                    Durability = Durability - 1;
+                }    
+            }
+            durabilityTicker = TickTimer.CreateFromSeconds(Runner,1);
+
+        }
+
+
         #endregion
 
         #region - OnChanged Events -
@@ -52,6 +70,11 @@ namespace DEMO.DB
                         case nameof(Durability):
                             uIManager.UpdateDurabilitySlider(Durability, MaxDurability);
                             break;
+
+                        case nameof(durabilityTicker):
+                            uIManager.UpdateDurabilitySlider(Durability, MaxDurability);
+                            break;
+                        
                     }
                 }
             }
