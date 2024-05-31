@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -6341705602766411257}
   - component: {fileID: -7730391460070994321}
   - component: {fileID: 5480442379956726413}
+  - component: {fileID: 4555868820962139489}
   m_Layer: 0
   m_Name: Shelter
   m_TagString: Untagged
@@ -66,6 +67,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5480442379956726413}
+  - {fileID: 4555868820962139489}
 --- !u!50 &-7730391460070994321
 Rigidbody2D:
   serializedVersion: 4
@@ -115,6 +117,20 @@ MonoBehaviour:
     Position: 0.01
     Rotation: 0.01
     Scale: 0.01
+--- !u!114 &4555868820962139489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7283399992505218230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf20c02adbc7c74d91cb14c728f4f59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Durability: 0
+  MaxDurability: 100
 --- !u!1 &8895651009869754318
 GameObject:
   m_ObjectHideFlags: 0
