@@ -13,7 +13,7 @@ namespace DEMO.DB
 
         [Networked] public int playerId { get; private set; }
         [Networked] public string playerName { get; private set; }
-        public bool isInRoom = false;
+        [Networked] public bool isReady { get; private set; }
         public int Player_id;
         public string Player_name;
         public string Player_password;
@@ -22,14 +22,12 @@ namespace DEMO.DB
         {
 			gameManager = GameManager.Instance;
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
-            if(!isInRoom)
+
+            gameManager.playerList.Add(Object.InputAuthority, this);
+            transform.SetParent(GameManager.Instance.transform);
+            if (Object.HasStateAuthority)
             {
-                gameManager.playerList.Add(Object.InputAuthority, this);
-                transform.SetParent(GameManager.Instance.transform);
-                if (Object.HasStateAuthority)
-                {
-                    SetPlayerInfo_RPC();
-                }
+                SetPlayerInfo_RPC();
             }
             
             gameManager.UpdatePlayerList();
@@ -42,6 +40,13 @@ namespace DEMO.DB
         {
             playerId = Player_id;
 			playerName = Player_name;
+            isReady = false;
+		}
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+		public void SetIsReady_RPC()
+        {
+            isReady = !isReady;
 		}
         
         #endregion
@@ -54,12 +59,9 @@ namespace DEMO.DB
                 {
                     switch (change)
                     {
-                        case nameof(playerName):
+                        case nameof(isReady):
                             GameManager.Instance.UpdatePlayerList();
                             break;
-                        // case nameof(IsReady):
-                        //     GameManager.Instance.UpdatePlayerList();
-                        //     break;
                     }
                 }
             }

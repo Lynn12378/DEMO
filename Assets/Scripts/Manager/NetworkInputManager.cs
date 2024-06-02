@@ -14,9 +14,10 @@ namespace DEMO.Manager
 {
     public class NetworkInputManager : MonoBehaviour ,INetworkRunnerCallbacks
     {
-        [SerializeField] private NetworkRunner runner;
+        private NetworkRunner runner;
         public void Start()
         {
+            runner = GamePlayManager.Instance.Runner;
             runner.AddCallbacks(this);
         }
         

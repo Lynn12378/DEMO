@@ -6,6 +6,7 @@ using Fusion;
 using Fusion.Addons.Physics;
 
 using DEMO.DB;
+using DEMO.Manager;
 
 namespace DEMO.GamePlay.Player
 {
@@ -13,22 +14,16 @@ namespace DEMO.GamePlay.Player
     {
         [SerializeField] private PlayerMovementHandler movementHandler = null;
         [SerializeField] private PlayerAttackHandler attackHandler = null;
-        [SerializeField] private PlayerNetworkData playerNetworkDataPrefab;
-        private PlayerNetworkData playerNetworkData;
+        [SerializeField] private PlayerNetworkData playerNetworkData;
+
+        private UIManager uIManager;
         private GameObject obj;
         private NetworkButtons buttonsPrevious;
 
         public override void Spawned()
         {
-            playerNetworkData = playerNetworkDataPrefab;
-
-            // obj = GameObject.Find("LocalPlayer");
-            // if(obj != null)
-            // {
-            //     playerNetworkData = obj.GetComponent<PlayerNetworkData>();
-            // }
-
-            // Debug.Log("Find:" + playerNetworkData.HP);
+            uIManager = FindObjectOfType<UIManager>();
+            playerNetworkData.SetUIManager(uIManager);
         }
 
         private void Respawn() 
