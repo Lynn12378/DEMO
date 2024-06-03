@@ -7,6 +7,7 @@ using Fusion.Addons.Physics;
 
 using DEMO.DB;
 using DEMO.Manager;
+using DEMO.Item;
 
 namespace DEMO.GamePlay.Player
 {
@@ -14,11 +15,14 @@ namespace DEMO.GamePlay.Player
     {
         [SerializeField] private PlayerMovementHandler movementHandler = null;
         [SerializeField] private PlayerAttackHandler attackHandler = null;
+        [SerializeField] private PlayerInventory playerInventory = null;
         [SerializeField] private PlayerNetworkData playerNetworkData;
 
         private UIManager uIManager;
         private GameObject obj;
         private NetworkButtons buttonsPrevious;
+        private bool isPickupKeyPressed = false;
+        private ItemClass itemInRange = null;
 
         public override void Spawned()
         {
@@ -36,6 +40,21 @@ namespace DEMO.GamePlay.Player
             if (GetInput(out NetworkInputData data))
             {
                 ApplyInput(data);
+            }
+
+            if(playerNetworkData.HP <= 0)
+            {
+                Respawn();
+            }
+
+            // Handle pickup in here, otherwise not synchronized
+            if (isPickupKeyPressed && itemInRange != null)
+            {
+                playerInventory.PickUpItem(itemInRange);
+                itemInRange = null;
+                isPickupKeyPressed = false;
+
+                Debug.Log("Inventory for player " + playerNetworkData.playerRef + " : " + playerInventory.GetInventoryItemsAsString());
             }
         }
 
@@ -63,9 +82,41 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.TESTDAMAGE))
             {
-                Debug.Log($"TESTDAMAGE");
                 playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - 10);
-                Debug.Log(playerNetworkData.HP);
+            }
+
+            if (pressed.IsSet(InputButtons.PICKUP))
+            {
+                isPickupKeyPressed = true;
+            }
+            else
+            {
+                // Reset state
+                isPickupKeyPressed = false;
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.CompareTag("ItemsInteractable"))
+            {
+                ItemClass item = collider.GetComponent<ItemClass>();
+                if (item != null)
+                {
+                    itemInRange = item; // Set item in range
+                }
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collider)
+        {
+            if (collider.CompareTag("ItemsInteractable"))
+            {
+                ItemClass item = collider.GetComponent<ItemClass>();
+                if (item != null && item == itemInRange)
+                {
+                    itemInRange = null; // Reset item in range
+                }
             }
         }
     }

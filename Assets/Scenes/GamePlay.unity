@@ -55642,7 +55642,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -55854,7 +55854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameScene: GamePlay
-  playerPrefab: {fileID: 8630666624398672265, guid: 4ba3ca1628f666f49bc4779279f6ea68, type: 3}
+  playerPrefab: {fileID: 8630666624398672265, guid: 566ad86580460bb4e8712d9e20f91e51, type: 3}
   teamCellPrefab: {fileID: 8999278482288716422, guid: a243d8fc5d87cd1498d1bafdbb7e7df8, type: 3}
   contentTrans: {fileID: 2013208378}
 --- !u!1 &1335702937

@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 7739318057711301159}
   - component: {fileID: 2056007185373111176}
   - component: {fileID: 2792764139209155941}
+  - component: {fileID: -7515597140013142647}
   m_Layer: 0
   m_Name: ItemHealth
-  m_TagString: Untagged
+  m_TagString: ItemsInteractable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,6 +107,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 7739318057711301159}
+  - {fileID: -7515597140013142647}
 --- !u!114 &7739318057711301159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +167,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2432331799907138972}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -184,3 +186,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-7515597140013142647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2432331799907138972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b26b18d468ce5ef499fd9455c082fb57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 3
+  amount: 1
+  sprite: {fileID: 934571490, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}

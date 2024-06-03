@@ -1,34 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using DEMO.Item;
 
 namespace DEMO.Inventory
 {
-	public class Inventory : MonoBehaviour {
+	public class InventoryClass
+	{
+		private List<ItemClass> items;
 
-		/*#region Singleton
+        public InventoryClass()
+        {
+            items = new List<ItemClass>();
+        }
 
-		public static Inventory instance;
+        public void AddItem(ItemClass item)
+        {
+            items.Add(item);
+        }
 
-		void Awake ()
-		{
-			if (instance != null)
-			{
-				Debug.LogWarning("More than one instance of Inventory found!");
-				return;
-			}
+        public void RemoveItem(ItemClass item)
+        {
+            items.Remove(item);
+        }
 
-			instance = this;
-		}
+        public List<ItemClass> GetItems()
+        {
+            return items;
+        }
 
-		#endregion*/
 
-		// Callback which is triggered when an item gets added or removed
+		/*// Callback which is triggered when an item gets added or removed
 		public delegate void OnItemChanged();
 		public OnItemChanged onItemChangedCallback;
 
-		public int capacity = 10;	// Amount of slots in inventory
+		public int capacity = 12;	// Amount of slots in inventory
 
 		// Current list of items in inventory
 		public List<ItemClass> items = new List<ItemClass>();
@@ -116,6 +123,6 @@ namespace DEMO.Inventory
 		public void ClearInventory()
 		{
 			items.Clear();
-		}
+		}*/
 	}
 }
