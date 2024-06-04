@@ -275,6 +275,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteResolver: {fileID: 3468902761092888955}
-  sprite: {fileID: 284634634384982869}
+  spriteRenderer: {fileID: 284634634384982869}
   _itemID: 0
   _amount: 0
+  itemType: 0
+  quantity: 0

@@ -30,6 +30,7 @@ namespace DEMO.DB
         public void SetUIManager(UIManager uIManager)
         {
             this.uIManager = uIManager;
+            uIManager.SetPlayerNetworkData(this);
         }
 
 
@@ -43,7 +44,6 @@ namespace DEMO.DB
   
             if (Object.HasStateAuthority)
             {
-
                 SetPlayerInfo_RPC(0,"TEST");
                 SetPlayerHP_RPC(MaxHP);
                 SetPlayerBullet_RPC(MaxBullet);

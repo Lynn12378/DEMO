@@ -109,8 +109,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -14.9515, y: 14.6792}
-  m_SizeDelta: {x: 30, y: 30}
+  m_AnchoredPosition: {x: -20, y: 15}
+  m_SizeDelta: {x: 40, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6853069322932315007
 CanvasRenderer:
@@ -167,8 +167,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -304,6 +304,7 @@ MonoBehaviour:
   itemImage: {fileID: 3008987740179525503}
   itemAmount: {fileID: 2742559743375448294}
   occupied: 0
+  spriteLibraryAsset: {fileID: 7108339969198208228, guid: c598cc774018cb44ba37643fe8eb8b22, type: 3}
 --- !u!114 &5615295623216442817
 MonoBehaviour:
   m_ObjectHideFlags: 0

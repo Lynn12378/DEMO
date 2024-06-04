@@ -6,6 +6,7 @@ using UnityEngine.U2D.Animation;
 using Fusion;
 
 using DEMO.Manager;
+using UnityEditor.U2D.Animation;
 
 namespace DEMO.GamePlay.Inventory
 {
@@ -21,10 +22,11 @@ namespace DEMO.GamePlay.Inventory
         }
 
         [SerializeField] private SpriteResolver spriteResolver;
-        [SerializeField] public SpriteRenderer sprite;
+        [SerializeField] public SpriteRenderer spriteRenderer;
         [Networked] public int itemID { get; set; }
         [Networked] public int amount { get; set; }
-        private ItemType itemType;
+        public ItemType itemType;
+        public int quantity;
 
         public override void Spawned()
         {
@@ -40,6 +42,7 @@ namespace DEMO.GamePlay.Inventory
         {
             this.itemType = (ItemType) itemID;
             spriteResolver.SetCategoryAndLabel("item", this.itemType.ToString());
+            quantity = 1;
 
             SetItemID_RPC(itemID);
             SetAmount_RPC(1);
@@ -64,7 +67,6 @@ namespace DEMO.GamePlay.Inventory
 		}
 
         #endregion 
-
 
         #region - Pick Up Item -
 
