@@ -69,6 +69,7 @@ namespace DEMO.Manager
         #endregion 
 
         #region - Inventory -
+        /////////////////////////////////////// Work when only P1, still need debug
         public void OrganizeInventory(List<Item> items)
         {
             // Create dictionary to store item and amount in stack

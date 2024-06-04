@@ -6,7 +6,7 @@ using UnityEngine.U2D.Animation;
 using Fusion;
 
 using DEMO.Manager;
-using UnityEditor.U2D.Animation;
+//using UnityEditor.U2D.Animation;
 
 namespace DEMO.GamePlay.Inventory
 {
