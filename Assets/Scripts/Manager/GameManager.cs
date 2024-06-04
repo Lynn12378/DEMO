@@ -43,26 +43,25 @@ namespace DEMO.Manager
 
         #region - playerInfo -
 
-        public static PlayerInfo playerInfo = null;
-        public Dictionary<PlayerRef, PlayerInfo> playerList = new Dictionary<PlayerRef, PlayerInfo>();
-        
-        public event Action OnPlayerListUpdated = null;
-        public void UpdatePlayerList()
-        {
-            OnPlayerListUpdated?.Invoke();
-        }
+            public static PlayerInfo playerInfo = null;
+            public Dictionary<PlayerRef, PlayerInfo> playerList = new Dictionary<PlayerRef, PlayerInfo>();
+            
+            public event Action OnPlayerListUpdated = null;
+            public void UpdatePlayerList()
+            {
+                OnPlayerListUpdated?.Invoke();
+            }
   
         #endregion
 
         #region - playerNetworkData -
-        
-        public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
-        
-        public event Action OnInGamePlayerUpdated = null;
-        public void UpdatedGamePlayer()
-        {
-            OnInGamePlayerUpdated?.Invoke();
-        }
+            public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
+            
+            public event Action OnInGamePlayerUpdated = null;
+            public void UpdatedGamePlayer()
+            {
+                OnInGamePlayerUpdated?.Invoke();
+            }
 
         #endregion
         

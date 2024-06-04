@@ -10,19 +10,18 @@ using TMPro;
 
 using DEMO.DB;
 using DEMO.UI;
-using DEMO.Item;
+using DEMO.GamePlay.Inventory;
 
 namespace DEMO.Manager
 {
     public class InGameManager : MonoBehaviour, INetworkRunnerCallbacks
     {
 		[SerializeField] private string gameScene = null;
-        [SerializeField] public GameObject playerPrefab;
+        [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameObject teamCellPrefab = null;
         [SerializeField] private Transform contentTrans = null;
         private GamePlayManager gamePlayManager = null;
 		private NetworkRunner networkInstance = null;
-        [Networked] private int teamID { get; set; }
 
         #region - OnInGamePlayerUpdated -
 
@@ -34,20 +33,29 @@ namespace DEMO.Manager
 
             StartShared();
 
-            // GamePlayManager.Instance.OnInGamePlayerUpdated += UpdatedGamePlayer;
+            gamePlayManager.OnTeamListUpdated += UpdatedTeamList;
         }
 
         private void OnDestroy()
         {
-            // GamePlayManager.Instance.OnInGamePlayerUpdated -= UpdatedGamePlayer;
+            gamePlayManager.OnTeamListUpdated -= UpdatedTeamList;
+        }
+
+        public void UpdatedTeamList()
+        {
+            foreach(var team in gamePlayManager.teamList)
+            {
+                team.transform.SetParent(contentTrans, false);
+                team.SetInfo(team.teamID);
+            }
         }
 
         #endregion
 
         public void CreateTeam()
         {
-            SpawnTeamCell_RPC();
-            SetTeamID_RPC(teamID + 1);
+            var cell = networkInstance.Spawn(teamCellPrefab, Vector3.zero, Quaternion.identity);
+            cell.GetComponent<TeamCell>().SetPlayerTeamID_RPC(gamePlayManager.newTeamID);
         }
 
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -60,19 +68,6 @@ namespace DEMO.Manager
                 Camera.main.transform.SetParent(playerObject.transform);
             }
         }
-
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-		public void SpawnTeamCell_RPC()
-        {
-            var cell = networkInstance.Spawn(teamCellPrefab, Vector3.zero, Quaternion.identity);
-            //cell.GetComponent<TeamCell>().SetInfo(teamID, contentTrans);
-		}
-
-        [Rpc]
-		public void SetTeamID_RPC(int id)
-        {
-            teamID = id;
-		}
 
         #region - start game -
         public void StartShared()
@@ -106,10 +101,6 @@ namespace DEMO.Manager
             {
                 itemSpawner.StartItemSpawner();
             }
-            else
-            {
-                Debug.LogError("ItemSpawner not found!!");
-            }
         }
 
         #endregion
@@ -131,7 +122,6 @@ namespace DEMO.Manager
             public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken){}
             public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data){}
             public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress){}
-            //public void OnSceneLoadDone(NetworkRunner runner){}
             public void OnSceneLoadStart(NetworkRunner runner){}
         #endregion
     }

@@ -33,7 +33,6 @@ namespace DEMO.Manager
             networkInstance.AddCallbacks(this);
 
             playerInfo = GameManager.playerInfo;
-            // Debug.Log(playerInfo.isReady);
 			roomName.text = networkInstance.SessionInfo.Name;
 
             GameManager.Instance.OnPlayerListUpdated += UpdatePlayerList;

@@ -5,7 +5,7 @@ using Fusion;
 
 using DEMO.DB;
 using DEMO.UI;
-//using DEMO.Item;
+using DEMO.GamePlay.Inventory;
 
 namespace DEMO.Manager
 {
@@ -45,19 +45,19 @@ namespace DEMO.Manager
         }
 
         #region - playerNetworkData -
-
-        public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
-        
-        public event Action OnInGamePlayerUpdated = null;
-        public void UpdatedGamePlayer()
-        {
-            OnInGamePlayerUpdated?.Invoke();
-        }
+            public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
+            
+            public event Action OnInGamePlayerUpdated = null;
+            public void UpdatedGamePlayer()
+            {
+                OnInGamePlayerUpdated?.Invoke();
+            }
 
         #endregion
 
         #region - TeamList -
 
+        public int newTeamID = 0;
         public List<TeamCell> teamList = new List<TeamCell>();
 
         public event Action OnTeamListUpdated = null;
@@ -67,5 +67,6 @@ namespace DEMO.Manager
         }
         
         #endregion
+        public List<Item> itemList = new List<Item>();
     }
 }

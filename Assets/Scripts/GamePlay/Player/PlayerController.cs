@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Fusion;
 using Fusion.Addons.Physics;
 
 using DEMO.DB;
 using DEMO.Manager;
-using DEMO.Item;
+using DEMO.GamePlay.Inventory;
 
 namespace DEMO.GamePlay.Player
 {
@@ -15,14 +16,11 @@ namespace DEMO.GamePlay.Player
     {
         [SerializeField] private PlayerMovementHandler movementHandler = null;
         [SerializeField] private PlayerAttackHandler attackHandler = null;
-        [SerializeField] private PlayerInventory playerInventory = null;
         [SerializeField] private PlayerNetworkData playerNetworkData;
 
         private UIManager uIManager;
-        private GameObject obj;
         private NetworkButtons buttonsPrevious;
-        private bool isPickupKeyPressed = false;
-        private ItemClass itemInRange = null;
+        [SerializeField] private Item itemInRange = null;
 
         public override void Spawned()
         {
@@ -41,24 +39,9 @@ namespace DEMO.GamePlay.Player
             {
                 ApplyInput(data);
             }
-
-            if(playerNetworkData.HP <= 0)
-            {
-                Respawn();
-            }
-
-            // Handle pickup in here, otherwise not synchronized
-            if (isPickupKeyPressed && itemInRange != null)
-            {
-                playerInventory.PickUpItem(itemInRange);
-                itemInRange = null;
-                isPickupKeyPressed = false;
-
-                Debug.Log("Inventory for player " + playerNetworkData.playerRef + " : " + playerInventory.GetInventoryItemsAsString());
-            }
         }
 
-        private void ApplyInput(NetworkInputData data)
+        private async void ApplyInput(NetworkInputData data)
         {
             NetworkButtons buttons = data.buttons;
             var pressed = buttons.GetPressed(buttonsPrevious);
@@ -80,43 +63,37 @@ namespace DEMO.GamePlay.Player
                 }
             }
 
+            if (pressed.IsSet(InputButtons.PICKUP))
+            {
+                if(itemInRange == null){return;}
+
+                var item = itemInRange.GetComponent<Item>();
+
+                uIManager.UpdateInventoryUI(item);
+                playerNetworkData.itemList.Add(item);
+
+                itemInRange.DespawnItem_RPC();
+            }
+
             if (pressed.IsSet(InputButtons.TESTDAMAGE))
             {
                 playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - 10);
-            }
-
-            if (pressed.IsSet(InputButtons.PICKUP))
-            {
-                isPickupKeyPressed = true;
-            }
-            else
-            {
-                // Reset state
-                isPickupKeyPressed = false;
             }
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.CompareTag("ItemsInteractable"))
+            if (collider.CompareTag("Item"))
             {
-                ItemClass item = collider.GetComponent<ItemClass>();
-                if (item != null)
-                {
-                    itemInRange = item; // Set item in range
-                }
+                itemInRange = collider.GetComponent<Item>();
             }
         }
 
         private void OnTriggerExit2D(Collider2D collider)
         {
-            if (collider.CompareTag("ItemsInteractable"))
+            if (collider.CompareTag("Item"))
             {
-                ItemClass item = collider.GetComponent<ItemClass>();
-                if (item != null && item == itemInRange)
-                {
-                    itemInRange = null; // Reset item in range
-                }
+                itemInRange = null;
             }
         }
     }

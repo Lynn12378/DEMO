@@ -11,18 +11,55 @@ namespace DEMO.UI
 {
     public class TeamCell : NetworkBehaviour
     {
+        private ChangeDetector changes;
         [SerializeField] private TMP_Text teamTxt = null;
         //[SerializeField] private Button joinBtn = null;
-        private int teamID;
+        [Networked] public int teamID { get; set; } = 0;
 
-        public void SetInfo(int teamID)
+        public override void Spawned()
         {
-            teamTxt.text = $"Team {teamID}";
-            this.teamID = teamID;
+            changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
+            GamePlayManager.Instance.teamList.Add(this);
+            GamePlayManager.Instance.newTeamID += 1;
+
+            GamePlayManager.Instance.UpdatedTeamList();
+        }
+
+        public void SetInfo(int id)
+        {
+            teamTxt.text = $"Team {id}";
         }
 
         public void OnJoinBtnClicked()
         {
         }
+
+        #region - RPCs -
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+		public void SetPlayerTeamID_RPC(int id)
+        {
+            teamID = id;
+		}
+
+        #endregion
+
+        #region - OnChanged Events -
+
+            public override void Render()
+            {
+                foreach (var change in changes.DetectChanges(this, out var previousBuffer, out var currentBuffer))
+                {
+                    switch (change)
+                    {
+                        case nameof(teamID):
+                            GamePlayManager.Instance.UpdatedTeamList();
+                            break;
+                    }
+                }
+            }
+        
+        #endregion
     }
 }
+
