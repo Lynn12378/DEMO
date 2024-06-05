@@ -69,8 +69,8 @@ namespace DEMO.GamePlay.Player
 
                 var item = itemInRange.GetComponent<Item>();
 
-                uIManager.UpdateInventoryUI(item);
                 playerNetworkData.itemList.Add(item);
+                playerNetworkData.UpdateItemList();
 
                 itemInRange.DespawnItem_RPC();
             }

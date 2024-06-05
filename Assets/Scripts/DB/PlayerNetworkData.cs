@@ -30,7 +30,6 @@ namespace DEMO.DB
         public void SetUIManager(UIManager uIManager)
         {
             this.uIManager = uIManager;
-            uIManager.SetPlayerNetworkData(this);
         }
 
 
@@ -107,6 +106,14 @@ namespace DEMO.DB
                     }
                 }
             }
+        #endregion
+
+        #region - ItemList - 
+        public void UpdateItemList()
+        {
+            uIManager.SetItemList(itemList);
+            uIManager.UpdateInventoryUI(itemList);
+        }
         #endregion
     }
 }

@@ -20,16 +20,11 @@ namespace DEMO.Manager
         [SerializeField] private GameObject inventoryPanel = null;
         [SerializeField] private Transform slotsBackground = null;
         private InventorySlot[] inventorySlots;
-        PlayerNetworkData playerNetworkData;
+        private List<Item> tempItemList;    // To store PlayerNetworkData.itemList
 
         private void Start()
         {
             inventorySlots = slotsBackground.GetComponentsInChildren<InventorySlot>();
-        }
-
-        public void SetPlayerNetworkData(PlayerNetworkData playerNetworkData)
-        {
-            this.playerNetworkData = playerNetworkData;
         }
 
         #region - PlayerNetworkData UI -
@@ -64,11 +59,16 @@ namespace DEMO.Manager
 
         public void OnOrganizeButton()
         {
-            OrganizeInventory(playerNetworkData.itemList);
+            OrganizeInventory(tempItemList);
         }
         #endregion 
 
         #region - Inventory -
+        public void SetItemList(List<Item> items)
+        {
+            tempItemList = items;
+        }
+
         /////////////////////////////////////// Work when only P1, still need debug
         public void OrganizeInventory(List<Item> items)
         {
@@ -141,17 +141,6 @@ namespace DEMO.Manager
             }
         }
 
-        public void UpdateInventoryUI(Item newItem)
-        {
-            foreach (var slot in inventorySlots)
-            {
-                if (slot.IsEmpty())
-                {
-                    slot.AddItem(newItem);
-                    break;
-                }
-            }
-        }
         #endregion
 
         //Test
