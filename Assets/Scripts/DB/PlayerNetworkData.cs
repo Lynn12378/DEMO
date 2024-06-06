@@ -49,12 +49,20 @@ namespace DEMO.DB
                 SetPlayerBullet_RPC(MaxBullet);
                 SetPlayerTeamID_RPC(-1);
             }
+
+            // Change color of slider for LocalPlayer
+            if (playerRef == Runner.LocalPlayer)
+            {
+                // Change color of color code, if failed then color = white
+                Color fillColor = ColorUtility.TryParseHtmlString("#00C800", out Color color) ? color : Color.white;
+                hpSlider.fillRect.GetComponent<Image>().color = fillColor;
+            }
             
 
             gamePlayManager.UpdatedGamePlayer();
 		}
 
-        private void UpdateHPSlider(int health)
+        public void UpdateHPSlider(int health)
         {
             hpSlider.value = health;
         }
@@ -74,22 +82,14 @@ namespace DEMO.DB
         {
             playerId = id;
 			playerName = name;
-            playerRefString = playerRef.ToString();
-            this.playerRef = playerRef;
+            playerRefString = Runner.LocalPlayer.ToString();
+            playerRef = Runner.LocalPlayer;
 		}
 
-        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        [Rpc(RpcSources.All, RpcTargets.All)]
 		public void SetPlayerHP_RPC(int hp)
         {
-            HP = hp;
-
-            // Change color of slider for LocalPlayer
-            if (playerRef == Runner.LocalPlayer)
-            {
-                // Change color of color code, if failed then color = white
-                Color fillColor = ColorUtility.TryParseHtmlString("#A0FF71", out Color color) ? color : Color.white;
-                hpSlider.fillRect.GetComponent<Image>().color = fillColor;
-            }
+            HP = hp; 
 		}
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
