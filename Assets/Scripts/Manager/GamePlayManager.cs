@@ -6,6 +6,7 @@ using Fusion;
 using DEMO.DB;
 using DEMO.UI;
 using DEMO.GamePlay.Inventory;
+using DEMO.GamePlay.EnemyScript;
 
 namespace DEMO.Manager
 {
@@ -67,6 +68,9 @@ namespace DEMO.Manager
         }
         
         #endregion
+
         public List<Item> itemList = new List<Item>();
+
+        public List<Enemy> enemyList = new List<Enemy>();
     }
 }

@@ -11,6 +11,7 @@ using TMPro;
 using DEMO.DB;
 using DEMO.UI;
 using DEMO.GamePlay.Inventory;
+using DEMO.GamePlay.EnemyScript;
 
 namespace DEMO.Manager
 {
@@ -97,10 +98,10 @@ namespace DEMO.Manager
         public void OnSceneLoadDone(NetworkRunner runner)
         {
             var itemSpawner = FindObjectOfType<ItemSpawner>();
-            if (itemSpawner != null)
-            {
-                itemSpawner.StartItemSpawner();
-            }
+            itemSpawner.StartItemSpawner();
+
+            var enemySpawner = FindObjectOfType<EnemySpawner>();
+            enemySpawner.StartEnemySpawner();
         }
 
         #endregion

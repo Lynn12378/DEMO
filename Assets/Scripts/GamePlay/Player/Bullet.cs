@@ -5,6 +5,8 @@ using UnityEngine;
 using Fusion;
 using Fusion.Addons.Physics;
 
+using DEMO.GamePlay.EnemyScript;
+
 namespace DEMO.GamePlay.Player
 {
     public class Bullet : NetworkBehaviour
