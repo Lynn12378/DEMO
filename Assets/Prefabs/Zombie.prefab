@@ -582,5 +582,5 @@ MonoBehaviour:
   hPSlider: {fileID: 1422947231120268285}
   _Hp: 0
   moveSpeed: 1
-  range: 1
-  maxDistance: 4
+  range: 0.5
+  maxDistance: 3

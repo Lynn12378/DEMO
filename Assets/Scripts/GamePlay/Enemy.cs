@@ -22,11 +22,12 @@ public class Enemy : NetworkBehaviour
     private int maxHp = 50;
 
     [SerializeField] private float moveSpeed;   // 1
-    [SerializeField] private float range;       // 1
+    [SerializeField] private float range;       // 0.1
     [SerializeField] private float maxDistance; // 4
     private Vector2 wayPoint;
     private bool patrolAlongXAxis;
-    private float lastDestinationChangeTime;
+    private float patrolInterval = 5f;
+    private float patrolTimer;
 
     // Initialize
     public override void Spawned() 
@@ -34,21 +35,24 @@ public class Enemy : NetworkBehaviour
         Hp = maxHp;
 
         damageTimer = damageInterval;
+        patrolTimer = patrolInterval;
 
         // Pick an axis to patrol
         patrolAlongXAxis = Random.Range(0, 2) == 0 ? true : false;
         SetNewDestination();
-        // Set lastDestinationChangeTime
-        lastDestinationChangeTime = Time.time;
     }
 
+    #region - Patrol -
     public override void FixedUpdateNetwork()
-    { 
-        if(Vector2.Distance(transform.position, wayPoint) < range || Time.time - lastDestinationChangeTime > 2f)
+    {
+        patrolTimer -= Runner.DeltaTime;
+
+        // If position too close or patrol timer runs out, set new destination
+        if (Vector2.Distance(transform.position, wayPoint) < range || patrolTimer <= 0f)
         {
+            // Pick an axis to patrol
+            patrolAlongXAxis = Random.Range(0, 2) == 0 ? true : false;
             SetNewDestination();
-            // Update lastDestinationChangeTime
-            lastDestinationChangeTime = Time.time;
         }
 
         // Calculate direction from transform to destination
@@ -69,21 +73,19 @@ public class Enemy : NetworkBehaviour
             // Patrol on Y axis
             wayPoint = new Vector2(transform.position.x, Random.Range(-maxDistance, maxDistance));
         }
+
+        patrolTimer = patrolInterval;
     }
+    #endregion
 
 
     #region - Damage to Player - 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        var netObj = collision.collider.GetComponent<NetworkBehaviour>().Object;
-
-        if (netObj == null) return;
-
-        var player = collision.collider.GetComponent<PlayerController>();
-
-        if (player != null && netObj.InputAuthority != Object.InputAuthority)
+        if(collision.collider.CompareTag("Player"))
         {
-            if(netObj.CompareTag("Player"))
+            var player = collision.collider.GetComponent<PlayerController>();
+            if (player != null && player.Object.InputAuthority != Object.InputAuthority)
             {
                 player.TakeDamage(directDamage);
             }
@@ -92,17 +94,12 @@ public class Enemy : NetworkBehaviour
 
     public void OnCollisionStay2D(Collision2D collision)
     {
-        var netObj = collision.collider.GetComponent<NetworkBehaviour>().Object;
-
-        if (netObj == null) return;
-
-        var player = collision.collider.GetComponent<PlayerController>();
-
-        if (player != null && netObj.InputAuthority != Object.InputAuthority)
+        if(collision.collider.CompareTag("Player"))
         {
-            if(netObj.CompareTag("Player"))
+            var player = collision.collider.GetComponent<PlayerController>();
+            if (player != null && player.Object.InputAuthority != Object.InputAuthority)
             {
-                damageTimer -= Time.deltaTime;
+                damageTimer -= Runner.DeltaTime;
                 if(damageTimer <= 0f)
                 {
                     player.TakeDamage(damageOverTime);
@@ -110,7 +107,6 @@ public class Enemy : NetworkBehaviour
                     // Reset timer
                     damageTimer = damageInterval;
                 }
-                
             }
         }
     }
