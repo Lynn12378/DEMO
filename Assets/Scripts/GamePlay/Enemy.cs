@@ -22,8 +22,8 @@ public class Enemy : NetworkBehaviour
     private int maxHp = 50;
 
     [SerializeField] private float moveSpeed;   // 1
-    [SerializeField] private float range;       // 0.1
-    [SerializeField] private float maxDistance; // 4
+    [SerializeField] private float range;       // 0.5
+    [SerializeField] private float maxDistance; // 3
     private Vector2 wayPoint;
     private bool patrolAlongXAxis;
     private float patrolInterval = 5f;
