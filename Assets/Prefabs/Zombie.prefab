@@ -512,7 +512,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8630666624398672265}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -581,3 +581,6 @@ MonoBehaviour:
   enemyNetworkRigidbody: {fileID: 397606304458726309}
   hPSlider: {fileID: 1422947231120268285}
   _Hp: 0
+  moveSpeed: 1
+  range: 1
+  maxDistance: 4
