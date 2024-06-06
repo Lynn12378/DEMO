@@ -31,6 +31,9 @@ namespace DEMO.GamePlay.Player
         private void Respawn() 
         {
             transform.position = Vector3.zero;
+
+            playerNetworkData.SetPlayerHP_RPC(playerNetworkData.MaxHP);
+            playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.MaxBullet);
         }
 
         public override void FixedUpdateNetwork()
@@ -74,11 +77,6 @@ namespace DEMO.GamePlay.Player
 
                 itemInRange.DespawnItem_RPC();
             }
-
-            if (pressed.IsSet(InputButtons.TESTDAMAGE))
-            {
-                playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - 10);
-            }
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
@@ -94,6 +92,15 @@ namespace DEMO.GamePlay.Player
             if (collider.CompareTag("Item"))
             {
                 itemInRange = null;
+            }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - damage);
+            if(playerNetworkData.HP <= 0)
+            {
+                Respawn();
             }
         }
     }

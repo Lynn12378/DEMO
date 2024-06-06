@@ -708,7 +708,7 @@ MonoBehaviour:
   movementHandler: {fileID: 7523426437674528838}
   attackHandler: {fileID: 3935815838663998337}
   playerNetworkData: {fileID: 4796105495841460358}
-  uIManager: {fileID: 0}
+  itemInRange: {fileID: 0}
 --- !u!114 &3935815838663998337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,6 +817,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4504320698300242342, guid: ed14ee6a7013e8c4cad20df0ce9975b3, type: 3}
+      propertyPath: hpSlider
+      value: 
+      objectReference: {fileID: 1422947231120268285}
     - target: {fileID: 4504320698300242342, guid: ed14ee6a7013e8c4cad20df0ce9975b3, type: 3}
       propertyPath: _playerRef
       value: 4

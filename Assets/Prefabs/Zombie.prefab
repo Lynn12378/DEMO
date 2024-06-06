@@ -436,11 +436,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5105427102533241871}
   - component: {fileID: 3200382009352126582}
+  - component: {fileID: 397606304458726309}
   - component: {fileID: 4199331920531775570}
   - component: {fileID: -1909304560376316178}
-  - component: {fileID: 397606304458726309}
-  - component: {fileID: 1475834049703138947}
-  - component: {fileID: 1666197289363832700}
+  - component: {fileID: 7637637205018366213}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Enemy
@@ -482,8 +481,29 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 397606304458726309}
-  - {fileID: 1475834049703138947}
-  - {fileID: 1666197289363832700}
+  - {fileID: 7637637205018366213}
+--- !u!114 &397606304458726309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8630666624398672265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 1
+  _interpolationTarget: {fileID: 0}
+  UsePreciseRotation: 0
+  UseRenderSleepThresholds: 1
+  RenderThresholds:
+    UseEnergy: 1
+    Position: 0.01
+    Rotation: 0.01
+    Scale: 0.01
 --- !u!50 &4199331920531775570
 Rigidbody2D:
   serializedVersion: 4
@@ -492,11 +512,11 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8630666624398672265}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 300
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -543,10 +563,10 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.016108274, y: -0.021477818}
-  m_Size: {x: 0.6670947, y: 1.0704455}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.7, y: 1.2}
   m_Direction: 0
---- !u!114 &397606304458726309
+--- !u!114 &7637637205018366213
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -555,47 +575,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8630666624398672265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5e690b5fb1084f5ab1c86457af401d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncScale: 0
-  SyncParent: 1
-  _interpolationTarget: {fileID: 0}
-  UsePreciseRotation: 0
-  UseRenderSleepThresholds: 1
-  RenderThresholds:
-    UseEnergy: 1
-    Position: 0.01
-    Rotation: 0.01
-    Scale: 0.01
---- !u!114 &1475834049703138947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630666624398672265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f5a728cd223f045824d110764a5821, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthPointSlider: {fileID: 1422947231120268285}
-  _Hp: 0
---- !u!114 &1666197289363832700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630666624398672265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 491cea1ddfe6bbc4287b47e96b0357b5, type: 3}
+  m_Script: {fileID: 11500000, guid: cd0badea3271857449a6184b3df38e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNetworkRigidbody: {fileID: 397606304458726309}
-  healthPoint: {fileID: 1475834049703138947}
-  moveSpeed: 0
-  range: 0
-  maxDistance: 0
+  hPSlider: {fileID: 1422947231120268285}
+  _Hp: 0

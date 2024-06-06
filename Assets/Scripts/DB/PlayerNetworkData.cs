@@ -12,12 +12,14 @@ namespace DEMO.DB
 {
     public class PlayerNetworkData : NetworkBehaviour
     {
+        [SerializeField] public Slider hpSlider;
         private GamePlayManager gamePlayManager = null;
         private ChangeDetector changes;
         private UIManager uIManager = null;
 
         [Networked] public int playerId { get; private set; }
-        [Networked] public string playerRef { get; private set; }
+        [Networked] public PlayerRef playerRef { get; private set; }
+        [Networked] public string playerRefString { get; private set; }
         [Networked] public string playerName { get; private set; }
         [Networked] public int HP { get; set; }
         [Networked] public int bulletAmount { get; set; }
@@ -31,7 +33,6 @@ namespace DEMO.DB
         {
             this.uIManager = uIManager;
         }
-
 
         public override void Spawned()
         {
@@ -53,6 +54,19 @@ namespace DEMO.DB
             gamePlayManager.UpdatedGamePlayer();
 		}
 
+        private void UpdateHPSlider(int health)
+        {
+            hpSlider.value = health;
+        }
+
+        #region - ItemList - 
+        public void UpdateItemList()
+        {
+            uIManager.SetItemList(itemList);
+            uIManager.UpdateInventoryUI(itemList);
+        }
+        #endregion
+
         #region - RPCs -
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -60,13 +74,22 @@ namespace DEMO.DB
         {
             playerId = id;
 			playerName = name;
-            playerRef = Runner.LocalPlayer.ToString();
+            playerRefString = playerRef.ToString();
+            this.playerRef = playerRef;
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerHP_RPC(int hp)
         {
             HP = hp;
+
+            // Change color of slider for LocalPlayer
+            if (playerRef == Runner.LocalPlayer)
+            {
+                // Change color of color code, if failed then color = white
+                Color fillColor = ColorUtility.TryParseHtmlString("#A0FF71", out Color color) ? color : Color.white;
+                hpSlider.fillRect.GetComponent<Image>().color = fillColor;
+            }
 		}
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -94,6 +117,7 @@ namespace DEMO.DB
                     {
                         case nameof(HP):
                             uIManager.UpdateHPSlider(HP, MaxHP);
+                            UpdateHPSlider(HP);
                             break;
 
                         case nameof(bulletAmount):
@@ -106,14 +130,6 @@ namespace DEMO.DB
                     }
                 }
             }
-        #endregion
-
-        #region - ItemList - 
-        public void UpdateItemList()
-        {
-            uIManager.SetItemList(itemList);
-            uIManager.UpdateInventoryUI(itemList);
-        }
         #endregion
     }
 }

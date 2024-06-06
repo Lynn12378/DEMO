@@ -9,8 +9,7 @@ namespace DEMO.GamePlay.Player
     public enum InputButtons
     {
         FIRE,
-        PICKUP,
-        TESTDAMAGE
+        PICKUP
     }
 
     public struct NetworkInputData : INetworkInput

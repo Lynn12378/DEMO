@@ -22,6 +22,7 @@ namespace DEMO.Manager
         private InventorySlot[] inventorySlots;
         private List<Item> tempItemList;    // To store PlayerNetworkData.itemList
 
+
         private void Start()
         {
             inventorySlots = slotsBackground.GetComponentsInChildren<InventorySlot>();
@@ -69,7 +70,6 @@ namespace DEMO.Manager
             tempItemList = items;
         }
 
-        /////////////////////////////////////// Work when only P1, still need debug
         public void OrganizeInventory(List<Item> items)
         {
             // Create dictionary to store item and amount in stack
@@ -143,7 +143,7 @@ namespace DEMO.Manager
 
         #endregion
 
-        //Test
+        // Test for debug
         public string ShowList(List<Item> items)
         {
             string result = "Inventory: ";

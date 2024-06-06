@@ -32,5 +32,16 @@ namespace DEMO.GamePlay.Player
                 Runner.Despawn(Object);
             }
         }
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            var enemy = collider.GetComponent<Enemy>();
+
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+                Runner.Despawn(Object);
+            }
+        }
     }
 }
