@@ -236,7 +236,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8360657086495333813}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99996334, y: 0.99996334, z: 0.99996334}
   m_ConstrainProportionsScale: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a7e5d2419d92754da4c0f6996f2e419, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 15a522d0e2dce05478bf9edcacc4297e, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -305,6 +305,7 @@ MonoBehaviour:
   itemAmount: {fileID: 2742559743375448294}
   occupied: 0
   spriteLibraryAsset: {fileID: 7108339969198208228, guid: c598cc774018cb44ba37643fe8eb8b22, type: 3}
+  onClickPanel: {fileID: 112619745038305580, guid: f7b2043c5d28e1644b87d91aeb917b7e, type: 3}
 --- !u!114 &5615295623216442817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,4 +349,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5257606888838103619}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8581156141203947869}
+        m_TargetAssemblyTypeName: DEMO.GamePlay.Inventory.InventorySlot, Assembly-CSharp
+        m_MethodName: OnSlotClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

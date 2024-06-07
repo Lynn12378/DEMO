@@ -6,6 +6,7 @@ using UnityEngine.U2D.Animation;
 using Fusion;
 
 using DEMO.Manager;
+using DEMO.DB;
 //using UnityEditor.U2D.Animation;
 
 namespace DEMO.GamePlay.Inventory
@@ -27,6 +28,9 @@ namespace DEMO.GamePlay.Inventory
         [Networked] public int amount { get; set; }
         public ItemType itemType;
         public int quantity;
+
+        // Usage of item
+        private int boostHealth = 20;
 
         public override void Spawned()
         {
@@ -69,13 +73,57 @@ namespace DEMO.GamePlay.Inventory
         #endregion 
 
         #region - Pick Up Item -
-
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void DespawnItem_RPC()
         {
             Runner.Despawn(Object);
 		}
+        #endregion
 
+        #region - Use Item - 
+        public void Use(PlayerNetworkData playerNetworkData)
+        {
+            Debug.Log("Item in use: " + this.itemType);
+
+            switch (itemType)
+            {
+                default:
+                case ItemType.Bullet:
+                    playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount + 1);
+                    break;
+                case ItemType.Coin:
+                    // Add coin
+                    break;
+                case ItemType.Food:
+                    // Add food
+                    break;
+                case ItemType.Health:
+                    playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP + boostHealth);
+                    break;
+                case ItemType.Wood:
+                    // Add durability
+                    break;
+            }
+
+            foreach (Item item in playerNetworkData.itemList)
+            {
+                if (item.itemType == this.itemType)
+                {
+                    if (item.quantity > 1)
+                    {
+                        item.quantity--;
+                    }
+                    else
+                    {
+                        playerNetworkData.itemList.Remove(item);
+                    }
+                    break;
+                }
+            }
+
+            playerNetworkData.UpdateItemList();
+            Debug.Log(playerNetworkData.ShowList());
+        }
         #endregion
     }
 }

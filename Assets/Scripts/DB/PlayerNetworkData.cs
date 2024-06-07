@@ -89,13 +89,27 @@ namespace DEMO.DB
         [Rpc(RpcSources.All, RpcTargets.All)]
 		public void SetPlayerHP_RPC(int hp)
         {
-            HP = hp; 
+            if(hp >= MaxHP)
+            {
+                HP = MaxHP;
+            }
+            else
+            {
+                HP = hp;
+            }
 		}
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerBullet_RPC(int amount)
         {
-            bulletAmount = amount;
+            if(bulletAmount >= MaxBullet)
+            {
+                bulletAmount = MaxBullet;
+            }
+            else
+            {
+                bulletAmount = amount;
+            }
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -108,28 +122,41 @@ namespace DEMO.DB
 
         #region - OnChanged Events -
 
-            public override void Render()
+        public override void Render()
+        {
+            if(!Object.HasStateAuthority){return;}
+            foreach (var change in changes.DetectChanges(this, out var previousBuffer, out var currentBuffer))
             {
-                if(!Object.HasStateAuthority){return;}
-                foreach (var change in changes.DetectChanges(this, out var previousBuffer, out var currentBuffer))
+                switch (change)
                 {
-                    switch (change)
-                    {
-                        case nameof(HP):
-                            uIManager.UpdateHPSlider(HP, MaxHP);
-                            UpdateHPSlider(HP);
-                            break;
+                    case nameof(HP):
+                        uIManager.UpdateHPSlider(HP, MaxHP);
+                        UpdateHPSlider(HP);
+                        break;
 
-                        case nameof(bulletAmount):
-                            uIManager.UpdateBulletAmountTxt(bulletAmount, MaxBullet);
-                            break;
+                    case nameof(bulletAmount):
+                        uIManager.UpdateBulletAmountTxt(bulletAmount, MaxBullet);
+                        break;
 
-                        case nameof(teamID):
-                            //call UIManager change Team
-                            break;
-                    }
+                    case nameof(teamID):
+                        //call UIManager change Team
+                        break;
                 }
             }
+        }
         #endregion
+
+        // Test for debug
+        public string ShowList()
+        {
+            string result = "Inventory: ";
+
+            for(int i=0; i < itemList.Count; i++)
+            {
+                result += "ItemType: " + itemList[i].itemType + "; Quantity: " + itemList[i].quantity;
+            }
+
+            return result;
+        }
     }
 }

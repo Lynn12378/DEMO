@@ -8,9 +8,9 @@ namespace DEMO.GamePlay.EnemyScript
     public class EnemySpawner : NetworkBehaviour
     {
         [SerializeField] private NetworkObject enemy;
-        [SerializeField] private int _initialEnemyCount = 50;
-        [SerializeField] private int _enemyPerSpawn = 20; // The number of items to spawn after each delay.
-        [SerializeField] private float _delayBetweenSpawns = 300.0f;  // The delay between each spawn after the initial spawn. // 5 minutes in seconds
+        [SerializeField] private int _initialEnemyCount = 20;
+        [SerializeField] private int _enemyPerSpawn = 10; // The number of items to spawn after each delay.
+        [SerializeField] private float _delayBetweenSpawns = 900.0f;  // The delay between each spawn after the initial spawn. // 15 minutes in seconds
         private bool _initialSpawnCompleted = false; // Flag to indicate whether initial spawning is done.
 
         public void StartEnemySpawner()
