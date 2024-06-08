@@ -31,6 +31,8 @@ namespace DEMO.DB
         public int MaxHP = 100;
         public int MaxFood = 100;
         public int MaxBullet = 50;
+        private float foodDecreaseInterval = 30f;
+        private float foodDecreaseTimer = 0f;
         public List<Item> itemList = new List<Item>();
 
         public override void Spawned()
@@ -62,6 +64,20 @@ namespace DEMO.DB
 
             gamePlayManager.UpdatedGamePlayer();
 		}
+
+        private void Update()
+        {
+            foodDecreaseTimer += Time.deltaTime;
+
+            if (foodDecreaseTimer >= foodDecreaseInterval)
+            {
+                // Reset timer
+                foodDecreaseTimer = 0f;
+
+                // Decrease food
+                SetPlayerFood_RPC(foodAmount - 1);
+            }
+        }
 
         public void SetUIManager(UIManager uIManager)
         {
