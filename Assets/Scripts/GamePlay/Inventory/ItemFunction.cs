@@ -25,8 +25,11 @@ namespace DEMO.GamePlay.Inventory
             }
         }
 
-        private void HidePanel()
+        private void AfterFunction()
         {
+            // Update UI
+            playerNetworkData.UpdateItemList();
+
             // Hide the panel
             gameObject.SetActive(false);
         }
@@ -34,19 +37,19 @@ namespace DEMO.GamePlay.Inventory
         public void OnUseItem()
         {
             currentSlot.UseItem(playerNetworkData);
-            HidePanel();
+            AfterFunction();
         }
 
         public void OnDiscardItem()
         {
             currentSlot.DiscardItem(playerNetworkData);
-            HidePanel();
+            AfterFunction();
         }
 
         public void OnGiftItem()
         {
             currentSlot.GiftItem(playerNetworkData);
-            HidePanel();
+            AfterFunction();
         }
     }
 }

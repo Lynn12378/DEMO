@@ -2007,6 +2007,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3183574250533190752}
+        m_TargetAssemblyTypeName: DEMO.GamePlay.Inventory.ItemFunction, Assembly-CSharp
+        m_MethodName: UpdateItemList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &594749731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58929,6 +58941,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1721659182}
   - component: {fileID: 1721659183}
+  - component: {fileID: 1721659184}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -58971,6 +58984,24 @@ MonoBehaviour:
   teamListPanel: {fileID: 1366516399}
   inventoryPanel: {fileID: 7369272}
   slotsBackground: {fileID: 48892327}
+--- !u!114 &1721659184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721659180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 932125096
+  ObjectInterest: 1
+  Flags: 786433
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1721659183}
 --- !u!1 &1750496203
 GameObject:
   m_ObjectHideFlags: 0
@@ -59490,6 +59521,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4608537451426742330, guid: 430b275ab1a3ff14bb9006b5158a27bd, type: 3}
   m_PrefabInstance: {fileID: 9172444480301923011}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3183574250533190752 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8927844647791326121, guid: 430b275ab1a3ff14bb9006b5158a27bd, type: 3}
+  m_PrefabInstance: {fileID: 9172444480301923011}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8540223335923822375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afebb618a21b37548849e57d2114244b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6558943474599150040
 PrefabInstance:
   m_ObjectHideFlags: 0

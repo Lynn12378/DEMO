@@ -6,6 +6,7 @@ using DEMO;
 using System.ComponentModel;
 using UnityEngine.U2D.Animation;
 using DEMO.DB;
+using Unity.VisualScripting;
 
 namespace DEMO.GamePlay.Inventory
 {
@@ -17,10 +18,15 @@ namespace DEMO.GamePlay.Inventory
         public bool occupied = false;           // Check if slot is occupied
 
         Item item;                  // Current item
-        Item.ItemType itemType;     // Current ItemType in slot
+        public Item.ItemType itemType;     // Current ItemType in slot
         public SpriteLibraryAsset spriteLibraryAsset;   // To get sprite
 
         [SerializeField] private GameObject onClickPanel = null;
+
+        private void Start()
+        {
+            itemType = Item.ItemType.None;
+        }
 
 
         // Add item to the slot
@@ -47,6 +53,7 @@ namespace DEMO.GamePlay.Inventory
         public void ClearSlot ()
         {
             item = null;
+            itemType = Item.ItemType.None;
 
             itemImage.sprite = null;
             itemImage.enabled = false;
@@ -65,16 +72,23 @@ namespace DEMO.GamePlay.Inventory
         // Show panel to delete, use, or give away item
         public void OnSlotClicked()
         {
-            if (occupied)
+            if (occupied && !onClickPanel.activeSelf)
             {
                 // Change color of color code, if failed then color = white
-                Color slotColor = ColorUtility.TryParseHtmlString("#B6B6B6", out Color color) ? color : Color.white;
+                Color slotColor = UnityEngine.ColorUtility.TryParseHtmlString("#B6B6B6", out Color color) ? color : Color.white;
                 slotButton.GetComponent<Image>().color = slotColor;
 
-                onClickPanel.SetActive(!onClickPanel.activeSelf);
+                onClickPanel.SetActive(true);
                 var transformParent = GameObject.Find("InventoryPanel");
                 onClickPanel.transform.SetParent(transformParent.transform);
                 onClickPanel.GetComponent<ItemFunction>().SetSlot(this);
+            }
+            else if(occupied && onClickPanel.activeSelf)
+            {
+                ResetSlotColor();
+                onClickPanel.SetActive(false);
+
+                return;
             }
         }
 
@@ -82,45 +96,25 @@ namespace DEMO.GamePlay.Inventory
         {
             item.Use(playerNetworkData);
 
-            // Reset slot color
-            slotButton.GetComponent<Image>().color = Color.white;
-
-            //DecreaseItemQuantity();
+            ResetSlotColor();
         }
 
         public void DiscardItem(PlayerNetworkData playerNetworkData)
         {
-            Debug.Log("Discard Item: " + item.itemType);
+            item.Discard(playerNetworkData);
 
-            // Reset slot color
-            slotButton.GetComponent<Image>().color = Color.white;
-
-            //DecreaseItemQuantity();
+            ResetSlotColor();
         }
 
         public void GiftItem(PlayerNetworkData playerNetworkData)
         {
             Debug.Log("Gift Item: " + item.itemType);
 
-            // Reset slot color
-            slotButton.GetComponent<Image>().color = Color.white;
-
-            //DecreaseItemQuantity();
+            ResetSlotColor();
         }
 
-        private void DecreaseItemQuantity()
+        private void ResetSlotColor()
         {
-            if (item.quantity > 1)
-            {
-                item.quantity--;
-                itemAmount.SetText(item.quantity.ToString());
-            }
-            else
-            {
-                ClearSlot();
-            }
-
-            // Reset slot color
             slotButton.GetComponent<Image>().color = Color.white;
         }
     }

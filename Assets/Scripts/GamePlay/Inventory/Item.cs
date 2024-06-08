@@ -20,6 +20,7 @@ namespace DEMO.GamePlay.Inventory
             Food,
             Health,
             Wood,
+            None,
         }
 
         [SerializeField] private SpriteResolver spriteResolver;
@@ -72,19 +73,17 @@ namespace DEMO.GamePlay.Inventory
 
         #endregion 
 
-        #region - Pick Up Item -
+        #region - Item Functions -
+        // Pick up item
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void DespawnItem_RPC()
         {
             Runner.Despawn(Object);
 		}
-        #endregion
 
-        #region - Use Item - 
+        // Use Item
         public void Use(PlayerNetworkData playerNetworkData)
         {
-            Debug.Log("Item in use: " + this.itemType);
-
             switch (itemType)
             {
                 default:
@@ -105,24 +104,33 @@ namespace DEMO.GamePlay.Inventory
                     break;
             }
 
-            foreach (Item item in playerNetworkData.itemList)
+            DecreaseQuantityOrRemove(playerNetworkData.itemList);
+        }
+
+        // Discard Item 
+        public void Discard(PlayerNetworkData playerNetworkData)
+        {
+            DecreaseQuantityOrRemove(playerNetworkData.itemList);
+        }
+
+        // Decrease quantity or remove item after use
+        private void DecreaseQuantityOrRemove(List<Item> itemList)
+        {
+            for (int i = 0; i < itemList.Count; i++)
             {
-                if (item.itemType == this.itemType)
+                if (itemList[i].itemType == itemType)
                 {
-                    if (item.quantity > 1)
+                    if (itemList[i].quantity > 1)
                     {
-                        item.quantity--;
+                        itemList[i].quantity--;
                     }
                     else
                     {
-                        playerNetworkData.itemList.Remove(item);
+                        itemList.RemoveAt(i);
                     }
                     break;
                 }
             }
-
-            playerNetworkData.UpdateItemList();
-            Debug.Log(playerNetworkData.ShowList());
         }
         #endregion
     }

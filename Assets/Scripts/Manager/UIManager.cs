@@ -4,10 +4,11 @@ using UnityEngine.UI;
 using TMPro;
 using DEMO.GamePlay.Inventory;
 using DEMO.DB;
+using Fusion;
 
 namespace DEMO.Manager
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : NetworkBehaviour
     {
         [SerializeField] Slider HPSlider = null;
         [SerializeField] private TMP_Text HPTxt = null;
@@ -21,7 +22,7 @@ namespace DEMO.Manager
         [SerializeField] private Transform slotsBackground = null;
 
         private InventorySlot[] inventorySlots;
-        private List<Item> tempItemList;    // To store PlayerNetworkData.itemList
+        private PlayerNetworkData playerNetworkData;
 
 
         private void Start()
@@ -61,15 +62,19 @@ namespace DEMO.Manager
 
         public void OnOrganizeButton()
         {
-            OrganizeInventory(tempItemList);
+            var pND = Runner.GetComponentInChildren<PlayerNetworkData>();
+            var pRef = pND.playerRef;
+            if(pRef == Runner.LocalPlayer)
+            {
+                playerNetworkData = pND;
+            }
+
+            OrganizeInventory(playerNetworkData.itemList);
+            playerNetworkData.UpdateItemList();
         }
         #endregion 
 
         #region - Inventory -
-        public void SetItemList(List<Item> items)
-        {
-            tempItemList = items;
-        }
 
         public void OrganizeInventory(List<Item> items)
         {
@@ -110,9 +115,6 @@ namespace DEMO.Manager
                 // Add into items
                 items.Add(stackedItem);
             }
-
-            // Update UI for organized list
-            UpdateInventoryUI(items);
         }
 
         public void UpdateInventoryUI(List<Item> items)

@@ -70,7 +70,6 @@ namespace DEMO.DB
         #region - ItemList - 
         public void UpdateItemList()
         {
-            uIManager.SetItemList(itemList);
             uIManager.UpdateInventoryUI(itemList);
         }
         #endregion
@@ -102,14 +101,7 @@ namespace DEMO.DB
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerBullet_RPC(int amount)
         {
-            if(bulletAmount >= MaxBullet)
-            {
-                bulletAmount = MaxBullet;
-            }
-            else
-            {
-                bulletAmount = amount;
-            }
+            bulletAmount = amount;
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
