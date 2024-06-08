@@ -45,6 +45,12 @@ namespace DEMO.Manager
             durabilityTxt.text = $"Durability: {durability}/{maxDurability}";
         }
 
+        public void UpdateFoodSlider(int food, int maxFood)
+        {
+            foodSlider.value = food;
+            foodTxt.text = $"Food: {food}/{maxFood}";
+        }
+
         public void UpdateBulletAmountTxt(int bulletAmount, int maxbulletAmount)
         {
             bulletAmountTxt.text = $"Bullet amount: {bulletAmount}/{maxbulletAmount}";

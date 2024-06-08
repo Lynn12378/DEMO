@@ -59469,8 +59469,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HPSlider: {fileID: 927092927}
   HPTxt: {fileID: 359942139}
-  foodSlider: {fileID: 0}
-  foodTxt: {fileID: 0}
+  foodSlider: {fileID: 1469380858}
+  foodTxt: {fileID: 337257476}
   durabilitySlider: {fileID: 1858928391}
   durabilityTxt: {fileID: 1363126220}
   bulletAmountTxt: {fileID: 480902462}

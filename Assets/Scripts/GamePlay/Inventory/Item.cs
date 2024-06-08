@@ -33,6 +33,7 @@ namespace DEMO.GamePlay.Inventory
 
         // Usage of item
         private int bulletAdd = 10;
+        private int foodAdd = 20;
         private int boostHealth = 20;
 
         public override void Spawned()
@@ -92,11 +93,8 @@ namespace DEMO.GamePlay.Inventory
                 case ItemType.Bullet:
                     playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount + bulletAdd);
                     break;
-                case ItemType.Coin:
-                    // Add coin
-                    break;
                 case ItemType.Food:
-                    // Add food
+                    playerNetworkData.SetPlayerFood_RPC(playerNetworkData.foodAmount + foodAdd);
                     break;
                 case ItemType.Health:
                     playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP + boostHealth);

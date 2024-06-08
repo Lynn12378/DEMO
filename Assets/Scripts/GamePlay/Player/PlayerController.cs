@@ -33,7 +33,7 @@ namespace DEMO.GamePlay.Player
             transform.position = Vector3.zero;
 
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.MaxHP);
-            playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.MaxBullet);
+            playerNetworkData.bulletAmount = playerNetworkData.MaxBullet;
         }
 
         public override void FixedUpdateNetwork()
@@ -71,16 +71,23 @@ namespace DEMO.GamePlay.Player
                 if(itemInRange == null){return;}
 
                 var item = itemInRange.GetComponent<Item>();
-                
-                // Check if enough space    
-                if (playerNetworkData.itemList.Count < 12)
+
+                // If item is coin, then just add to coinAmount
+                if(item.itemType == Item.ItemType.Coin)
+                {
+                    playerNetworkData.SetPlayerCoin_RPC(playerNetworkData.coinAmount + 10);
+                    itemInRange.DespawnItem_RPC();
+                }
+
+                // If item not coin and enough space    
+                if (playerNetworkData.itemList.Count < 12 && item.itemType != Item.ItemType.Coin)
                 {
                     playerNetworkData.itemList.Add(item);
                     playerNetworkData.UpdateItemList();
 
                     itemInRange.DespawnItem_RPC();
                 }
-                else
+                else if(playerNetworkData.itemList.Count >= 12)
                 {
                     Debug.Log("Inventory is full, cannot pick up item.");
                 }

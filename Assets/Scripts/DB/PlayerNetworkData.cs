@@ -22,17 +22,16 @@ namespace DEMO.DB
         [Networked] public string playerRefString { get; private set; }
         [Networked] public string playerName { get; private set; }
         [Networked] public int HP { get; set; }
+        [Networked] public int foodAmount { get; set; }
         [Networked] public int bulletAmount { get; set; }
+        [Networked] public int coinAmount { get; set; }
         [Networked] public int teamID { get; set; }
+        
 
         public int MaxHP = 100;
+        public int MaxFood = 100;
         public int MaxBullet = 50;
         public List<Item> itemList = new List<Item>();
-
-        public void SetUIManager(UIManager uIManager)
-        {
-            this.uIManager = uIManager;
-        }
 
         public override void Spawned()
         {
@@ -47,6 +46,8 @@ namespace DEMO.DB
                 SetPlayerInfo_RPC(0,"TEST");
                 SetPlayerHP_RPC(MaxHP);
                 SetPlayerBullet_RPC(MaxBullet);
+                SetPlayerCoin_RPC(0);
+                SetPlayerFood_RPC(MaxFood);
                 SetPlayerTeamID_RPC(-1);
             }
 
@@ -61,6 +62,11 @@ namespace DEMO.DB
 
             gamePlayManager.UpdatedGamePlayer();
 		}
+
+        public void SetUIManager(UIManager uIManager)
+        {
+            this.uIManager = uIManager;
+        }
 
         #region - Update UI -
         // Small slider above
@@ -113,6 +119,25 @@ namespace DEMO.DB
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+		public void SetPlayerCoin_RPC(int amount)
+        {
+            coinAmount = amount;
+		}
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+		public void SetPlayerFood_RPC(int amount)
+        {
+            if(amount >= MaxFood)
+            {
+                foodAmount = MaxFood;
+            }
+            else
+            {
+                foodAmount = amount;
+            }
+		}
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerTeamID_RPC(int id)
         {
             teamID = id;
@@ -136,6 +161,10 @@ namespace DEMO.DB
 
                     case nameof(bulletAmount):
                         uIManager.UpdateBulletAmountTxt(bulletAmount, MaxBullet);
+                        break;
+
+                    case nameof(foodAmount):
+                        uIManager.UpdateFoodSlider(foodAmount, MaxFood);
                         break;
 
                     case nameof(teamID):
