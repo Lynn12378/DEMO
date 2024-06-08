@@ -37,8 +37,6 @@ namespace DEMO.DB
 
         public override void Spawned()
         {
-            SetUIManager_RPC();
-
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
             transform.SetParent(Runner.transform);
 
@@ -80,11 +78,9 @@ namespace DEMO.DB
             }
         }
 
-        private void InitializeUI()
+        public void SetUIManager(UIManager uIManager)
         {
-            uIManager.UpdateHPSlider(HP, MaxHP);
-            uIManager.UpdateFoodSlider(foodAmount, MaxFood);
-            uIManager.UpdateBulletAmountTxt(bulletAmount, MaxBullet);
+            this.uIManager = uIManager;
         }
 
         #region - Update UI -
@@ -96,17 +92,12 @@ namespace DEMO.DB
 
         public void UpdateItemList()
         {
+            uIManager.SetItemList(itemList);
             uIManager.UpdateInventoryUI(itemList);
         }
         #endregion
 
         #region - RPCs -
-
-        [Rpc(RpcSources.All, RpcTargets.All)]
-		public void SetUIManager_RPC()
-        {
-            uIManager = FindObjectOfType<UIManager>();
-		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerInfo_RPC(int id, string name)
@@ -183,7 +174,6 @@ namespace DEMO.DB
                 {
                     case nameof(HP):
                         uIManager.UpdateHPSlider(HP, MaxHP);
-                        //UpdateHPSlider(HP);
                         break;
 
                     case nameof(bulletAmount):

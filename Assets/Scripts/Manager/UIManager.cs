@@ -3,12 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DEMO.GamePlay.Inventory;
-using DEMO.DB;
-using Fusion;
 
 namespace DEMO.Manager
 {
-    public class UIManager : NetworkBehaviour
+    public class UIManager : MonoBehaviour
     {
         [SerializeField] Slider HPSlider = null;
         [SerializeField] private TMP_Text HPTxt = null;
@@ -24,7 +22,7 @@ namespace DEMO.Manager
         [SerializeField] private Transform slotsBackground = null;
 
         private InventorySlot[] inventorySlots;
-        private PlayerNetworkData playerNetworkData;
+        private List<Item> tempItemList;
 
 
         private void Start()
@@ -70,19 +68,16 @@ namespace DEMO.Manager
 
         public void OnOrganizeButton()
         {
-            var pND = Runner.GetComponentInChildren<PlayerNetworkData>();
-            var pRef = pND.playerRef;
-            if(pRef == Runner.LocalPlayer)
-            {
-                playerNetworkData = pND;
-            }
-
-            OrganizeInventory(playerNetworkData.itemList);
-            playerNetworkData.UpdateItemList();
+            OrganizeInventory(tempItemList);
         }
         #endregion 
 
         #region - Inventory -
+
+        public void SetItemList(List<Item> items)
+        {
+            tempItemList = items;
+        }
 
         public void OrganizeInventory(List<Item> items)
         {
@@ -123,6 +118,8 @@ namespace DEMO.Manager
                 // Add into items
                 items.Add(stackedItem);
             }
+
+            UpdateInventoryUI(items);
         }
 
         public void UpdateInventoryUI(List<Item> items)
@@ -150,18 +147,6 @@ namespace DEMO.Manager
                     inventorySlots[i].ClearSlot();
                 }
             }
-        }
-
-        public bool AllSlotsOccupied()
-        {
-            foreach (var slot in inventorySlots)
-            {
-                if (!slot.occupied)
-                {
-                    return false; // Found an empty slot
-                }
-            }
-            return true; // All slots are occupied
         }
 
         #endregion
