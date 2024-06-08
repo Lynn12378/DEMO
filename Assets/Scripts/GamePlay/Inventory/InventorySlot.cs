@@ -18,7 +18,7 @@ namespace DEMO.GamePlay.Inventory
         public bool occupied = false;           // Check if slot is occupied
 
         Item item;                  // Current item
-        public Item.ItemType itemType;     // Current ItemType in slot
+        Item.ItemType itemType;     // Current ItemType in slot
         public SpriteLibraryAsset spriteLibraryAsset;   // To get sprite
 
         [SerializeField] private GameObject onClickPanel = null;

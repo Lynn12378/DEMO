@@ -71,11 +71,19 @@ namespace DEMO.GamePlay.Player
                 if(itemInRange == null){return;}
 
                 var item = itemInRange.GetComponent<Item>();
+                
+                // Check if enough space    
+                if (playerNetworkData.itemList.Count < 12)
+                {
+                    playerNetworkData.itemList.Add(item);
+                    playerNetworkData.UpdateItemList();
 
-                playerNetworkData.itemList.Add(item);
-                playerNetworkData.UpdateItemList();
-
-                itemInRange.DespawnItem_RPC();
+                    itemInRange.DespawnItem_RPC();
+                }
+                else
+                {
+                    Debug.Log("Inventory is full, cannot pick up item.");
+                }
             }
         }
 

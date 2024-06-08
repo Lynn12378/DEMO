@@ -62,12 +62,13 @@ namespace DEMO.DB
             gamePlayManager.UpdatedGamePlayer();
 		}
 
+        #region - Update UI -
+        // Small slider above
         public void UpdateHPSlider(int health)
         {
             hpSlider.value = health;
         }
 
-        #region - ItemList - 
         public void UpdateItemList()
         {
             uIManager.UpdateInventoryUI(itemList);
@@ -101,7 +102,14 @@ namespace DEMO.DB
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerBullet_RPC(int amount)
         {
-            bulletAmount = amount;
+            if(amount >= MaxBullet)
+            {
+                bulletAmount = MaxBullet;
+            }
+            else
+            {
+                bulletAmount = amount;
+            }
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

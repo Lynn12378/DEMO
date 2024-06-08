@@ -7,6 +7,7 @@ using Fusion;
 
 using DEMO.Manager;
 using DEMO.DB;
+using UnityEngine.EventSystems;
 //using UnityEditor.U2D.Animation;
 
 namespace DEMO.GamePlay.Inventory
@@ -31,6 +32,7 @@ namespace DEMO.GamePlay.Inventory
         public int quantity;
 
         // Usage of item
+        private int bulletAdd = 10;
         private int boostHealth = 20;
 
         public override void Spawned()
@@ -88,7 +90,7 @@ namespace DEMO.GamePlay.Inventory
             {
                 default:
                 case ItemType.Bullet:
-                    playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount + 1);
+                    playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount + bulletAdd);
                     break;
                 case ItemType.Coin:
                     // Add coin

@@ -12,6 +12,8 @@ namespace DEMO.Manager
     {
         [SerializeField] Slider HPSlider = null;
         [SerializeField] private TMP_Text HPTxt = null;
+        [SerializeField] Slider foodSlider = null;
+        [SerializeField] private TMP_Text foodTxt = null;
         [SerializeField] Slider durabilitySlider = null;
         [SerializeField] private TMP_Text durabilityTxt = null;
         [SerializeField] private TMP_Text bulletAmountTxt = null;
@@ -142,6 +144,18 @@ namespace DEMO.Manager
                     inventorySlots[i].ClearSlot();
                 }
             }
+        }
+
+        public bool AllSlotsOccupied()
+        {
+            foreach (var slot in inventorySlots)
+            {
+                if (!slot.occupied)
+                {
+                    return false; // Found an empty slot
+                }
+            }
+            return true; // All slots are occupied
         }
 
         #endregion
