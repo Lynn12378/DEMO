@@ -18,15 +18,8 @@ namespace DEMO.GamePlay.Player
         [SerializeField] private PlayerAttackHandler attackHandler = null;
         [SerializeField] private PlayerNetworkData playerNetworkData;
 
-        private UIManager uIManager;
         private NetworkButtons buttonsPrevious;
         [SerializeField] private Item itemInRange = null;
-
-        public override void Spawned()
-        {
-            uIManager = FindObjectOfType<UIManager>();
-            playerNetworkData.SetUIManager(uIManager);
-        }
 
         private void Respawn() 
         {

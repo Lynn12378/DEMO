@@ -37,11 +37,13 @@ namespace DEMO.DB
 
         public override void Spawned()
         {
+            SetUIManager_RPC();
+
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
             transform.SetParent(Runner.transform);
 
             gamePlayManager = FindObjectOfType<GamePlayManager>();
-            gamePlayManager.gamePlayerList.Add(Object.InputAuthority, this);      
+            gamePlayManager.gamePlayerList.Add(Object.InputAuthority, this);       
   
             if (Object.HasStateAuthority)
             {
@@ -61,7 +63,6 @@ namespace DEMO.DB
                 hpSlider.fillRect.GetComponent<Image>().color = fillColor;
             }
             
-
             gamePlayManager.UpdatedGamePlayer();
 		}
 
@@ -79,9 +80,11 @@ namespace DEMO.DB
             }
         }
 
-        public void SetUIManager(UIManager uIManager)
+        private void InitializeUI()
         {
-            this.uIManager = uIManager;
+            uIManager.UpdateHPSlider(HP, MaxHP);
+            uIManager.UpdateFoodSlider(foodAmount, MaxFood);
+            uIManager.UpdateBulletAmountTxt(bulletAmount, MaxBullet);
         }
 
         #region - Update UI -
@@ -98,6 +101,12 @@ namespace DEMO.DB
         #endregion
 
         #region - RPCs -
+
+        [Rpc(RpcSources.All, RpcTargets.All)]
+		public void SetUIManager_RPC()
+        {
+            uIManager = FindObjectOfType<UIManager>();
+		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerInfo_RPC(int id, string name)
@@ -119,6 +128,8 @@ namespace DEMO.DB
             {
                 HP = hp;
             }
+
+            UpdateHPSlider(HP);
 		}
         
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -172,7 +183,7 @@ namespace DEMO.DB
                 {
                     case nameof(HP):
                         uIManager.UpdateHPSlider(HP, MaxHP);
-                        UpdateHPSlider(HP);
+                        //UpdateHPSlider(HP);
                         break;
 
                     case nameof(bulletAmount):
