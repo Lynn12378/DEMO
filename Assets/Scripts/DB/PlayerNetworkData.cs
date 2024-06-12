@@ -51,12 +51,14 @@ namespace DEMO.DB
                 SetPlayerTeamID_RPC(-1);
             }
 
-            // Change color of slider for LocalPlayer
+            // Set state for LocalPlayer
             if (playerRef == Runner.LocalPlayer)
             {
                 // Change color of color code, if failed then color = white
                 Color fillColor = ColorUtility.TryParseHtmlString("#00C800", out Color color) ? color : Color.white;
                 hpSlider.fillRect.GetComponent<Image>().color = fillColor;
+
+                uIManager.InitializeItemSlots(this); 
             }
             
             gamePlayManager.UpdatedGamePlayer();

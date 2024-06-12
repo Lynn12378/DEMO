@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DEMO.GamePlay.Inventory;
+using DEMO.DB;
 
 namespace DEMO.Manager
 {
@@ -18,6 +19,7 @@ namespace DEMO.Manager
 
         [SerializeField] private GameObject shopPanel = null;
         [SerializeField] private TextMeshProUGUI playerCoinAmount = null;
+        private ShopItemSlot[] itemSlots;
 
         [SerializeField] private GameObject teamListPanel = null;
 
@@ -31,6 +33,15 @@ namespace DEMO.Manager
         private void Start()
         {
             inventorySlots = slotsBackground.GetComponentsInChildren<InventorySlot>();
+        }
+
+        public void InitializeItemSlots(PlayerNetworkData playerNetworkData)
+        {
+            itemSlots = shopPanel.GetComponentsInChildren<ShopItemSlot>();
+            foreach (var slot in itemSlots)
+            {
+                slot.Initialize(playerNetworkData);
+            }
         }
 
         #region - PlayerNetworkData UI -

@@ -1231,7 +1231,6 @@ GameObject:
   - component: {fileID: 1379127840337753022}
   - component: {fileID: 1662893819348337351}
   - component: {fileID: 648133920437933724}
-  - component: {fileID: 8662531590651737125}
   m_Layer: 5
   m_Name: ItemSlot
   m_TagString: Untagged
@@ -1322,24 +1321,6 @@ MonoBehaviour:
   inputField: {fileID: 4186109462027528397}
   costTxt: {fileID: 3179594381132860842}
   buyCost: 10
---- !u!114 &8662531590651737125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8651548867114773961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SortKey: 1751733858
-  ObjectInterest: 1
-  Flags: 786433
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 648133920437933724}
 --- !u!1 &9049866549134797755
 GameObject:
   m_ObjectHideFlags: 0

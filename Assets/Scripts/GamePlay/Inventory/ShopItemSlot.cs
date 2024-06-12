@@ -10,10 +10,10 @@ using DEMO.DB;
 
 namespace DEMO.GamePlay.Inventory
 {
-    public class ItemSlot : NetworkBehaviour
+    public class ShopItemSlot : MonoBehaviour
     {
-        Item item;                                          // To set item for each slot
-        [SerializeField] private Item.ItemType itemType;    // To set itemType for each slot
+        Item item;                                         // Item in slot
+        [SerializeField] public Item.ItemType itemType;    // To set itemType for each slot
         public Image itemImage;
         public SpriteLibraryAsset spriteLibraryAsset;       // To get sprite
 
@@ -45,18 +45,11 @@ namespace DEMO.GamePlay.Inventory
                 buyButton.gameObject.SetActive(false);
                 inputField.gameObject.SetActive(false);
             }
-
-            SetPND();
         }
 
-        private void SetPND()
+        public void Initialize(PlayerNetworkData playerNetworkData)
         {
-            var pND = Runner.GetComponentInChildren<PlayerNetworkData>();
-            var pRef = pND.playerRef;
-            if(pRef == Runner.LocalPlayer)
-            {
-                playerNetworkData = pND;
-            }
+            this.playerNetworkData = playerNetworkData;
         }
 
         public void OnInputFieldValueChanged(string value)
