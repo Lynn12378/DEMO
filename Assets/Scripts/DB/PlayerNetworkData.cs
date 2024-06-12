@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +5,6 @@ using Fusion;
 
 using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
-using System;
 
 namespace DEMO.DB
 {
@@ -48,7 +46,7 @@ namespace DEMO.DB
                 SetPlayerInfo_RPC(0,"TEST");
                 SetPlayerHP_RPC(MaxHP);
                 SetPlayerBullet_RPC(MaxBullet);
-                SetPlayerCoin_RPC(0);
+                SetPlayerCoin_RPC(100);
                 SetPlayerFood_RPC(MaxFood);
                 SetPlayerTeamID_RPC(-1);
             }
@@ -178,6 +176,10 @@ namespace DEMO.DB
 
                     case nameof(bulletAmount):
                         uIManager.UpdateBulletAmountTxt(bulletAmount, MaxBullet);
+                        break;
+
+                    case nameof(coinAmount):
+                        uIManager.UpdateCoinAmountTxt(coinAmount);
                         break;
 
                     case nameof(foodAmount):

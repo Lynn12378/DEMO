@@ -16,6 +16,9 @@ namespace DEMO.Manager
         [SerializeField] private TMP_Text durabilityTxt = null;
         [SerializeField] private TMP_Text bulletAmountTxt = null;
 
+        [SerializeField] private GameObject shopPanel = null;
+        [SerializeField] private TextMeshProUGUI playerCoinAmount = null;
+
         [SerializeField] private GameObject teamListPanel = null;
 
         [SerializeField] private GameObject inventoryPanel = null;
@@ -53,12 +56,22 @@ namespace DEMO.Manager
         {
             bulletAmountTxt.text = $"Bullet amount: {bulletAmount}/{maxbulletAmount}";
         }
+
+        public void UpdateCoinAmountTxt(int coinAmount)
+        {
+            playerCoinAmount.SetText(coinAmount.ToString());
+        }
         #endregion
 
         #region - Buttons -
         public void OnOpenInventoryButton()
         {
             inventoryPanel.SetActive(!inventoryPanel.activeSelf);
+        }
+
+        public void OnOpenShopButton()
+        {
+            shopPanel.SetActive(!shopPanel.activeSelf);
         }
 
         public void OnOpenTeamListButton()
