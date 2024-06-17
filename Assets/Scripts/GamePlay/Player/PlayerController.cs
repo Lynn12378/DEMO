@@ -96,6 +96,15 @@ namespace DEMO.GamePlay.Player
                     shelter.RepairDurability_RPC();
                 }
             }
+
+            if (pressed.IsSet(InputButtons.RELOAD) && isInShelter)
+            {
+                Debug.Log("Reloading...");
+                if (playerNetworkData.bulletAmount < playerNetworkData.MaxBullet)
+                {
+                    playerNetworkData.SetPlayerBullet_RPC(Mathf.Min(playerNetworkData.bulletAmount + 5, playerNetworkData.MaxBullet));
+                }
+            }
         }
 
         private void HealPlayer()
