@@ -15,6 +15,8 @@ namespace DEMO.DB
         [Networked] public int Durability { get; set; }
         public int MaxDurability = 100;
 
+        [SerializeField] public int repair = 20;
+
         [Networked] private TickTimer durabilityTicker { get; set; }
         [SerializeField] UIManager uIManager;
 
@@ -23,11 +25,8 @@ namespace DEMO.DB
         {
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
 
-            if (Object.HasStateAuthority)
-            {
-                SetShelterDurability_RPC(MaxDurability);
-                durabilityTicker = TickTimer.CreateFromSeconds(Runner, 1);
-            }
+            Durability = MaxDurability;
+            durabilityTicker = TickTimer.CreateFromSeconds(Runner, 1);
         }
 
         public override void FixedUpdateNetwork()
@@ -36,7 +35,11 @@ namespace DEMO.DB
             {
                 if (durabilityTicker.Expired(Runner))
                 {
-                    DropDurability_RPC();
+                    if (Durability > 0)
+                    {
+                        Durability -= 1;
+                        durabilityTicker = TickTimer.CreateFromSeconds(Runner, 1);
+                    }
                 }
             }
         }
@@ -44,26 +47,16 @@ namespace DEMO.DB
         #region - RPCs -
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void SetShelterDurability_RPC(int durability)
+        public void SetDurability_RPC(int durability)
         {
             Durability = durability;
-            if (uIManager != null)
-            {
-                uIManager.UpdateDurabilitySlider(Durability, MaxDurability);
-            }
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-        public void DropDurability_RPC()
+        public void RepairDurability_RPC()
         {
-            Debug.Log($"Current Durability: {Durability}");
-            if (Durability > 0)
-            {
-                Durability -= 1;
-                durabilityTicker = TickTimer.CreateFromSeconds(Runner, 1);
-            }
+            Durability = Mathf.Min(Durability + 10, MaxDurability);
         }
-
         #endregion
 
         #region - OnChanged Events -
@@ -79,9 +72,6 @@ namespace DEMO.DB
                         {
                             uIManager.UpdateDurabilitySlider(Durability, MaxDurability);
                         }
-                        break;
-
-                    case nameof(durabilityTicker):
                         break;
                 }
             }

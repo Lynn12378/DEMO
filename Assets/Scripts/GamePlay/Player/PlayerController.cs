@@ -15,15 +15,29 @@ namespace DEMO.GamePlay.Player
         [SerializeField] private PlayerMovementHandler movementHandler = null;
         [SerializeField] private PlayerAttackHandler attackHandler = null;
         [SerializeField] private PlayerNetworkData playerNetworkData;
+        [SerializeField] private Shelter shelter;
 
         private UIManager uIManager;
         private GameObject obj;
         private NetworkButtons buttonsPrevious;
 
+        private bool isInShelter = false;
+        private float shelterTimer = 0f;
+        private const float SHELTER_HEAL_INTERVAL = 5f;
+        private const int HEAL_AMOUNT = 10;
+        private const int MAX_HP = 100; 
+
         public override void Spawned()
         {
             uIManager = FindObjectOfType<UIManager>();
-            playerNetworkData.SetUIManager(uIManager);
+            if (uIManager == null)
+            {
+                Debug.LogError("UIManager not found!");
+            }
+            else
+            {
+                playerNetworkData.SetUIManager(uIManager);
+            }
         }
 
         private void Respawn() 
@@ -36,6 +50,17 @@ namespace DEMO.GamePlay.Player
             if (GetInput(out NetworkInputData data))
             {
                 ApplyInput(data);
+            }
+
+            if (isInShelter)
+            {
+                shelterTimer += Runner.DeltaTime; // 使用 Runner.DeltaTime 來計算時間，確保網路同步
+
+                if (shelterTimer >= SHELTER_HEAL_INTERVAL)
+                {
+                    HealPlayer();
+                    shelterTimer = 0f; // 重置計時器
+                }
             }
         }
 
@@ -50,24 +75,58 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.FIRE))
             {
-                if(playerNetworkData.bulletAmount > 0)
+                if (playerNetworkData.bulletAmount > 0)
                 {
                     attackHandler.Shoot(data.mousePosition);
                     playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount - 1);
-                }
-                else
-                {
-                    Debug.Log("Not enough bullet!");
                 }
             }
 
             if (pressed.IsSet(InputButtons.TESTDAMAGE))
             {
-                Debug.Log($"TESTDAMAGE");
                 playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - 10);
                 Debug.Log(playerNetworkData.HP);
+            }
+
+            if (pressed.IsSet(InputButtons.REPAIR) && isInShelter)
+            {
+                Debug.Log("Repairing...");
+                if (shelter != null)
+                {
+                    shelter.RepairDurability_RPC();
+                }
+            }
+        }
+
+        private void HealPlayer()
+        {
+            int newHP = Mathf.Min(playerNetworkData.HP + HEAL_AMOUNT, MAX_HP); // 確保血量不超過最大值
+            playerNetworkData.SetPlayerHP_RPC(newHP);
+        }
+
+        public void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.CompareTag("Shelter"))
+            {
+                Debug.Log("Entered Shelter");
+                isInShelter = true;
+                shelter = collider.GetComponent<Shelter>();
+                if (shelter == null)
+                {
+                    Debug.LogError("Shelter component not found on the collided object!");
+                }
+            }
+        }
+
+        public void OnTriggerExit2D(Collider2D collider)
+        {
+            if (collider.CompareTag("Shelter"))
+            {
+                Debug.Log("Exited Shelter");
+                isInShelter = false;
+                shelterTimer = 0f;
+                shelter = null;
             }
         }
     }
 }
-
