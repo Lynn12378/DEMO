@@ -63,11 +63,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee026d482b9603345ac15c26c581c380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpSlider: {fileID: 0}
+  minimapIcon: {fileID: 0}
   _playerId: 0
-  _playerRef: 
+  _playerRefString: 
   _playerName: 
   _HP: 0
+  _foodAmount: 0
   _bulletAmount: 0
+  _coinAmount: 0
   _teamID: 0
   MaxHP: 100
+  MaxFood: 100
   MaxBullet: 50
+  itemList: []

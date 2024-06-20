@@ -11,6 +11,7 @@ namespace DEMO.DB
     public class PlayerNetworkData : NetworkBehaviour
     {
         [SerializeField] public Slider hpSlider;
+        [SerializeField] public GameObject minimapIcon;
         private GamePlayManager gamePlayManager = null;
         private ChangeDetector changes;
         private UIManager uIManager = null;
@@ -57,6 +58,7 @@ namespace DEMO.DB
                 // Change color of color code, if failed then color = white
                 Color fillColor = ColorUtility.TryParseHtmlString("#00C800", out Color color) ? color : Color.white;
                 hpSlider.fillRect.GetComponent<Image>().color = fillColor;
+                minimapIcon.GetComponent<SpriteRenderer>().color = fillColor;
 
                 uIManager.InitializeItemSlots(this); 
             }
