@@ -11,9 +11,22 @@ namespace DEMO.GamePlay.Inventory
     {
         [SerializeField] private NetworkObject item;
         [SerializeField] private int _initialItemCount = 300;
-        [SerializeField] private int _itemsPerSpawn = 20; // The number of items to spawn after each delay.
+        [SerializeField] private int _itemPerSpawn = 10; // The number of items to spawn after each delay.
         [SerializeField] private float _delayBetweenSpawns = 300.0f;  // The delay between each spawn after the initial spawn. // 5 minutes in seconds
         private bool _initialSpawnCompleted = false; // Flag to indicate whether initial spawning is done.
+
+        private List<Transform> spawnPoints;
+
+        private void Start()
+        {
+            GameObject[] spawnPointObjects = GameObject.FindGameObjectsWithTag("SpawnPoint");
+            spawnPoints = new List<Transform>();
+
+            foreach (var spawnPoint in spawnPointObjects)
+            {
+                spawnPoints.Add(spawnPoint.transform);
+            }
+        }
 
         public void StartItemSpawner()
         {
@@ -23,9 +36,14 @@ namespace DEMO.GamePlay.Inventory
 
         private void SpawnInitialItems()
         {
-            for (int i = 0; i < _initialItemCount; i++)
+            int itemsPerSpawnPoint = Mathf.CeilToInt((float)_initialItemCount / spawnPoints.Count);
+
+            foreach (var spawnPoint in spawnPoints)
             {
-                SpawnRandomItem();
+                for (int i = 0; i < itemsPerSpawnPoint; i++)
+                {
+                    SpawnItemNearSpawnPoint(spawnPoint);
+                }
             }
 
             _initialSpawnCompleted = true;
@@ -35,35 +53,41 @@ namespace DEMO.GamePlay.Inventory
         {
             if (!_initialSpawnCompleted) return;
 
-            for (int i = 0; i < _itemsPerSpawn; i++)
+            int itemsPerSpawnPoint = Mathf.CeilToInt((float)_itemPerSpawn / spawnPoints.Count / (_delayBetweenSpawns / 60)); // Adjusted for the delay
+
+            foreach (var spawnPoint in spawnPoints)
             {
-                SpawnRandomItem();
+                for (int i = 0; i < itemsPerSpawnPoint; i++)
+                {
+                    SpawnItemNearSpawnPoint(spawnPoint);
+                }
             }
         }
 
-        private void SpawnRandomItem()
+        private void SpawnItemNearSpawnPoint(Transform spawnPoint)
         {
             int itemID = Random.Range(0, 5);
-            Vector3 spawnPosition = GetRandomSpawnPosition();
+            Vector3 spawnPosition = GetSpawnPosition(spawnPoint);
 
             var NO = Runner.Spawn(item, spawnPosition, Quaternion.identity);
             NO.GetComponent<Item>().Init(itemID);
         }
 
-        private Vector3 GetRandomSpawnPosition()
+        private Vector3 GetSpawnPosition(Transform spawnPoint)
         {
-            // Define the boundaries of your map
-            float minX = -83f;
-            float maxX = 164f;
-            float minY = -83f;
-            float maxY = 45f;
+            // Define the offset range
+            float offsetRange = 5.0f;
 
-            // Generate random coordinates within the boundaries
-            float randomX = UnityEngine.Random.Range(minX, maxX);
-            float randomY = UnityEngine.Random.Range(minY, maxY);
+            // Generate random offsets
+            float randomOffsetX = Random.Range(-offsetRange, offsetRange);
+            float randomOffsetY = Random.Range(-offsetRange, offsetRange);
 
-            // Return the random position
-            return new Vector3(randomX, randomY, 0);
+            // Return the position near the spawn point
+            return new Vector3(
+                spawnPoint.position.x + randomOffsetX,
+                spawnPoint.position.y + randomOffsetY,
+                spawnPoint.position.z
+            );
         }
     }
 }

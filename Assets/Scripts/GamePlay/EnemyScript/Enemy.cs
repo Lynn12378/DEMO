@@ -53,7 +53,7 @@ namespace DEMO.GamePlay.EnemyScript
         #region - Patrol & Player Detect -
         public override void FixedUpdateNetwork()
         {
-            Vector2 direction;
+            Vector2 direction = Vector2.zero;
 
             if(playerDetection.detectedObjs.Count > 0)
             {
@@ -70,7 +70,7 @@ namespace DEMO.GamePlay.EnemyScript
                 {
                     // Pick an axis to patrol
                     patrolAlongXAxis = Random.Range(0, 2) == 0 ? true : false;
-                    SetNewDestination();
+                    //SetNewDestination();
                 }
 
                 // Calculate direction from transform to destination
