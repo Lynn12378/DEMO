@@ -60,7 +60,7 @@ namespace DEMO.DB
                 hpSlider.fillRect.GetComponent<Image>().color = fillColor;
                 minimapIcon.GetComponent<SpriteRenderer>().color = fillColor;
 
-                uIManager.InitializeItemSlots(this); 
+                uIManager.InitializeItemSlots(this);
             }
             
             gamePlayManager.UpdatedGamePlayer();

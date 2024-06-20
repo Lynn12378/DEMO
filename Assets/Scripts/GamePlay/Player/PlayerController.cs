@@ -24,6 +24,7 @@ namespace DEMO.GamePlay.Player
         {
             uIManager = FindObjectOfType<UIManager>();
             playerNetworkData.SetUIManager(uIManager);
+            uIManager.InitializeMinimapArrow(transform);
         }
 
         private void Respawn() 
@@ -89,6 +90,11 @@ namespace DEMO.GamePlay.Player
                 {
                     Debug.Log("Inventory is full, cannot pick up item.");
                 }
+            }
+
+            if (pressed.IsSet(InputButtons.TALK))
+            {
+                
             }
         }
 

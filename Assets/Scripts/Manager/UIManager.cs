@@ -29,6 +29,8 @@ namespace DEMO.Manager
         private InventorySlot[] inventorySlots;
         private List<Item> tempItemList;
 
+        [SerializeField] private MinimapArrow minimapArrow;
+
 
         private void Start()
         {
@@ -42,6 +44,11 @@ namespace DEMO.Manager
             {
                 slot.Initialize(playerNetworkData);
             }
+        }
+
+        public void InitializeMinimapArrow(Transform transform)
+        {
+            minimapArrow.playerTransform = transform;
         }
 
         #region - PlayerNetworkData UI -
