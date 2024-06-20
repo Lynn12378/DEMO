@@ -73,7 +73,7 @@ namespace DEMO.Manager
         #region - start game -
         public void StartShared()
         {
-            StartGame(GameMode.Shared, "test", gameScene);
+            StartGame(GameMode.Shared, "test123", gameScene);
         }
 
         private async void StartGame(GameMode mode, string roomName, string sceneName)

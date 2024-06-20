@@ -18,18 +18,19 @@ namespace DEMO.GamePlay.EnemyScript
         [Networked] private TickTimer damageTimer { get; set; } // Timer to countdown next damage
 
         [SerializeField] public Slider hPSlider;
-
         [Networked] [OnChangedRender(nameof(HandleHpChanged))]
         public int Hp { get; set; }
         private int maxHp = 50;
 
-        [SerializeField] private float moveSpeed;   // 1
+        [SerializeField] private float moveSpeed;   // 0.5
         [SerializeField] private float range;       // 0.5
         [SerializeField] private float maxDistance; // 3
         private Vector2 wayPoint;
         private bool patrolAlongXAxis;
         private float patrolInterval = 5f;
         [Networked] private TickTimer patrolTimer { get; set; }
+
+        public PlayerDetection playerDetection;
 
         // Initialize
         public override void Spawned() 
@@ -49,19 +50,33 @@ namespace DEMO.GamePlay.EnemyScript
             SetNewDestination();
         }
 
-        #region - Patrol -
+        #region - Patrol & Player Detect -
         public override void FixedUpdateNetwork()
         {
-            // If position too close or patrol timer runs out, set new destination
-            if (Vector2.Distance(transform.position, wayPoint) < range || patrolTimer.Expired(Runner))
+            Vector2 direction;
+
+            if(playerDetection.detectedObjs.Count > 0)
             {
-                // Pick an axis to patrol
-                patrolAlongXAxis = Random.Range(0, 2) == 0 ? true : false;
-                SetNewDestination();
+                // Calculate direction to detected player
+                Vector2 targetPosition = playerDetection.detectedObjs[0].transform.position;
+                direction = (targetPosition - (Vector2)transform.position).normalized;
+                direction.y += -0.5f; // Offset
+                direction.Normalize();
+            }
+            else
+            {
+                // If position too close or patrol timer runs out, set new destination
+                if (Vector2.Distance(transform.position, wayPoint) < range || patrolTimer.Expired(Runner))
+                {
+                    // Pick an axis to patrol
+                    patrolAlongXAxis = Random.Range(0, 2) == 0 ? true : false;
+                    SetNewDestination();
+                }
+
+                // Calculate direction from transform to destination
+                direction = (wayPoint - (Vector2)transform.position).normalized;
             }
 
-            // Calculate direction from transform to destination
-            Vector2 direction = (wayPoint - (Vector2)transform.position).normalized;
             // Set velocity
             enemyNetworkRigidbody.Rigidbody.velocity = direction * moveSpeed;
         }
@@ -82,7 +97,6 @@ namespace DEMO.GamePlay.EnemyScript
             patrolTimer = TickTimer.CreateFromSeconds(Runner, patrolInterval);
         }
         #endregion
-
 
         #region - Damage to Player - 
         public void OnCollisionEnter2D(Collision2D collision)
@@ -127,7 +141,7 @@ namespace DEMO.GamePlay.EnemyScript
             }
         }
 
-        public void HandleHpChanged()
+        private void HandleHpChanged()
         {
             hPSlider.value = Hp;
         }
