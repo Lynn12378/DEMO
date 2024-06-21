@@ -30,6 +30,7 @@ namespace DEMO.Manager
         private List<Item> tempItemList;
 
         [SerializeField] private MinimapArrow minimapArrow;
+        [SerializeField] private GameObject micIcon;
 
 
         private void Start()
@@ -78,6 +79,24 @@ namespace DEMO.Manager
         public void UpdateCoinAmountTxt(int coinAmount)
         {
             playerCoinAmount.SetText(coinAmount.ToString());
+        }
+
+        public void UpdateMicIconColor(int isSpeaking)
+        {
+            Image micIconImage = micIcon.GetComponent<Image>();
+
+            if (isSpeaking == 0)
+            {
+                micIconImage.color = Color.green; // Local player speaking
+            }
+            else if (isSpeaking == 1)
+            {
+                micIconImage.color = Color.blue; // Other player speaking
+            }
+            else
+            {
+                micIconImage.color = Color.gray; // Default color when not speaking
+            }
         }
         #endregion
 

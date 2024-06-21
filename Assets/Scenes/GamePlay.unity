@@ -5704,7 +5704,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1721659183}
         m_TargetAssemblyTypeName: DEMO.Manager.UIManager, Assembly-CSharp
-        m_MethodName: OnOpenInventoryButton
+        m_MethodName: OnOpenTeamListButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -60455,6 +60455,7 @@ RectTransform:
   - {fileID: 7369273}
   - {fileID: 860230262}
   - {fileID: 2058309380}
+  - {fileID: 1505879771}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -62074,6 +62075,81 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4244606854834622071, guid: 3ea8b454af8d11044b911efaa8b06961, type: 3}
   m_PrefabInstance: {fileID: 1501486700}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1505879770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1505879771}
+  - component: {fileID: 1505879773}
+  - component: {fileID: 1505879772}
+  m_Layer: 5
+  m_Name: MicIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1505879771
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505879770}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1270526908}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 80, y: 140}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1505879772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505879770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6666667, g: 0.6666667, b: 0.6666667, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -5900926969388301916, guid: 2a01691a87fedbe4aa6de6f1c0c0f3d4, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1505879773
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505879770}
+  m_CullTransparentMesh: 1
 --- !u!1 &1562967042
 GameObject:
   m_ObjectHideFlags: 0
@@ -63049,6 +63125,7 @@ MonoBehaviour:
   inventoryPanel: {fileID: 7369272}
   slotsBackground: {fileID: 48892327}
   minimapArrow: {fileID: 2113469544}
+  micIcon: {fileID: 1505879770}
 --- !u!1 &1750496203
 GameObject:
   m_ObjectHideFlags: 0
@@ -63793,6 +63870,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 853419679}
+  - {fileID: 2085832347}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2036895366
@@ -63841,9 +63919,9 @@ MonoBehaviour:
   ApplyDontDestroyOnLoad: 1
   runInBackground: 1
   statsResetInterval: 1000
-  speakerPrefab: {fileID: 7852833417309642521, guid: d5b7c9840a7348f4db62ebf5fa33565a, type: 3}
+  speakerPrefab: {fileID: 0}
   primaryRecorder: {fileID: 2085832346}
-  usePrimaryRecorder: 1
+  usePrimaryRecorder: 0
   cppCompatibilityMode: 0
   Settings:
     AppIdRealtime: 
@@ -64064,16 +64142,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voiceDetection: 0
+  voiceDetection: 1
   voiceDetectionThreshold: 0.01
-  voiceDetectionDelayMs: 500
+  voiceDetectionDelayMs: 200
   interestGroup: 0
   useTargetPlayers: 0
   targetPlayers: 
   debugEchoMode: 0
   reliableMode: 0
   encrypt: 0
-  transmitEnabled: 1
+  transmitEnabled: 0
   samplingRate: 24000
   frameDuration: 20000
   bitrate: 30000
@@ -64103,12 +64181,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085832345}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2036895365}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2113469540
 GameObject:
@@ -64201,6 +64279,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   baseTransform: {fileID: 1229375878}
   arrowRectTransform: {fileID: 2113469541}
+  initialAngleOffset: 90
 --- !u!1001 &2125998751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64647,7 +64726,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 2085832347}
   - {fileID: 2036895365}
   - {fileID: 1033719542}
   - {fileID: 1718594170}

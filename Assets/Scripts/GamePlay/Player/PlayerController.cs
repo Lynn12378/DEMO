@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Fusion;
 using Fusion.Addons.Physics;
@@ -7,6 +6,7 @@ using Fusion.Addons.Physics;
 using DEMO.DB;
 using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
+using Photon.Voice.Unity;
 
 namespace DEMO.GamePlay.Player
 {
@@ -94,8 +94,19 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.TALK))
             {
-                
+                ToggleTransmit();
             }
+        }
+        
+        private void ToggleTransmit()
+        {
+            Recorder recorder = playerNetworkData.voiceObject.RecorderInUse;
+            if (recorder != null)
+            {
+                recorder.TransmitEnabled = !recorder.TransmitEnabled;
+            }
+
+            Debug.Log(recorder.TransmitEnabled.ToString());
         }
 
         private void OnTriggerEnter2D(Collider2D collider)

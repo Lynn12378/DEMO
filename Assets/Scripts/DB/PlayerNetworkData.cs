@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,6 +6,7 @@ using Fusion;
 
 using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
+using Photon.Voice.Fusion;
 
 namespace DEMO.DB
 {
@@ -12,6 +14,7 @@ namespace DEMO.DB
     {
         [SerializeField] public Slider hpSlider;
         [SerializeField] public GameObject minimapIcon;
+        [SerializeField] public VoiceNetworkObject voiceObject;
         private GamePlayManager gamePlayManager = null;
         private ChangeDetector changes;
         private UIManager uIManager = null;
@@ -62,6 +65,8 @@ namespace DEMO.DB
 
                 uIManager.InitializeItemSlots(this);
             }
+
+            voiceObject.RecorderInUse.TransmitEnabled = false;
             
             gamePlayManager.UpdatedGamePlayer();
 		}
@@ -77,6 +82,22 @@ namespace DEMO.DB
 
                 // Decrease food
                 SetPlayerFood_RPC(foodAmount - 1);
+            }
+
+            if(voiceObject.RecorderInUse.IsCurrentlyTransmitting)
+            {
+                if(playerRef == Runner.LocalPlayer)
+                {
+                    uIManager.UpdateMicIconColor(0);
+                }
+                else
+                {
+                    uIManager.UpdateMicIconColor(1);
+                }
+            }
+            else
+            {
+                uIManager.UpdateMicIconColor(-1);
             }
         }
 

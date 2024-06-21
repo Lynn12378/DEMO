@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using Photon.Voice.Unity;
 
 using DEMO.DB;
 using DEMO.UI;
