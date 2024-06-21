@@ -63124,7 +63124,9 @@ MonoBehaviour:
   teamListPanel: {fileID: 1366516399}
   inventoryPanel: {fileID: 7369272}
   slotsBackground: {fileID: 48892327}
-  minimapArrow: {fileID: 2113469544}
+  baseTransform: {fileID: 1229375878}
+  arrowRectTransform: {fileID: 2113469541}
+  initialAngleOffset: 90
   micIcon: {fileID: 1505879770}
 --- !u!1 &1750496203
 GameObject:

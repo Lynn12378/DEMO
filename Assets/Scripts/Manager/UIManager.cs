@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using TMPro;
 using DEMO.GamePlay.Inventory;
 using DEMO.DB;
+using DEMO.UI;
+using DEMO.GamePlay.Player;
 
 namespace DEMO.Manager
 {
@@ -29,7 +31,11 @@ namespace DEMO.Manager
         private InventorySlot[] inventorySlots;
         private List<Item> tempItemList;
 
-        [SerializeField] private MinimapArrow minimapArrow;
+        public Transform baseTransform;
+        public RectTransform arrowRectTransform;
+        public float initialAngleOffset = 90f;
+
+
         [SerializeField] private GameObject micIcon;
 
 
@@ -47,10 +53,16 @@ namespace DEMO.Manager
             }
         }
 
-        public void InitializeMinimapArrow(Transform transform)
+        #region - Minimap -
+        public void UpdateMinimapArrow(Transform playerTransform)
         {
-            minimapArrow.playerTransform = transform;
+            Vector3 direction = playerTransform.position - baseTransform.position;
+        
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - initialAngleOffset;
+
+            arrowRectTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
+        #endregion
 
         #region - PlayerNetworkData UI -
         public void UpdateHPSlider(int HP, int maxHP)

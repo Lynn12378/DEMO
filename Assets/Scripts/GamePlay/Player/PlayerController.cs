@@ -24,7 +24,6 @@ namespace DEMO.GamePlay.Player
         {
             uIManager = FindObjectOfType<UIManager>();
             playerNetworkData.SetUIManager(uIManager);
-            uIManager.InitializeMinimapArrow(transform);
         }
 
         private void Respawn() 
@@ -32,11 +31,22 @@ namespace DEMO.GamePlay.Player
             transform.position = Vector3.zero;
 
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.MaxHP);
-            playerNetworkData.bulletAmount = playerNetworkData.MaxBullet;
+            playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.MaxBullet);
+            playerNetworkData.SetPlayerFood_RPC(playerNetworkData.MaxFood);
         }
 
         public override void FixedUpdateNetwork()
         {
+            if(playerNetworkData.playerRef == Runner.LocalPlayer)
+            {
+                uIManager.UpdateMinimapArrow(gameObject.transform);
+            }
+
+            if(playerNetworkData.HP <= 0 || playerNetworkData.foodAmount <= 0)
+            {
+                Respawn();
+            }
+
             if (GetInput(out NetworkInputData data))
             {
                 ApplyInput(data);
@@ -101,12 +111,7 @@ namespace DEMO.GamePlay.Player
         private void ToggleTransmit()
         {
             Recorder recorder = playerNetworkData.voiceObject.RecorderInUse;
-            if (recorder != null)
-            {
-                recorder.TransmitEnabled = !recorder.TransmitEnabled;
-            }
-
-            Debug.Log(recorder.TransmitEnabled.ToString());
+            recorder.TransmitEnabled = !recorder.TransmitEnabled;
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
@@ -128,10 +133,6 @@ namespace DEMO.GamePlay.Player
         public void TakeDamage(int damage)
         {
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - damage);
-            if(playerNetworkData.HP <= 0)
-            {
-                Respawn();
-            }
         }
     }
 }

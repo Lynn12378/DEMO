@@ -7,6 +7,7 @@ using Fusion;
 using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
 using Photon.Voice.Fusion;
+using DEMO.GamePlay.Player;
 
 namespace DEMO.DB
 {
@@ -69,6 +70,8 @@ namespace DEMO.DB
             voiceObject.RecorderInUse.TransmitEnabled = false;
             
             gamePlayManager.UpdatedGamePlayer();
+
+            Debug.Log(voiceObject);
 		}
 
         private void Update()
