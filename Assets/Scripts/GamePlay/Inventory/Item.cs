@@ -7,7 +7,8 @@ using Fusion;
 
 using DEMO.Manager;
 using DEMO.DB;
-using UnityEngine.EventSystems;
+using DEMO.GamePlay;
+using DEMO.Gameplay;
 //using UnityEditor.U2D.Animation;
 
 namespace DEMO.GamePlay.Inventory
@@ -56,12 +57,6 @@ namespace DEMO.GamePlay.Inventory
             SetAmount_RPC(1);
 		}
 
-        /*public void SetType()
-        {
-            this.itemType = (ItemType) itemID;
-            spriteResolver.SetCategoryAndLabel("item", this.itemType.ToString());
-        }*/
-
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetItemID_RPC(int itemID)
         {
@@ -100,7 +95,14 @@ namespace DEMO.GamePlay.Inventory
                     playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP + boostHealth);
                     break;
                 case ItemType.Wood:
-                    // Add durability
+                    if(playerNetworkData.shelter != null)
+                    {
+                        playerNetworkData.shelter.RepairDurability_RPC();
+                    }
+                    else
+                    {
+                        Debug.Log("Shelter not found!");
+                    }
                     break;
             }
 

@@ -5,9 +5,10 @@ using UnityEngine.UI;
 using Fusion;
 
 using DEMO.Manager;
+using DEMO.GamePlay;
 using DEMO.GamePlay.Inventory;
 using Photon.Voice.Fusion;
-using DEMO.GamePlay.Player;
+using DEMO.Gameplay;
 
 namespace DEMO.DB
 {
@@ -15,7 +16,7 @@ namespace DEMO.DB
     {
         [SerializeField] public Slider hpSlider;
         [SerializeField] public GameObject minimapIcon;
-        [SerializeField] public VoiceNetworkObject voiceObject;
+        //[SerializeField] public VoiceNetworkObject voiceObject;
         private GamePlayManager gamePlayManager = null;
         private ChangeDetector changes;
         private UIManager uIManager = null;
@@ -36,7 +37,9 @@ namespace DEMO.DB
         public int MaxBullet = 50;
         private float foodDecreaseInterval = 30f;
         private float foodDecreaseTimer = 0f;
+
         public List<Item> itemList = new List<Item>();
+        public Shelter shelter; // Reference when in shelter
 
         public override void Spawned()
         {
@@ -67,11 +70,9 @@ namespace DEMO.DB
                 uIManager.InitializeItemSlots(this);
             }
 
-            voiceObject.RecorderInUse.TransmitEnabled = false;
+            //voiceObject.RecorderInUse.TransmitEnabled = false;
             
             gamePlayManager.UpdatedGamePlayer();
-
-            Debug.Log(voiceObject);
 		}
 
         private void Update()
@@ -87,7 +88,7 @@ namespace DEMO.DB
                 SetPlayerFood_RPC(foodAmount - 1);
             }
 
-            if(voiceObject.RecorderInUse.IsCurrentlyTransmitting)
+            /*if(voiceObject.RecorderInUse.IsCurrentlyTransmitting)
             {
                 if(playerRef == Runner.LocalPlayer)
                 {
@@ -101,12 +102,17 @@ namespace DEMO.DB
             else
             {
                 uIManager.UpdateMicIconColor(-1);
-            }
+            }*/
         }
 
         public void SetUIManager(UIManager uIManager)
         {
             this.uIManager = uIManager;
+        }
+
+        public void SetShelter(Shelter shelter)
+        {
+            this.shelter = shelter;
         }
 
         #region - Update UI -

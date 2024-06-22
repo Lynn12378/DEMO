@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - MapCollision
   - SpawnPoint
+  - Shelter
   layers:
   - Default
   - TransparentFX

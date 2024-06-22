@@ -5,8 +5,10 @@ using Fusion.Addons.Physics;
 
 using DEMO.DB;
 using DEMO.Manager;
+using DEMO.GamePlay;
 using DEMO.GamePlay.Inventory;
 using Photon.Voice.Unity;
+using DEMO.Gameplay;
 
 namespace DEMO.GamePlay.Player
 {
@@ -19,6 +21,11 @@ namespace DEMO.GamePlay.Player
         private UIManager uIManager;
         private NetworkButtons buttonsPrevious;
         [SerializeField] private Item itemInRange = null;
+
+        [SerializeField] private Shelter shelter;
+        private bool isInShelter = false;
+        private float shelterTimer = 0f;
+        private const float shelterHealInterval = 5f;
 
         public override void Spawned()
         {
@@ -51,8 +58,20 @@ namespace DEMO.GamePlay.Player
             {
                 ApplyInput(data);
             }
+
+            if (isInShelter)
+            {
+                shelterTimer += Runner.DeltaTime; // Use Runner.DeltaTime to ensure synchronization
+
+                if (shelterTimer >= shelterHealInterval)
+                {
+                    HealPlayer(10);
+                    shelterTimer = 0f; // Reset timer
+                }
+            }
         }
 
+        #region - Input - 
         private async void ApplyInput(NetworkInputData data)
         {
             NetworkButtons buttons = data.buttons;
@@ -106,19 +125,35 @@ namespace DEMO.GamePlay.Player
             {
                 ToggleTransmit();
             }
+
+            if (pressed.IsSet(InputButtons.RELOAD) && isInShelter)
+            {
+                playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount + 5);
+            }
         }
-        
+        #endregion
+
+        #region - Microphone -
         private void ToggleTransmit()
         {
-            Recorder recorder = playerNetworkData.voiceObject.RecorderInUse;
-            recorder.TransmitEnabled = !recorder.TransmitEnabled;
+            /*Recorder recorder = playerNetworkData.voiceObject.RecorderInUse;
+            recorder.TransmitEnabled = !recorder.TransmitEnabled;*/
         }
+        #endregion
 
+        #region - On Trigger -
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.CompareTag("Item"))
             {
                 itemInRange = collider.GetComponent<Item>();
+            }
+
+            if (collider.CompareTag("Shelter"))
+            {
+                isInShelter = true;
+                shelter = collider.GetComponent<Shelter>();
+                playerNetworkData.SetShelter(shelter);
             }
         }
 
@@ -128,12 +163,28 @@ namespace DEMO.GamePlay.Player
             {
                 itemInRange = null;
             }
+
+            if (collider.CompareTag("Shelter"))
+            {
+                isInShelter = false;
+                shelterTimer = 0f;
+                shelter = null;
+                playerNetworkData.SetShelter(shelter);
+            }
+        }
+        #endregion
+
+        #region - Player HP -
+        private void HealPlayer(int healAmount)
+        {
+            playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP + healAmount);
         }
 
         public void TakeDamage(int damage)
         {
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - damage);
         }
+        #endregion
     }
 }
 
