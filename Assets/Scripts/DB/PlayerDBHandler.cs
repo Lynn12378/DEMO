@@ -39,19 +39,21 @@ namespace DEMO.DB
             SetPlayerName();
             SetPlayerPassword();
 
-            if (playerInfo.Player_name.Length < 5 || playerInfo.Player_name.Length > 12)  //checking playername input
+            if (action == "signUp")
             {
-                WarningPanel.SetActive(true);
-                warningText.text = "Player's name must be between 5 to 12 letters.";
-                yield break; // Exit the coroutine if validation fails
+                if (playerInfo.Player_name.Length < 5 || playerInfo.Player_name.Length > 12)  //checking playername input
+                {
+                    WarningPanel.SetActive(true);
+                    warningText.text = "Player's name must be between 5 to 12 letters.";
+                    yield break; // Exit the coroutine if validation fails
+                }
+                if (playerInfo.Player_password.IsNullOrEmpty())  //checking password input
+                {
+                    WarningPanel.SetActive(true);
+                    warningText.text = "Please enter your password.";
+                    yield break; // Exit the coroutine if validation fails
+                }
             }
-            if (playerInfo.Player_password.IsNullOrEmpty())  //checking password input
-            {
-                WarningPanel.SetActive(true);
-                warningText.text = "Please enter your password.";
-                yield break; // Exit the coroutine if validation fails
-            }
-
 
             formData = new List<IMultipartFormSection>
             {
@@ -70,9 +72,10 @@ namespace DEMO.DB
             if (!string.IsNullOrEmpty(responseText))
             {
                 var status = jsonResponse["status"].ToString();
+                var message = jsonResponse["message"].ToString();
 
                 Debug.Log(responseText);
-                if (status == "Success")
+                if (status == "Success")   //login success
                 {
                     int Player_id = Int32.Parse(jsonResponse["Player_id"].ToString());
                     SetPlayerID(Player_id);
@@ -80,7 +83,11 @@ namespace DEMO.DB
                     GameManager.playerInfo = playerInfo;
                     panelManager.OnActiveLobbyPanel();
                 }
-                var message = jsonResponse["message"].ToString();
+                else  //login fail
+                {
+                    WarningPanel.SetActive(true);
+                    warningText.text = "Incorrect username or password.";
+                }
                 Debug.Log(message);
             }
             else
@@ -104,7 +111,8 @@ namespace DEMO.DB
             playerInfo.Player_password = playerPasswordTxt.text.Trim('\u200b');
         }
 
-        public void ClosingWarningPanel(){
+        public void ClosingWarningPanel()
+        {
             playerNameTxt.text = string.Empty;
             playerPasswordTxt.text = string.Empty;
             WarningPanel.SetActive(false);
