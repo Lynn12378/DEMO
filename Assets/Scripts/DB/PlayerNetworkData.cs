@@ -16,10 +16,10 @@ namespace DEMO.DB
     {
         [SerializeField] public Slider hpSlider;
         [SerializeField] public GameObject minimapIcon;
-        //[SerializeField] public VoiceNetworkObject voiceObject;
+        [SerializeField] public VoiceNetworkObject voiceObject;
         private GamePlayManager gamePlayManager = null;
         private ChangeDetector changes;
-        private UIManager uIManager = null;
+        public UIManager uIManager = null;
 
         [Networked] public int playerId { get; private set; }
         [Networked] public PlayerRef playerRef { get; private set; }
@@ -69,8 +69,6 @@ namespace DEMO.DB
 
                 uIManager.InitializeItemSlots(this);
             }
-
-            //voiceObject.RecorderInUse.TransmitEnabled = false;
             
             gamePlayManager.UpdatedGamePlayer();
 		}

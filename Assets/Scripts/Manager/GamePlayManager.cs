@@ -16,6 +16,7 @@ namespace DEMO.Manager
         /// 代替GameManager
         public static GamePlayManager Instance { get; private set; }
         [SerializeField] private NetworkRunner runner = null;
+        [SerializeField] public Recorder recorder = null;
 
         public NetworkRunner Runner
         {

@@ -27,6 +27,20 @@ namespace DEMO.GamePlay.Player
         private float shelterTimer = 0f;
         private const float shelterHealInterval = 5f;
 
+        AudioSource speakerSource;
+        Recorder rec;
+
+        private void Start()
+        {
+            if (playerNetworkData.playerRef == Runner.LocalPlayer)
+            {
+                rec = playerNetworkData.voiceObject.RecorderInUse;
+                rec.TransmitEnabled = false;
+            }
+            
+            speakerSource = playerNetworkData.voiceObject.SpeakerInUse.GetComponent<AudioSource>();
+        }
+
         public override void Spawned()
         {
             uIManager = FindObjectOfType<UIManager>();
@@ -44,11 +58,6 @@ namespace DEMO.GamePlay.Player
 
         public override void FixedUpdateNetwork()
         {
-            if(playerNetworkData.playerRef == Runner.LocalPlayer)
-            {
-                uIManager.UpdateMinimapArrow(gameObject.transform);
-            }
-
             if(playerNetworkData.HP <= 0 || playerNetworkData.foodAmount <= 0)
             {
                 Respawn();
@@ -57,6 +66,11 @@ namespace DEMO.GamePlay.Player
             if (GetInput(out NetworkInputData data))
             {
                 ApplyInput(data);
+            }
+
+            if(playerNetworkData.playerRef == Runner.LocalPlayer)
+            {
+                uIManager.UpdateMinimapArrow(gameObject.transform);
             }
 
             if (isInShelter)
@@ -69,9 +83,12 @@ namespace DEMO.GamePlay.Player
                     shelterTimer = 0f; // Reset timer
                 }
             }
+
+            AudioCheck();
         }
 
-        #region - Input - 
+        #region - Input -
+        /* FIRE, PICKUP, TALK, RELOAD */
         private async void ApplyInput(NetworkInputData data)
         {
             NetworkButtons buttons = data.buttons;
@@ -123,7 +140,7 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.TALK))
             {
-                ToggleTransmit();
+                rec.TransmitEnabled = !rec.TransmitEnabled;
             }
 
             if (pressed.IsSet(InputButtons.RELOAD) && isInShelter)
@@ -134,10 +151,29 @@ namespace DEMO.GamePlay.Player
         #endregion
 
         #region - Microphone -
-        private void ToggleTransmit()
+        private void AudioCheck()
         {
-            /*Recorder recorder = playerNetworkData.voiceObject.RecorderInUse;
-            recorder.TransmitEnabled = !recorder.TransmitEnabled;*/
+            if(rec != null && rec.IsCurrentlyTransmitting)
+            {
+                if(playerNetworkData.playerRef == Runner.LocalPlayer) playerNetworkData.uIManager.UpdateMicIconColor(0);
+                else playerNetworkData.uIManager.UpdateMicIconColor(-1);
+            }
+            else
+            {
+                foreach (var kvp in GamePlayManager.Instance.gamePlayerList)
+                {
+                    PlayerNetworkData playerNetworkDataValue = kvp.Value;
+
+                    if (playerNetworkDataValue.voiceObject.IsSpeaking)
+                    {
+                        playerNetworkData.uIManager.UpdateMicIconColor(1);
+                    }
+                    else
+                    {
+                        playerNetworkData.uIManager.UpdateMicIconColor(-1);
+                    }
+                }
+            }
         }
         #endregion
 
