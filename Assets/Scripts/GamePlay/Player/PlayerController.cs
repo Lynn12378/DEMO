@@ -155,8 +155,17 @@ namespace DEMO.GamePlay.Player
         {
             if(rec != null && rec.IsCurrentlyTransmitting)
             {
-                if(playerNetworkData.playerRef == Runner.LocalPlayer) playerNetworkData.uIManager.UpdateMicIconColor(0);
-                else playerNetworkData.uIManager.UpdateMicIconColor(-1);
+                if(playerNetworkData.playerRef == Runner.LocalPlayer)
+                {
+                    playerNetworkData.uIManager.UpdateMicIconColor(0);
+                    // Use playerRef to test
+                    playerNetworkData.uIManager.UpdateMicTxt(playerNetworkData.playerRefString);
+                }
+                else 
+                {
+                    playerNetworkData.uIManager.UpdateMicIconColor(-1);
+                    playerNetworkData.uIManager.UpdateMicTxt("none");
+                }
             }
             else
             {
@@ -167,10 +176,12 @@ namespace DEMO.GamePlay.Player
                     if (playerNetworkDataValue.voiceObject.IsSpeaking)
                     {
                         playerNetworkData.uIManager.UpdateMicIconColor(1);
+                        playerNetworkData.uIManager.UpdateMicTxt(playerNetworkDataValue.playerRefString);
                     }
                     else
                     {
                         playerNetworkData.uIManager.UpdateMicIconColor(-1);
+                        playerNetworkData.uIManager.UpdateMicTxt("none");
                     }
                 }
             }

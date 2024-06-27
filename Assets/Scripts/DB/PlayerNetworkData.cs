@@ -69,6 +69,8 @@ namespace DEMO.DB
 
                 uIManager.InitializeItemSlots(this);
             }
+
+            uIManager.UpdateMicTxt("none");
             
             gamePlayManager.UpdatedGamePlayer();
 		}

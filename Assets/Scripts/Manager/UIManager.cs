@@ -35,8 +35,8 @@ namespace DEMO.Manager
         public RectTransform arrowRectTransform;
         public float initialAngleOffset = 90f;
 
-
         [SerializeField] private GameObject micIcon;
+        [SerializeField] private TMP_Text micTxt = null;
 
 
         private void Start()
@@ -108,6 +108,18 @@ namespace DEMO.Manager
             else
             {
                 micIconImage.color = Color.gray; // Default color when not speaking
+            }
+        }
+
+        public void UpdateMicTxt(string playerName)
+        {
+            if(playerName == "none")
+            {
+                micTxt.text = " ";
+            }
+            else
+            {
+                micTxt.text = $"Speaking : {playerName}";
             }
         }
         #endregion
