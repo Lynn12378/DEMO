@@ -13,7 +13,7 @@ namespace DEMO.GamePlay.EnemyScript
     public class Enemy : NetworkBehaviour
     {
         [SerializeField] private NetworkRigidbody2D enemyNetworkRigidbody = null;
-        private int directDamage = 20;
+        private int directDamage = 10;
         private int damageOverTime = 5;
         private float damageInterval = 3f;  // Interval until next damage
         [Networked] private TickTimer damageTimer { get; set; } // Timer to countdown next damage
@@ -23,9 +23,9 @@ namespace DEMO.GamePlay.EnemyScript
         public int Hp { get; set; }
         private int maxHp = 50;
 
-        [SerializeField] private float moveSpeed;   // 0.5
-        [SerializeField] private float range;       // 0.5
-        [SerializeField] private float maxDistance; // 3
+        [SerializeField] private float moveSpeed;   // 2f
+        [SerializeField] private float range;       // 1
+        [SerializeField] private float maxDistance; // 4
         private Vector2 wayPoint;
         private bool patrolAlongXAxis;
         private float patrolInterval = 5f;
