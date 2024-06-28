@@ -19,15 +19,20 @@ namespace DEMO.Manager
         [SerializeField] private TMP_Text durabilityTxt = null;
         [SerializeField] private TMP_Text bulletAmountTxt = null;
 
+        [SerializeField] private GameObject micIcon;
+        [SerializeField] private TMP_Text micTxt = null;
+
         [SerializeField] private GameObject shopPanel = null;
         [SerializeField] private TextMeshProUGUI playerCoinAmount = null;
         private ShopItemSlot[] itemSlots;
 
         [SerializeField] private GameObject teamListPanel = null;
 
+        [SerializeField] private GameObject rankPanel = null; 
+        private RankListPanel rankListPanel;
+
         [SerializeField] private GameObject inventoryPanel = null;
         [SerializeField] private Transform slotsBackground = null;
-
         private InventorySlot[] inventorySlots;
         private List<Item> tempItemList;
 
@@ -35,13 +40,11 @@ namespace DEMO.Manager
         public RectTransform arrowRectTransform;
         public float initialAngleOffset = 90f;
 
-        [SerializeField] private GameObject micIcon;
-        [SerializeField] private TMP_Text micTxt = null;
-
 
         private void Start()
         {
             inventorySlots = slotsBackground.GetComponentsInChildren<InventorySlot>();
+            rankListPanel = rankPanel.GetComponent<RankListPanel>();
         }
 
         public void InitializeItemSlots(PlayerNetworkData playerNetworkData)
@@ -140,6 +143,11 @@ namespace DEMO.Manager
             teamListPanel.SetActive(!teamListPanel.activeSelf);
         }
 
+        public void OnOpenRankButton()
+        {
+            rankPanel.SetActive(!rankPanel.activeSelf);
+        }
+
         public void OnOrganizeButton()
         {
             OrganizeInventory(tempItemList);
@@ -223,8 +231,6 @@ namespace DEMO.Manager
             }
         }
 
-        #endregion
-
         // Test for debug
         public string ShowList(List<Item> items)
         {
@@ -237,5 +243,7 @@ namespace DEMO.Manager
 
             return result;
         }
+
+        #endregion
     }
 }

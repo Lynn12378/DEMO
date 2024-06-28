@@ -6,6 +6,7 @@ using Fusion;
 using Fusion.Addons.Physics;
 using DEMO.GamePlay.Player;
 using DEMO.Manager;
+using DEMO.DB;
 
 namespace DEMO.GamePlay.EnemyScript
 {
@@ -131,12 +132,23 @@ namespace DEMO.GamePlay.EnemyScript
         #endregion
 
         #region - Hp -
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, PlayerRef shooter)
         {
             Hp -= damage;
             SetEnemyHP_RPC(Hp);
             if (Hp <= 0)
             {
+                foreach (var kvp in GamePlayManager.Instance.playerOutputList)
+                {
+                    PlayerRef playerRefKey = kvp.Key;
+                    PlayerOutputData playerOutputDataValue = kvp.Value;
+
+                    if (shooter == playerRefKey)
+                    {
+                        playerOutputDataValue.AddKillNo_RPC();
+                    }
+                }
+
                 DespawnEnemy_RPC(Object);
             }
         }

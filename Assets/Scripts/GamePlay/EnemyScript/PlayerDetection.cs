@@ -29,7 +29,7 @@ namespace DEMO.GamePlay.EnemyScript
             if (collider.gameObject.CompareTag("Player"))
             {
                 var networkObject = collider.GetComponent<NetworkObject>();
-                if (networkObject != null && detectedObjs.Contains(networkObject))
+                if (Object != null && networkObject != null && detectedObjs.Contains(networkObject))
                 {
                     RemoveDetectedObj_RPC(networkObject);
                 }

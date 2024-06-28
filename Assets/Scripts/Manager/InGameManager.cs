@@ -24,7 +24,6 @@ namespace DEMO.Manager
         private GamePlayManager gamePlayManager = null;
 		private NetworkRunner networkInstance = null;
 
-        #region - OnInGamePlayerUpdated -
 
         private void Start()
         {
@@ -42,6 +41,7 @@ namespace DEMO.Manager
             gamePlayManager.OnTeamListUpdated -= UpdatedTeamList;
         }
 
+        #region - OnTeamUpdated -
         public void UpdatedTeamList()
         {
             foreach(var team in gamePlayManager.teamList)
@@ -51,14 +51,14 @@ namespace DEMO.Manager
             }
         }
 
-        #endregion
-
         public void CreateTeam()
         {
             var cell = networkInstance.Spawn(teamCellPrefab, Vector3.zero, Quaternion.identity);
             cell.GetComponent<TeamCell>().SetPlayerTeamID_RPC(gamePlayManager.newTeamID);
         }
+        #endregion
 
+        #region - Start Game -
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
             if (player == runner.LocalPlayer)
@@ -70,10 +70,9 @@ namespace DEMO.Manager
             }
         }
 
-        #region - start game -
         public void StartShared()
         {
-            StartGame(GameMode.Shared, "test123", gameScene);
+            StartGame(GameMode.Shared, "test111", gameScene);
         }
 
         private async void StartGame(GameMode mode, string roomName, string sceneName)

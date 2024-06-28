@@ -17,6 +17,8 @@ namespace DEMO.GamePlay.Player
         [SerializeField] private PlayerMovementHandler movementHandler = null;
         [SerializeField] private PlayerAttackHandler attackHandler = null;
         [SerializeField] private PlayerNetworkData playerNetworkData;
+        [SerializeField] private PlayerOutputData playerOutputData;
+        private float surviveTime = 0f;
 
         private UIManager uIManager;
         private NetworkButtons buttonsPrevious;
@@ -54,12 +56,22 @@ namespace DEMO.GamePlay.Player
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.MaxHP);
             playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.MaxBullet);
             playerNetworkData.SetPlayerFood_RPC(playerNetworkData.MaxFood);
+
+            surviveTime = 0f;
         }
 
         public override void FixedUpdateNetwork()
         {
+            surviveTime += Runner.DeltaTime;
+            if(surviveTime > playerOutputData.surviveTime)
+            {
+                playerOutputData.SetSurviveTime_RPC(surviveTime);
+            }
+
             if(playerNetworkData.HP <= 0 || playerNetworkData.foodAmount <= 0)
             {
+                playerOutputData.AddDeathNo_RPC();
+                playerOutputData.SetSurviveTime_RPC(surviveTime);
                 Respawn();
             }
 
@@ -188,7 +200,7 @@ namespace DEMO.GamePlay.Player
         }
         #endregion
 
-        #region - On Trigger -
+        #region - On Trigger : Item & Shelter -
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.CompareTag("Item"))

@@ -31,7 +31,6 @@ namespace DEMO.DB
         [Networked] public int coinAmount { get; set; }
         [Networked] public int teamID { get; set; }
         
-
         public int MaxHP = 100;
         public int MaxFood = 100;
         public int MaxBullet = 50;
@@ -87,22 +86,6 @@ namespace DEMO.DB
                 // Decrease food
                 SetPlayerFood_RPC(foodAmount - 1);
             }
-
-            /*if(voiceObject.RecorderInUse.IsCurrentlyTransmitting)
-            {
-                if(playerRef == Runner.LocalPlayer)
-                {
-                    uIManager.UpdateMicIconColor(0);
-                }
-                else
-                {
-                    uIManager.UpdateMicIconColor(1);
-                }
-            }
-            else
-            {
-                uIManager.UpdateMicIconColor(-1);
-            }*/
         }
 
         public void SetUIManager(UIManager uIManager)
@@ -196,7 +179,6 @@ namespace DEMO.DB
         #endregion
 
         #region - OnChanged Events -
-
         public override void Render()
         {
             if(!Object.HasStateAuthority){return;}

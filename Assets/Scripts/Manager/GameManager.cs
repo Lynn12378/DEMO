@@ -42,7 +42,6 @@ namespace DEMO.Manager
         }
 
         #region - playerInfo -
-
             public static PlayerInfo playerInfo = null;
             public Dictionary<PlayerRef, PlayerInfo> playerList = new Dictionary<PlayerRef, PlayerInfo>();
             
@@ -51,10 +50,9 @@ namespace DEMO.Manager
             {
                 OnPlayerListUpdated?.Invoke();
             }
-  
         #endregion
 
-        #region - playerNetworkData -
+        /*#region - playerNetworkData -
             public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
             
             public event Action OnInGamePlayerUpdated = null;
@@ -62,8 +60,7 @@ namespace DEMO.Manager
             {
                 OnInGamePlayerUpdated?.Invoke();
             }
-
-        #endregion
+        #endregion*/
         
     }
 }
