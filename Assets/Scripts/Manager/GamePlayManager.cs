@@ -54,27 +54,6 @@ namespace DEMO.Manager
             {
                 OnInGamePlayerUpdated?.Invoke();
             }
-<<<<<<< HEAD
-
-        #endregion
-
-        #region - TeamList -
-
-        public int newTeamID = 0;
-        public List<TeamCell> teamList = new List<TeamCell>();
-
-        public event Action OnTeamListUpdated = null;
-        public void UpdatedTeamList()
-        {
-            OnTeamListUpdated?.Invoke();
-        }
-        
-        #endregion
-
-        public List<Item> itemList = new List<Item>();
-
-        public List<Enemy> enemyList = new List<Enemy>();
-=======
         #endregion
 
         #region - playerOutputData -
@@ -112,6 +91,5 @@ namespace DEMO.Manager
                 OnRankListUpdated?.Invoke();
             }
         #endregion
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
     }
 }

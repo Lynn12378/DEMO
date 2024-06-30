@@ -42,10 +42,6 @@ namespace DEMO.Manager
         }
 
         #region - playerInfo -
-<<<<<<< HEAD
-
-=======
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
             public static PlayerInfo playerInfo = null;
             public Dictionary<PlayerRef, PlayerInfo> playerList = new Dictionary<PlayerRef, PlayerInfo>();
             
@@ -54,16 +50,9 @@ namespace DEMO.Manager
             {
                 OnPlayerListUpdated?.Invoke();
             }
-<<<<<<< HEAD
-  
-        #endregion
-
-        #region - playerNetworkData -
-=======
         #endregion
 
         /*#region - playerNetworkData -
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
             public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
             
             public event Action OnInGamePlayerUpdated = null;
@@ -71,12 +60,7 @@ namespace DEMO.Manager
             {
                 OnInGamePlayerUpdated?.Invoke();
             }
-<<<<<<< HEAD
-
-        #endregion
-=======
         #endregion*/
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         
     }
 }

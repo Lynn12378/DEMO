@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Fusion;
-<<<<<<< HEAD
 using TMPro;
 using DEMO.DB;
 using DEMO.Manager;
-=======
-using DEMO.DB;
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 
 
 namespace DEMO.GamePlay.Inventory
@@ -18,15 +14,11 @@ namespace DEMO.GamePlay.Inventory
     {
         private InventorySlot currentSlot;              // Reference to the current InventorySlot
         private PlayerNetworkData playerNetworkData;    // Reference to LocalPlayer.PlayerNetworkData
-<<<<<<< HEAD
         [SerializeField] private GameObject GiftPanel = null;
         [SerializeField] private GameObject GiftButton = null;
         [SerializeField] private GameObject GiftPlayerButton = null;
         private List<GameObject> playerButtonList = new List<GameObject>(); 
         
-=======
-
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         public void SetSlot(InventorySlot slot)
         {
             currentSlot = slot;
@@ -60,7 +52,6 @@ namespace DEMO.GamePlay.Inventory
             AfterFunction();
         }
 
-<<<<<<< HEAD
         public void OnGiftItem(string playerName)
         {
             currentSlot.GiftItem(playerNetworkData, playerName);
@@ -109,12 +100,5 @@ namespace DEMO.GamePlay.Inventory
                 GiftPanel.SetActive(false);
             }
         }
-=======
-        public void OnGiftItem()
-        {
-            currentSlot.GiftItem(playerNetworkData);
-            AfterFunction();
-        }
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
     }
 }

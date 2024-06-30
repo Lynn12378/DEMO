@@ -106,15 +106,9 @@ namespace DEMO.GamePlay.Inventory
             ResetSlotColor();
         }
 
-<<<<<<< HEAD
         public void GiftItem(PlayerNetworkData playerNetworkData, string targetPlayerName)
         {
             item.Gift(playerNetworkData, item.itemType, targetPlayerName);
-=======
-        public void GiftItem(PlayerNetworkData playerNetworkData)
-        {
-            Debug.Log("Gift Item: " + item.itemType);
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 
             ResetSlotColor();
         }

@@ -17,11 +17,8 @@ namespace DEMO.GamePlay.Player
         [SerializeField] private PlayerMovementHandler movementHandler = null;
         [SerializeField] private PlayerAttackHandler attackHandler = null;
         [SerializeField] private PlayerNetworkData playerNetworkData;
-<<<<<<< HEAD
-=======
         [SerializeField] private PlayerOutputData playerOutputData;
         private float surviveTime = 0f;
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 
         private UIManager uIManager;
         private NetworkButtons buttonsPrevious;
@@ -32,8 +29,6 @@ namespace DEMO.GamePlay.Player
         private float shelterTimer = 0f;
         private const float shelterHealInterval = 5f;
 
-<<<<<<< HEAD
-=======
         AudioSource speakerSource;
         Recorder rec;
 
@@ -48,7 +43,6 @@ namespace DEMO.GamePlay.Player
             speakerSource = playerNetworkData.voiceObject.SpeakerInUse.GetComponent<AudioSource>();
         }
 
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         public override void Spawned()
         {
             uIManager = FindObjectOfType<UIManager>();
@@ -62,34 +56,22 @@ namespace DEMO.GamePlay.Player
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.MaxHP);
             playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.MaxBullet);
             playerNetworkData.SetPlayerFood_RPC(playerNetworkData.MaxFood);
-<<<<<<< HEAD
-=======
 
             surviveTime = 0f;
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         }
 
         public override void FixedUpdateNetwork()
         {
-<<<<<<< HEAD
-            if(playerNetworkData.playerRef == Runner.LocalPlayer)
-            {
-                uIManager.UpdateMinimapArrow(gameObject.transform);
-=======
             surviveTime += Runner.DeltaTime;
             if(surviveTime > playerOutputData.surviveTime)
             {
                 playerOutputData.SetSurviveTime_RPC(surviveTime);
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
             }
 
             if(playerNetworkData.HP <= 0 || playerNetworkData.foodAmount <= 0)
             {
-<<<<<<< HEAD
-=======
                 playerOutputData.AddDeathNo_RPC();
                 playerOutputData.SetSurviveTime_RPC(surviveTime);
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
                 Respawn();
             }
 
@@ -98,14 +80,11 @@ namespace DEMO.GamePlay.Player
                 ApplyInput(data);
             }
 
-<<<<<<< HEAD
-=======
             if(playerNetworkData.playerRef == Runner.LocalPlayer)
             {
                 uIManager.UpdateMinimapArrow(gameObject.transform);
             }
 
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
             if (isInShelter)
             {
                 shelterTimer += Runner.DeltaTime; // Use Runner.DeltaTime to ensure synchronization
@@ -116,18 +95,12 @@ namespace DEMO.GamePlay.Player
                     shelterTimer = 0f; // Reset timer
                 }
             }
-<<<<<<< HEAD
-        }
-
-        #region - Input - 
-=======
 
             AudioCheck();
         }
 
         #region - Input -
         /* FIRE, PICKUP, TALK, RELOAD */
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         private async void ApplyInput(NetworkInputData data)
         {
             NetworkButtons buttons = data.buttons;
@@ -179,11 +152,7 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.TALK))
             {
-<<<<<<< HEAD
-                ToggleTransmit();
-=======
                 rec.TransmitEnabled = !rec.TransmitEnabled;
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
             }
 
             if (pressed.IsSet(InputButtons.RELOAD) && isInShelter)
@@ -194,16 +163,6 @@ namespace DEMO.GamePlay.Player
         #endregion
 
         #region - Microphone -
-<<<<<<< HEAD
-        private void ToggleTransmit()
-        {
-            /*Recorder recorder = playerNetworkData.voiceObject.RecorderInUse;
-            recorder.TransmitEnabled = !recorder.TransmitEnabled;*/
-        }
-        #endregion
-
-        #region - On Trigger -
-=======
         private void AudioCheck()
         {
             if(rec != null && rec.IsCurrentlyTransmitting)
@@ -242,7 +201,6 @@ namespace DEMO.GamePlay.Player
         #endregion
 
         #region - On Trigger : Item & Shelter -
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.CompareTag("Item"))

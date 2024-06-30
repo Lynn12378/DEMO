@@ -8,10 +8,6 @@ using Fusion;
 using DEMO.Manager;
 using DEMO.DB;
 using DEMO.GamePlay;
-<<<<<<< HEAD
-=======
-using DEMO.Gameplay;
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 //using UnityEditor.U2D.Animation;
 
 namespace DEMO.GamePlay.Inventory
@@ -118,7 +114,6 @@ namespace DEMO.GamePlay.Inventory
             DecreaseQuantityOrRemove(playerNetworkData.itemList);
         }
 
-<<<<<<< HEAD
         public void Gift(PlayerNetworkData playerNetworkData, Item.ItemType itemType, string targetPlayerName)
         {
             foreach (PlayerNetworkData pnd in GamePlayManager.Instance.gamePlayerList.Values)
@@ -132,8 +127,6 @@ namespace DEMO.GamePlay.Inventory
             DecreaseQuantityOrRemove(playerNetworkData.itemList);
         }
 
-=======
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         // Decrease quantity or remove item after use
         private void DecreaseQuantityOrRemove(List<Item> itemList)
         {

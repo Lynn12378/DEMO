@@ -1,19 +1,13 @@
 using System;
-<<<<<<< HEAD
-using System.Collections.Generic;
-=======
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Fusion;
 using Fusion.Sockets;
-<<<<<<< HEAD
-=======
 using TMPro;
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 
 using DEMO.DB;
 using DEMO.UI;
@@ -27,19 +21,13 @@ namespace DEMO.Manager
 		[SerializeField] private string gameScene = null;
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameObject teamCellPrefab = null;
-<<<<<<< HEAD
         [SerializeField] private GameObject teamPlayerCellPrefab = null;
         [SerializeField] private Transform contentTrans = null;
         private GamePlayManager gamePlayManager = null;
 		private NetworkRunner networkInstance = null;   
 
         #region - OnInGamePlayerUpdated -
-=======
-        [SerializeField] private Transform contentTrans = null;
-        private GamePlayManager gamePlayManager = null;
-		private NetworkRunner networkInstance = null;
 
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 
         private void Start()
         {
@@ -57,15 +45,11 @@ namespace DEMO.Manager
             gamePlayManager.OnTeamListUpdated -= UpdatedTeamList;
         }
 
-<<<<<<< HEAD
-=======
         #region - OnTeamUpdated -
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         public void UpdatedTeamList()
         {
             foreach(var team in gamePlayManager.teamList)
             {
-<<<<<<< HEAD
                 if (team != null)
                 {
                     team.transform.SetParent(contentTrans, false);
@@ -160,21 +144,6 @@ namespace DEMO.Manager
                         
         }
 
-=======
-                team.transform.SetParent(contentTrans, false);
-                team.SetInfo(team.teamID);
-            }
-        }
-
-        public void CreateTeam()
-        {
-            var cell = networkInstance.Spawn(teamCellPrefab, Vector3.zero, Quaternion.identity);
-            cell.GetComponent<TeamCell>().SetPlayerTeamID_RPC(gamePlayManager.newTeamID);
-        }
-        #endregion
-
-        #region - Start Game -
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
             if (player == runner.LocalPlayer)
@@ -186,16 +155,9 @@ namespace DEMO.Manager
             }
         }
 
-<<<<<<< HEAD
-        #region - start game -
-        public void StartShared()
-        {
-            StartGame(GameMode.Shared, "test123", gameScene);
-=======
         public void StartShared()
         {
             StartGame(GameMode.Shared, "test111", gameScene);
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         }
 
         private async void StartGame(GameMode mode, string roomName, string sceneName)

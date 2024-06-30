@@ -19,29 +19,20 @@ namespace DEMO.Manager
         [SerializeField] private TMP_Text durabilityTxt = null;
         [SerializeField] private TMP_Text bulletAmountTxt = null;
 
-<<<<<<< HEAD
-=======
         [SerializeField] private GameObject micIcon;
         [SerializeField] private TMP_Text micTxt = null;
 
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         [SerializeField] private GameObject shopPanel = null;
         [SerializeField] private TextMeshProUGUI playerCoinAmount = null;
         private ShopItemSlot[] itemSlots;
 
         [SerializeField] private GameObject teamListPanel = null;
 
-<<<<<<< HEAD
-        [SerializeField] private GameObject inventoryPanel = null;
-        [SerializeField] private Transform slotsBackground = null;
-
-=======
         [SerializeField] private GameObject rankPanel = null; 
         private RankListPanel rankListPanel;
 
         [SerializeField] private GameObject inventoryPanel = null;
         [SerializeField] private Transform slotsBackground = null;
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         private InventorySlot[] inventorySlots;
         private List<Item> tempItemList;
 
@@ -50,19 +41,10 @@ namespace DEMO.Manager
         public float initialAngleOffset = 90f;
 
 
-<<<<<<< HEAD
-        [SerializeField] private GameObject micIcon;
-
-
-        private void Start()
-        {
-            inventorySlots = slotsBackground.GetComponentsInChildren<InventorySlot>();
-=======
         private void Start()
         {
             inventorySlots = slotsBackground.GetComponentsInChildren<InventorySlot>();
             rankListPanel = rankPanel.GetComponent<RankListPanel>();
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         }
 
         public void InitializeItemSlots(PlayerNetworkData playerNetworkData)
@@ -131,8 +113,6 @@ namespace DEMO.Manager
                 micIconImage.color = Color.gray; // Default color when not speaking
             }
         }
-<<<<<<< HEAD
-=======
 
         public void UpdateMicTxt(string playerName)
         {
@@ -145,7 +125,6 @@ namespace DEMO.Manager
                 micTxt.text = $"Speaking : {playerName}";
             }
         }
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         #endregion
 
         #region - Buttons -
@@ -164,14 +143,11 @@ namespace DEMO.Manager
             teamListPanel.SetActive(!teamListPanel.activeSelf);
         }
 
-<<<<<<< HEAD
-=======
         public void OnOpenRankButton()
         {
             rankPanel.SetActive(!rankPanel.activeSelf);
         }
 
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         public void OnOrganizeButton()
         {
             OrganizeInventory(tempItemList);
@@ -255,11 +231,6 @@ namespace DEMO.Manager
             }
         }
 
-<<<<<<< HEAD
-        #endregion
-
-=======
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         // Test for debug
         public string ShowList(List<Item> items)
         {
@@ -272,10 +243,7 @@ namespace DEMO.Manager
 
             return result;
         }
-<<<<<<< HEAD
-=======
 
         #endregion
->>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
     }
 }
