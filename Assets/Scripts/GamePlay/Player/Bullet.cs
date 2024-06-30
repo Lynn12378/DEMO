@@ -19,10 +19,20 @@ namespace DEMO.GamePlay.Player
 
         public Vector2 mousePosition;
 
+<<<<<<< HEAD
         public void Init(Vector2 mousePosition)
         {
             life = TickTimer.CreateFromSeconds(Runner, bulletTime);
             this.mousePosition = mousePosition.normalized;
+=======
+        private PlayerRef shooterPlayerRef;
+
+        public void Init(Vector2 mousePosition, PlayerRef shooter)
+        {
+            life = TickTimer.CreateFromSeconds(Runner, bulletTime);
+            this.mousePosition = mousePosition.normalized;
+            shooterPlayerRef = shooter;
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
             transform.Translate(Vector2.zero);
         }
 
@@ -41,7 +51,11 @@ namespace DEMO.GamePlay.Player
 
             if (enemy != null)
             {
+<<<<<<< HEAD
                 enemy.TakeDamage(damage);
+=======
+                enemy.TakeDamage(damage, shooterPlayerRef);
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
                 Runner.Despawn(Object);
             }
         }

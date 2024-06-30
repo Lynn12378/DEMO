@@ -523,7 +523,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8927844647791326121}
         m_TargetAssemblyTypeName: DEMO.GamePlay.Inventory.ItemFunction, Assembly-CSharp
+<<<<<<< HEAD
         m_MethodName: OnGiftClicked
+=======
+        m_MethodName: OnGiftItem
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -625,9 +629,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afebb618a21b37548849e57d2114244b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   GiftPanel: {fileID: 0}
   GiftButton: {fileID: 2458451637398589216}
   GiftPlayerButton: {fileID: 0}
+=======
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 --- !u!114 &8801186795127890143
 MonoBehaviour:
   m_ObjectHideFlags: 0

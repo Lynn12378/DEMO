@@ -1,11 +1,19 @@
+<<<<<<< HEAD
 using System;
+=======
+using System.Collections;
+using System.Collections.Generic;
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 using UnityEngine;
 using UnityEngine.UI;
 using Fusion;
 using TMPro;
 
 using DEMO.Manager;
+<<<<<<< HEAD
 using DEMO.DB;
+=======
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 
 namespace DEMO.UI
 {
@@ -13,6 +21,7 @@ namespace DEMO.UI
     {
         private ChangeDetector changes;
         [SerializeField] private TMP_Text teamTxt = null;
+<<<<<<< HEAD
         [SerializeField] private TMP_Text teamBtnTxt = null;
         [SerializeField] private Button teamBtn = null;
         [SerializeField] private Button expandBtn = null;        
@@ -20,18 +29,29 @@ namespace DEMO.UI
         PlayerRef player= GamePlayManager.Instance.Runner.LocalPlayer;
         InGameManager inGameManager = null;
         public bool isExpanded = false; 
+=======
+        //[SerializeField] private Button joinBtn = null;
+        [Networked] public int teamID { get; set; } = 0;
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 
         public override void Spawned()
         {
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
             GamePlayManager.Instance.teamList.Add(this);
+<<<<<<< HEAD
             GamePlayManager.Instance.UpdatedTeamList();
             inGameManager = FindObjectOfType<InGameManager>();
+=======
+            GamePlayManager.Instance.newTeamID += 1;
+
+            GamePlayManager.Instance.UpdatedTeamList();
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         }
 
         public void SetInfo(int id)
         {
             teamTxt.text = $"Team {id}";
+<<<<<<< HEAD
             if (GamePlayManager.Instance.gamePlayerList.TryGetValue(player, out PlayerNetworkData playerNetworkData))
             {
                 if (playerNetworkData.teamID != -1 && playerNetworkData.teamID != id)
@@ -89,6 +109,12 @@ namespace DEMO.UI
         public TMP_Text getTeamBtnTxt()
         {
             return teamBtnTxt;
+=======
+        }
+
+        public void OnJoinBtnClicked()
+        {
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         }
 
         #region - RPCs -
@@ -118,4 +144,9 @@ namespace DEMO.UI
         
         #endregion
     }
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9

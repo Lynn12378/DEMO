@@ -54,6 +54,7 @@ namespace DEMO.Manager
             {
                 OnInGamePlayerUpdated?.Invoke();
             }
+<<<<<<< HEAD
 
         #endregion
 
@@ -73,5 +74,44 @@ namespace DEMO.Manager
         public List<Item> itemList = new List<Item>();
 
         public List<Enemy> enemyList = new List<Enemy>();
+=======
+        #endregion
+
+        #region - playerOutputData -
+            public static PlayerOutputData playerOutputData = null;
+            public Dictionary<PlayerRef, PlayerOutputData> playerOutputList = new Dictionary<PlayerRef, PlayerOutputData>();
+            
+            public event Action OnPlayerOutputListUpdated = null;
+            public void UpdatePlayerOutputList()
+            {
+                OnPlayerOutputListUpdated?.Invoke();
+            }
+        #endregion
+
+        #region - TeamList -
+            public int newTeamID = 0;
+            public List<TeamCell> teamList = new List<TeamCell>();
+
+            public event Action OnTeamListUpdated = null;
+            public void UpdatedTeamList()
+            {
+                OnTeamListUpdated?.Invoke();
+            }
+        #endregion
+
+        #region - Spawn List -
+            public List<Item> itemList = new List<Item>();
+            public List<Enemy> enemyList = new List<Enemy>();
+        #endregion
+
+        #region - RankList -
+            public List<RankCell> rankList = new List<RankCell>();
+            public event Action OnRankListUpdated = null;
+            public void UpdateRankList()
+            {
+                OnRankListUpdated?.Invoke();
+            }
+        #endregion
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
     }
 }

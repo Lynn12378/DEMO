@@ -38,7 +38,11 @@ namespace DEMO.Gameplay
                     if (durability > 0)
                     {
                         durability -= 1;
+<<<<<<< HEAD
                         durabilityTicker = TickTimer.CreateFromSeconds(Runner, 1);
+=======
+                        durabilityTicker = TickTimer.CreateFromSeconds(Runner, 5);
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
                     }
                 }
             }

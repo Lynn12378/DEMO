@@ -16,10 +16,17 @@ namespace DEMO.DB
     {
         [SerializeField] public Slider hpSlider;
         [SerializeField] public GameObject minimapIcon;
+<<<<<<< HEAD
         //[SerializeField] public VoiceNetworkObject voiceObject;
         private GamePlayManager gamePlayManager = null;
         private ChangeDetector changes;
         private UIManager uIManager = null;
+=======
+        [SerializeField] public VoiceNetworkObject voiceObject;
+        private GamePlayManager gamePlayManager = null;
+        private ChangeDetector changes;
+        public UIManager uIManager = null;
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 
         [Networked] public int playerId { get; private set; }
         [Networked] public PlayerRef playerRef { get; private set; }
@@ -31,7 +38,10 @@ namespace DEMO.DB
         [Networked] public int coinAmount { get; set; }
         [Networked] public int teamID { get; set; }
         
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         public int MaxHP = 100;
         public int MaxFood = 100;
         public int MaxBullet = 50;
@@ -51,8 +61,12 @@ namespace DEMO.DB
   
             if (Object.HasStateAuthority)
             {
+<<<<<<< HEAD
                 //Random player name for testing
                 SetPlayerInfo_RPC(0,"Player" + new System.Random().Next(1, 10).ToString());
+=======
+                SetPlayerInfo_RPC(0,"TEST");
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
                 SetPlayerHP_RPC(MaxHP);
                 SetPlayerBullet_RPC(MaxBullet);
                 SetPlayerCoin_RPC(100);
@@ -71,7 +85,11 @@ namespace DEMO.DB
                 uIManager.InitializeItemSlots(this);
             }
 
+<<<<<<< HEAD
             //voiceObject.RecorderInUse.TransmitEnabled = false;
+=======
+            uIManager.UpdateMicTxt("none");
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
             
             gamePlayManager.UpdatedGamePlayer();
 		}
@@ -88,6 +106,7 @@ namespace DEMO.DB
                 // Decrease food
                 SetPlayerFood_RPC(foodAmount - 1);
             }
+<<<<<<< HEAD
 
             /*if(voiceObject.RecorderInUse.IsCurrentlyTransmitting)
             {
@@ -104,6 +123,8 @@ namespace DEMO.DB
             {
                 uIManager.UpdateMicIconColor(-1);
             }*/
+=======
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         }
 
         public void SetUIManager(UIManager uIManager)
@@ -194,6 +215,7 @@ namespace DEMO.DB
             teamID = id;
 		}
 
+<<<<<<< HEAD
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void ReceiveGift_RPC(Item.ItemType itemType)
         {
@@ -217,6 +239,11 @@ namespace DEMO.DB
 
         #region - OnChanged Events -
 
+=======
+        #endregion
+
+        #region - OnChanged Events -
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         public override void Render()
         {
             if(!Object.HasStateAuthority){return;}

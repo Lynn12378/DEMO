@@ -78,10 +78,13 @@ namespace DEMO.GamePlay.EnemyScript
             float randomOffsetX = Random.Range(-offsetRange, offsetRange);
             float randomOffsetY = Random.Range(-offsetRange, offsetRange);
 
+<<<<<<< HEAD
             // Apply a fixed upward offset for enemies
             float upwardOffset = 31.0f; // Add this because enemy's Transform always goes wrong
             randomOffsetY += upwardOffset;
 
+=======
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
             // Return the position near the spawn point
             return new Vector3(
                 spawnPoint.position.x + randomOffsetX,

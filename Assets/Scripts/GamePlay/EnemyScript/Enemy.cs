@@ -6,13 +6,21 @@ using Fusion;
 using Fusion.Addons.Physics;
 using DEMO.GamePlay.Player;
 using DEMO.Manager;
+<<<<<<< HEAD
+=======
+using DEMO.DB;
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
 
 namespace DEMO.GamePlay.EnemyScript
 {
     public class Enemy : NetworkBehaviour
     {
         [SerializeField] private NetworkRigidbody2D enemyNetworkRigidbody = null;
+<<<<<<< HEAD
         private int directDamage = 20;
+=======
+        private int directDamage = 10;
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         private int damageOverTime = 5;
         private float damageInterval = 3f;  // Interval until next damage
         [Networked] private TickTimer damageTimer { get; set; } // Timer to countdown next damage
@@ -22,9 +30,15 @@ namespace DEMO.GamePlay.EnemyScript
         public int Hp { get; set; }
         private int maxHp = 50;
 
+<<<<<<< HEAD
         [SerializeField] private float moveSpeed;   // 0.5
         [SerializeField] private float range;       // 0.5
         [SerializeField] private float maxDistance; // 3
+=======
+        [SerializeField] private float moveSpeed;   // 2f
+        [SerializeField] private float range;       // 1
+        [SerializeField] private float maxDistance; // 4
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         private Vector2 wayPoint;
         private bool patrolAlongXAxis;
         private float patrolInterval = 5f;
@@ -131,12 +145,30 @@ namespace DEMO.GamePlay.EnemyScript
         #endregion
 
         #region - Hp -
+<<<<<<< HEAD
         public void TakeDamage(int damage)
+=======
+        public void TakeDamage(int damage, PlayerRef shooter)
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
         {
             Hp -= damage;
             SetEnemyHP_RPC(Hp);
             if (Hp <= 0)
             {
+<<<<<<< HEAD
+=======
+                foreach (var kvp in GamePlayManager.Instance.playerOutputList)
+                {
+                    PlayerRef playerRefKey = kvp.Key;
+                    PlayerOutputData playerOutputDataValue = kvp.Value;
+
+                    if (shooter == playerRefKey)
+                    {
+                        playerOutputDataValue.AddKillNo_RPC();
+                    }
+                }
+
+>>>>>>> 1e73d3857742deca280a555b5041ca54311b10f9
                 DespawnEnemy_RPC(Object);
             }
         }
