@@ -54,6 +54,15 @@ namespace DEMO.Manager
             {
                 OnInGamePlayerUpdated?.Invoke();
             }
+
+            public string GetPlayerNameByRef(PlayerRef playerRef)
+            {
+                if (gamePlayerList.TryGetValue(playerRef, out PlayerNetworkData playerNetworkData))
+                {
+                    return playerNetworkData.playerName;
+                }
+                return "Unknown";
+            }
         #endregion
 
         #region - playerOutputData -

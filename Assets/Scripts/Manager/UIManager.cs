@@ -28,8 +28,7 @@ namespace DEMO.Manager
 
         [SerializeField] private GameObject teamListPanel = null;
 
-        [SerializeField] private GameObject rankPanel = null; 
-        private RankListPanel rankListPanel;
+        [SerializeField] private GameObject rankPanel = null;
 
         [SerializeField] private GameObject inventoryPanel = null;
         [SerializeField] private Transform slotsBackground = null;
@@ -44,7 +43,6 @@ namespace DEMO.Manager
         private void Start()
         {
             inventorySlots = slotsBackground.GetComponentsInChildren<InventorySlot>();
-            rankListPanel = rankPanel.GetComponent<RankListPanel>();
         }
 
         public void InitializeItemSlots(PlayerNetworkData playerNetworkData)

@@ -14,7 +14,8 @@ namespace DEMO.DB
         private ChangeDetector changes;
         public UIManager uIManager = null;
 
-        public RankListPanel rankListPanel;
+        //public RankListPanel rankListPanel;
+        [Networked] public PlayerRef playerRef { get; private set; }
         [Networked] public int killNo { get; set; }
         [Networked] public int deathNo { get; set; }
         [Networked] public float surviveTime { get; set; }
@@ -28,6 +29,11 @@ namespace DEMO.DB
 
             gamePlayManager = FindObjectOfType<GamePlayManager>();
             gamePlayManager.playerOutputList.Add(Object.InputAuthority, this);
+
+            if (Object.HasStateAuthority)
+            {
+                SetPlayerRef_RPC();
+            }
             
             gamePlayManager.UpdatePlayerOutputList();
 		}
@@ -38,6 +44,12 @@ namespace DEMO.DB
         }
 
         #region - RPCs -
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+		public void SetPlayerRef_RPC()
+        {
+            playerRef = Runner.LocalPlayer;
+		}
+
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void AddKillNo_RPC()
         {
@@ -58,29 +70,5 @@ namespace DEMO.DB
             surviveTime = longestTime;
 		}
         #endregion
-
-        /*#region - OnChanged Events -
-        public override void Render()
-        {
-            if(!Object.HasStateAuthority){return;}
-            foreach (var change in changes.DetectChanges(this, out var previousBuffer, out var currentBuffer))
-            {
-                switch (change)
-                {
-                    case nameof(killNo):
-                        rankListPanel.UpdateKillNo();
-                        break;
-
-                    case nameof(deathNo):
-                        rankListPanel.UpdateDeathNo();
-                        break;
-
-                    case nameof(surviveTime):
-                        rankListPanel.UpdateSurviveTime();
-                        break;
-                }
-            }
-        }
-        #endregion*/
     }
 }

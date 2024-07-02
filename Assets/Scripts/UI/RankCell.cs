@@ -7,17 +7,35 @@ namespace DEMO.UI
 {
     public class RankCell : MonoBehaviour
     {
-        [SerializeField] private TMP_Text playerName = null;
-        [SerializeField] private TMP_Text killNo = null;
-        [SerializeField] private TMP_Text deathNo = null;
-        [SerializeField] private TMP_Text surviveTime = null;
+        public TMP_Text rankText;
+        public TMP_Text playerNameText;
+        public TMP_Text valueText;
 
-        public void SetRankListInfo(string name, int kill, int death, float time)
+        private void SetText(TMP_Text textComponent, string text, float fontSize)
         {
-            playerName.text = name;
-            killNo.text = kill.ToString();
-            deathNo.text = death.ToString();
-            surviveTime.text = time.ToString();
+            textComponent.text = text;
+            textComponent.fontSize = fontSize;
+        }
+
+        public void SetRankTitle(string rank, string playerName, string value)
+        {
+            SetText(rankText, rank, 24);
+            SetText(playerNameText, playerName, 24);
+            SetText(valueText, value, value == "Survive Time" ? 19 : 24);
+        }
+
+        public void SetRankData(int rank, string playerName, int value)
+        {
+            rankText.text = rank.ToString();
+            playerNameText.text = playerName;
+            valueText.text = value.ToString();
+        }
+
+        public void SetRankData(int rank, string playerName, float value)
+        {
+            rankText.text = rank.ToString();
+            playerNameText.text = playerName;
+            valueText.text = value.ToString("F2");
         }
     }
 }
