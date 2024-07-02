@@ -23,9 +23,9 @@ namespace DEMO.GamePlay.EnemyScript
         public int Hp { get; set; }
         private int maxHp = 50;
 
-        [SerializeField] private float moveSpeed;   // 2f
-        [SerializeField] private float range;       // 1
-        [SerializeField] private float maxDistance; // 4
+        [SerializeField] private float moveSpeed;   // 1
+        [SerializeField] private float range;       // 0.3
+        [SerializeField] private float maxDistance; // 3
         private Vector2 wayPoint;
         private bool patrolAlongXAxis;
         private float patrolInterval = 5f;
@@ -54,6 +54,7 @@ namespace DEMO.GamePlay.EnemyScript
         #region - Patrol & Player Detect -
         public override void FixedUpdateNetwork()
         {
+            Vector2 currentPosition = transform.position;
             Vector2 direction = Vector2.zero;
 
             if(playerDetection.detectedObjs.Count > 0)
@@ -67,34 +68,46 @@ namespace DEMO.GamePlay.EnemyScript
             else
             {
                 // If position too close or patrol timer runs out, set new destination
-                if (Vector2.Distance(transform.position, wayPoint) < range || patrolTimer.Expired(Runner))
+                if (Vector2.Distance(currentPosition, wayPoint) <= range || patrolTimer.Expired(Runner))
                 {
-                    // Pick an axis to patrol
-                    patrolAlongXAxis = Random.Range(0, 2) == 0 ? true : false;
-                    //SetNewDestination();
+                    SetNewDestination();
                 }
 
                 // Calculate direction from transform to destination
-                direction = (wayPoint - (Vector2)transform.position).normalized;
+                direction = (wayPoint - currentPosition).normalized;
             }
 
-            // Set velocity
-            enemyNetworkRigidbody.Rigidbody.velocity = direction * moveSpeed;
+            // Move enemy only if distance > range
+            if (Vector2.Distance(currentPosition, wayPoint) > range)
+            {
+                enemyNetworkRigidbody.Rigidbody.velocity = direction * moveSpeed;
+            }
+            else
+            {
+                enemyNetworkRigidbody.Rigidbody.velocity = Vector2.zero;
+            }
         }
 
         private void SetNewDestination()
         {
-            if (patrolAlongXAxis)
-            {
-                // Patrol on X axis
-                wayPoint = new Vector2(Random.Range(-maxDistance, maxDistance), transform.position.y);
-            }
-            else
-            {
-                // Patrol on Y axis
-                wayPoint = new Vector2(transform.position.x, Random.Range(-maxDistance, maxDistance));
-            }
+            Vector2 currentPosition = transform.position;
+            Vector2 newWayPoint;
 
+            do
+            {
+                if (patrolAlongXAxis)
+                {
+                    float newX = Random.Range(currentPosition.x - maxDistance, currentPosition.x + maxDistance);
+                    newWayPoint = new Vector2(newX, currentPosition.y);
+                }
+                else
+                {
+                    float newY = Random.Range(currentPosition.y - maxDistance, currentPosition.y + maxDistance);
+                    newWayPoint = new Vector2(currentPosition.x, newY);
+                }
+            } while (Vector2.Distance(currentPosition, newWayPoint) <= range * 2);
+
+            wayPoint = newWayPoint;
             patrolTimer = TickTimer.CreateFromSeconds(Runner, patrolInterval);
         }
         #endregion
@@ -109,6 +122,10 @@ namespace DEMO.GamePlay.EnemyScript
                 {
                     player.TakeDamage(directDamage);
                 }
+            }
+            else if (!collision.collider.CompareTag("Player"))
+            {
+                SetNewDestination();
             }
         }
 

@@ -62,6 +62,27 @@ namespace DEMO.GamePlay.Player
 
         public override void FixedUpdateNetwork()
         {
+            /* Testing mic */
+            if (Object.HasInputAuthority)
+            {
+                Debug.Log($"Local Player Position: {transform.position}");
+
+                // 計算並輸出與其他玩家的距離
+                foreach (var player in Runner.ActivePlayers)
+                {
+                    if (player != Object.InputAuthority)
+                    {
+                        var otherPlayer = Runner.GetPlayerObject(player);
+                        if (otherPlayer != null)
+                        {
+                            float distance = Vector3.Distance(transform.position, otherPlayer.transform.position);
+                            Debug.Log($"Distance to Player {player}: {distance}");
+                        }
+                    }
+                }
+            }
+            /* ****************************** */
+
             surviveTime += Runner.DeltaTime;
             if(surviveTime > playerOutputData.surviveTime)
             {
