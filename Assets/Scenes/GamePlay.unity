@@ -65962,7 +65962,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 853419679}
-  - {fileID: 7213086285796437156}
+  - {fileID: 1240923780758404123}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2036895366
@@ -66012,8 +66012,8 @@ MonoBehaviour:
   ApplyDontDestroyOnLoad: 1
   runInBackground: 1
   statsResetInterval: 1000
-  speakerPrefab: {fileID: 0}
-  primaryRecorder: {fileID: 5173919850883744349}
+  speakerPrefab: {fileID: 7852833417309642521, guid: d5b7c9840a7348f4db62ebf5fa33565a, type: 3}
+  primaryRecorder: {fileID: 1933126650181764707}
   usePrimaryRecorder: 0
   cppCompatibilityMode: 0
   Settings:
@@ -66413,6 +66413,64 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3244760222053198718, guid: becb8d572c85c0746aabf4679b64da99, type: 3}
   m_PrefabInstance: {fileID: 2126429739}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1240923780758404123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5403650588683825382}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2036895365}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1933126650181764707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5403650588683825382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voiceDetection: 1
+  voiceDetectionThreshold: 0.01
+  voiceDetectionDelayMs: 200
+  interestGroup: 0
+  useTargetPlayers: 0
+  targetPlayers: 
+  debugEchoMode: 0
+  reliableMode: 0
+  encrypt: 0
+  transmitEnabled: 0
+  samplingRate: 48000
+  frameDuration: 20000
+  bitrate: 30000
+  sourceType: 0
+  microphoneType: 0
+  audioClip: {fileID: 0}
+  loopAudioClip: 1
+  recordingEnabled: 1
+  audioSessionParameters:
+    Category: 4
+    Mode: 1
+    CategoryOptions: 0800000004000000
+  editorAudioSessionPreset: 1
+  androidMicrophoneSettings:
+    EnableAEC: 1
+    EnableAGC: 1
+    EnableNS: 1
+  stopRecordingWhenPaused: 0
+  useOnAudioFilterRead: 0
+  useMicrophoneTypeFallback: 1
+  recordWhenJoined: 1
 --- !u!224 &2162595946311128509 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4608537451426742330, guid: 430b275ab1a3ff14bb9006b5158a27bd, type: 3}
@@ -66515,50 +66573,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2204178306835072796, guid: 9aa5f06fc780082408ff45156cd8f6a4, type: 3}
   m_PrefabInstance: {fileID: 1170249610}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5173919850883744349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6170717315397014256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  voiceDetection: 1
-  voiceDetectionThreshold: 0.01
-  voiceDetectionDelayMs: 200
-  interestGroup: 0
-  useTargetPlayers: 0
-  targetPlayers: 
-  debugEchoMode: 0
-  reliableMode: 0
-  encrypt: 0
-  transmitEnabled: 0
-  samplingRate: 48000
-  frameDuration: 20000
-  bitrate: 30000
-  sourceType: 0
-  microphoneType: 0
-  audioClip: {fileID: 0}
-  loopAudioClip: 1
-  recordingEnabled: 1
-  audioSessionParameters:
-    Category: 4
-    Mode: 1
-    CategoryOptions: 0800000004000000
-  editorAudioSessionPreset: 1
-  androidMicrophoneSettings:
-    EnableAEC: 1
-    EnableAGC: 1
-    EnableNS: 1
-  stopRecordingWhenPaused: 0
-  useOnAudioFilterRead: 0
-  useMicrophoneTypeFallback: 1
-  recordWhenJoined: 1
---- !u!1 &6170717315397014256
+--- !u!1 &5403650588683825382
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66566,8 +66581,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7213086285796437156}
-  - component: {fileID: 5173919850883744349}
+  - component: {fileID: 1240923780758404123}
+  - component: {fileID: 1933126650181764707}
   m_Layer: 0
   m_Name: Recorder
   m_TagString: Untagged
@@ -66676,21 +66691,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ea8b454af8d11044b911efaa8b06961, type: 3}
---- !u!4 &7213086285796437156
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6170717315397014256}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2036895365}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8540223335923822375 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3417369707480962190, guid: 430b275ab1a3ff14bb9006b5158a27bd, type: 3}

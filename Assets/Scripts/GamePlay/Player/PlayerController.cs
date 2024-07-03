@@ -29,8 +29,8 @@ namespace DEMO.GamePlay.Player
         private float shelterTimer = 0f;
         private const float shelterHealInterval = 5f;
 
-        AudioSource speakerSource;
         Recorder rec;
+        private const float hearingDistance = 5f;
 
         private void Start()
         {
@@ -39,8 +39,6 @@ namespace DEMO.GamePlay.Player
                 rec = playerNetworkData.voiceObject.RecorderInUse;
                 rec.TransmitEnabled = false;
             }
-            
-            speakerSource = playerNetworkData.voiceObject.SpeakerInUse.GetComponent<AudioSource>();
         }
 
         public override void Spawned()
@@ -96,6 +94,7 @@ namespace DEMO.GamePlay.Player
                 }
             }
 
+            DistanceCheck();
             AudioCheck();
         }
 
@@ -163,6 +162,30 @@ namespace DEMO.GamePlay.Player
         #endregion
 
         #region - Microphone -
+        private void DistanceCheck()
+        {
+            foreach (var player in GamePlayManager.Instance.gamePlayerList)
+            {
+                GameObject playerObject = player.Value.gameObject;
+                if (playerObject != null)
+                {
+                    float distance = Vector3.Distance(transform.position, playerObject.transform.position);
+                    var speaker = player.Value.voiceObject.SpeakerInUse;
+
+                    if (distance <= hearingDistance)
+                    {
+                        rec.TransmitEnabled = rec.TransmitEnabled;
+                        speaker.enabled = true;
+                    }
+                    else
+                    {
+                        rec.TransmitEnabled = false;
+                        speaker.enabled = false;
+                    }
+                }
+            }
+        }
+        
         private void AudioCheck()
         {
             if(rec != null && rec.IsCurrentlyTransmitting)
