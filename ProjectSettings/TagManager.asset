@@ -4,6 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Item
+  - Enemy
+  - MapCollision
+  - SpawnPoint
   - Shelter
   layers:
   - Default
@@ -12,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Minimap
   - 
   - 
   - 

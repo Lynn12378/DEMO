@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNameTxt: {fileID: 7583142949729061024}
+  isReadyTxt: {fileID: 7297292321071121672}
 --- !u!1 &7044373598776937682
 GameObject:
   m_ObjectHideFlags: 0

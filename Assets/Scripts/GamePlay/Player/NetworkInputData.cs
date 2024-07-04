@@ -10,9 +10,9 @@ namespace DEMO.GamePlay.Player
     {
         FIRE,
         PICKUP,
-        TESTDAMAGE,
-        REPAIR,
-        RELOAD
+        TALK,
+        RELOAD,
+        MAP
     }
 
     public struct NetworkInputData : INetworkInput

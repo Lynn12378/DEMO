@@ -13,10 +13,9 @@ namespace DEMO.GamePlay.Player
 
         public void Shoot(Vector2 mousePosition)
         {
-            // mousePosition = mousePosition - new Vector2(transform.position.x, transform.position.y);  
             Quaternion rotation = Quaternion.Euler(shootPoint.rotation.eulerAngles);
             Runner.Spawn(bulletPrefab, shootPoint.position, rotation, Object.InputAuthority,
-                (Runner, NO) => NO.GetComponent<Bullet>().Init(mousePosition));
+                (Runner, NO) => NO.GetComponent<Bullet>().Init(mousePosition, Object.InputAuthority));
         }
     }
 }

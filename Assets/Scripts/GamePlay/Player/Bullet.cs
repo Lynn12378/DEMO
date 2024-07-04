@@ -5,6 +5,8 @@ using UnityEngine;
 using Fusion;
 using Fusion.Addons.Physics;
 
+using DEMO.GamePlay.EnemyScript;
+
 namespace DEMO.GamePlay.Player
 {
     public class Bullet : NetworkBehaviour
@@ -17,10 +19,13 @@ namespace DEMO.GamePlay.Player
 
         public Vector2 mousePosition;
 
-        public void Init(Vector2 mousePosition)
+        private PlayerRef shooterPlayerRef;
+
+        public void Init(Vector2 mousePosition, PlayerRef shooter)
         {
             life = TickTimer.CreateFromSeconds(Runner, bulletTime);
             this.mousePosition = mousePosition.normalized;
+            shooterPlayerRef = shooter;
             transform.Translate(Vector2.zero);
         }
 
@@ -29,6 +34,17 @@ namespace DEMO.GamePlay.Player
             transform.Translate(Vector2.right * bulletSpeed);
             if (life.Expired(Runner))
             {
+                Runner.Despawn(Object);
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            var enemy = collider.GetComponent<Enemy>();
+
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage, shooterPlayerRef);
                 Runner.Despawn(Object);
             }
         }

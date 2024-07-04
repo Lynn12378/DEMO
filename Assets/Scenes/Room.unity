@@ -833,7 +833,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 820386141}
         m_TargetAssemblyTypeName: DEMO.Manager.RoomManager, Assembly-CSharp
-        m_MethodName: StartGamePlay
+        m_MethodName: OnReadyBtnClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

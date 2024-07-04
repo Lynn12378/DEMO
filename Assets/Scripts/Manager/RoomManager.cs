@@ -45,6 +45,7 @@ namespace DEMO.Manager
 
         public void UpdatePlayerList()
         {
+            var allReady = true;
             foreach(var cell in playerCells)
             {
                 Destroy(cell.gameObject);
@@ -57,11 +58,20 @@ namespace DEMO.Manager
                 var cell = Instantiate(playerCellPrefab, contentTrans);
                 var playerInfo = player.Value;
 
-                cell.SetInfo(playerInfo.playerName);
-
+                cell.SetInfo(playerInfo.playerName, playerInfo.isReady);
                 playerCells.Add(cell);
-                Debug.Log("List:" + playerInfo.playerName);
+
+                if(!playerInfo.isReady)
+                {
+                    allReady = false;
+                }
             }
+
+            if(allReady)
+            {
+                StartGamePlay();
+            }
+
         }
 
 		public async void StartGamePlay()
@@ -72,6 +82,14 @@ namespace DEMO.Manager
 			}
         }
 
+        public void OnReadyBtnClicked()
+        {
+            if (gameManager.playerList.TryGetValue(networkInstance.LocalPlayer, out PlayerInfo playerInfo))
+            {
+                playerInfo.SetIsReady_RPC();
+            }
+        }
+
         public void OnPlayerJoined(NetworkRunner runner, PlayerRef player){}
 
 		public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -79,6 +97,7 @@ namespace DEMO.Manager
 			if (networkInstance.IsServer)
             {
                 networkInstance.Despawn(playerInfo.Object);
+                GameManager.Instance.UpdatePlayerList();
             }
 		}
 

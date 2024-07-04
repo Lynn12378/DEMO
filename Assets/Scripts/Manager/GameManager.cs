@@ -12,7 +12,7 @@ namespace DEMO.Manager
         public static GameManager Instance { get; private set; }
         [SerializeField] private NetworkRunner runner = null;
 
-         public NetworkRunner Runner
+        public NetworkRunner Runner
         {
             get
             {
@@ -42,7 +42,6 @@ namespace DEMO.Manager
         }
 
         #region - playerInfo -
-
             public static PlayerInfo playerInfo = null;
             public Dictionary<PlayerRef, PlayerInfo> playerList = new Dictionary<PlayerRef, PlayerInfo>();
             
@@ -51,11 +50,9 @@ namespace DEMO.Manager
             {
                 OnPlayerListUpdated?.Invoke();
             }
-  
         #endregion
 
-        #region - playerNetworkData -
-            public static UIManager uIManager = null;
+        /*#region - playerNetworkData -
             public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
             
             public event Action OnInGamePlayerUpdated = null;
@@ -63,14 +60,7 @@ namespace DEMO.Manager
             {
                 OnInGamePlayerUpdated?.Invoke();
             }
-
-            public event Action OnUIManagerActive = null;
-            public void setUIManager()
-            {
-                OnUIManagerActive?.Invoke();
-            }
-
-        #endregion
+        #endregion*/
         
     }
 }
