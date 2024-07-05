@@ -126,7 +126,7 @@ namespace DEMO.DB
         [Rpc(RpcSources.All, RpcTargets.All)]
 		public void SetPlayerHP_RPC(int hp)
         {
-            if(hp > HP)
+            if(hp > HP && hp < MaxHP)
             {
                 playerOutputData.remainHP = HP;
                 Debug.Log(playerRefString + " remain HP is " + playerOutputData.remainHP);

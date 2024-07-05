@@ -21,6 +21,7 @@ namespace DEMO.DB
         public int bulletCollision;                         // No. of player bullet's collision with buildings
         public int remainHP;                                // HP amount remained when refill HP
         public int remainBullet;                            // Bullet amount remained when refill bullet
+        public float totalVoiceDetectionDuration;           // Duration of voice detected on player's mic
 
 
         public override void Spawned()

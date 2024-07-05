@@ -28,6 +28,7 @@ namespace DEMO.GamePlay.Player
             {
                 rec = voiceObject.RecorderInUse;
                 rec.TransmitEnabled = false;
+                rec.VoiceDetection = false;
             }
         }
 
@@ -73,15 +74,20 @@ namespace DEMO.GamePlay.Player
         private void EnableMicrophone(PlayerController playerController, bool enable)
         {
             var speaker = playerController.GetPlayerVoiceDetection().voiceObject.SpeakerInUse;
-            if(enable == false && rec != null)
+            if(rec != null)
             {
-                rec.TransmitEnabled = enable;
-                speaker.enabled = enable;
-            }
-            else
-            {
-                rec.TransmitEnabled = rec.TransmitEnabled;
-                speaker.enabled = enable;
+                if(enable == false)
+                {
+                    rec.TransmitEnabled = enable;
+                    rec.VoiceDetection = enable;
+                    speaker.enabled = enable;
+                }
+                else
+                {
+                    rec.TransmitEnabled = rec.TransmitEnabled;
+                    rec.VoiceDetection = enable;
+                    speaker.enabled = enable;
+                }
             }
         }
 
@@ -107,7 +113,18 @@ namespace DEMO.GamePlay.Player
         #endregion
 
         #region - Voice Detection -
+        void Update()
+        {
+            if (rec != null && rec.TransmitEnabled && rec.VoiceDetection)
+            {
+                if (rec.LevelMeter.CurrentAvgAmp >= rec.VoiceDetectionThreshold)
+                {
+                    playerOutputData.totalVoiceDetectionDuration += Time.deltaTime;
+                }
 
+                Debug.Log(playerNetworkData.playerRefString + " voice detection duration: " + playerOutputData.totalVoiceDetectionDuration);
+            }
+        }
         #endregion
     }
 }
