@@ -8,6 +8,7 @@ using DEMO.DB;
 using DEMO.UI;
 using DEMO.GamePlay.Inventory;
 using DEMO.GamePlay.EnemyScript;
+using DEMO.GamePlay.Player;
 
 namespace DEMO.Manager
 {
@@ -65,15 +66,11 @@ namespace DEMO.Manager
             }
         #endregion
 
-        #region - playerOutputData -
-            public static PlayerOutputData playerOutputData = null;
-            public Dictionary<PlayerRef, PlayerOutputData> playerOutputList = new Dictionary<PlayerRef, PlayerOutputData>();
-            
-            public event Action OnPlayerOutputListUpdated = null;
-            public void UpdatePlayerOutputList()
-            {
-                OnPlayerOutputListUpdated?.Invoke();
-            }
+        #region - OutputData & VoiceDetection -
+
+        public Dictionary<PlayerRef, PlayerOutputData> playerOutputList = new Dictionary<PlayerRef, PlayerOutputData>();
+        public Dictionary<PlayerRef, PlayerVoiceDetection> playerVoiceList = new Dictionary<PlayerRef, PlayerVoiceDetection>();
+        
         #endregion
 
         #region - TeamList -

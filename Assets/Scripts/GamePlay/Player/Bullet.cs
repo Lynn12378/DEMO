@@ -6,6 +6,8 @@ using Fusion;
 using Fusion.Addons.Physics;
 
 using DEMO.GamePlay.EnemyScript;
+using DEMO.Manager;
+using DEMO.DB;
 
 namespace DEMO.GamePlay.Player
 {
@@ -38,15 +40,33 @@ namespace DEMO.GamePlay.Player
             }
         }
 
+        #region - OnTrigger -
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            var enemy = collider.GetComponent<Enemy>();
+            if(collider.CompareTag("MapCollision"))
+            {
+                foreach (var kvp in GamePlayManager.Instance.playerOutputList)
+                {
+                    PlayerRef playerRefKey = kvp.Key;
+                    PlayerOutputData playerOutputDataValue = kvp.Value;
 
+                    if (shooterPlayerRef == playerRefKey)
+                    {
+                        playerOutputDataValue.bulletCollision++;
+                        Debug.Log(playerRefKey.ToString() + "'s bullet collision is: " + playerOutputDataValue.bulletCollision.ToString());
+                    }
+                }
+
+                Runner.Despawn(Object);
+            }
+
+            var enemy = collider.GetComponent<Enemy>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damage, shooterPlayerRef);
                 Runner.Despawn(Object);
             }
         }
+        #endregion
     }
 }

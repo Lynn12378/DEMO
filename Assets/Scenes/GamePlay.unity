@@ -7260,6 +7260,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 556354464641962623, guid: 52f19f46e9dfea34692df9c39ed3c7b2, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 556354464641962623, guid: 52f19f46e9dfea34692df9c39ed3c7b2, type: 3}
       propertyPath: m_ColliderPaths.Array.size
       value: 1
       objectReference: {fileID: 0}

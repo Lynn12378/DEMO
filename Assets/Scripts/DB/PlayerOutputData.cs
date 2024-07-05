@@ -12,15 +12,16 @@ namespace DEMO.DB
     {
         private GamePlayManager gamePlayManager = null;
         private ChangeDetector changes;
-        public UIManager uIManager = null;
 
-        //public RankListPanel rankListPanel;
         [Networked] public PlayerRef playerRef { get; private set; }
-        [Networked] public int killNo { get; set; }
-        [Networked] public int deathNo { get; set; }
-        [Networked] public float surviveTime { get; set; }
+        [Networked] public int killNo { get; set; }         // No. of enemy killed
+        [Networked] public int deathNo { get; set; }        // No. of death
+        [Networked] public float surviveTime { get; set; }  // Longest survival time
+        public int collisionNo;                             // No. of player's collision with buildings
+        public int bulletCollision;                         // No. of player bullet's collision with buildings
+        public int remainHP;                                // HP amount remained when refill HP
+        public int remainBullet;                            // Bullet amount remained when refill bullet
 
-        public Dictionary<string, string> rankList = new Dictionary<string, string>(); 
 
         public override void Spawned()
         {
@@ -34,14 +35,7 @@ namespace DEMO.DB
             {
                 SetPlayerRef_RPC();
             }
-            
-            gamePlayManager.UpdatePlayerOutputList();
 		}
-
-        public void SetUIManager(UIManager uIManager)
-        {
-            this.uIManager = uIManager;
-        }
 
         #region - RPCs -
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

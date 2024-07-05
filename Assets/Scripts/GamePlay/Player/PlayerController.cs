@@ -9,6 +9,8 @@ using DEMO.GamePlay;
 using DEMO.GamePlay.Inventory;
 using Photon.Voice.Unity;
 using DEMO.Gameplay;
+using TMPro.Examples;
+using System.Collections.Generic;
 
 namespace DEMO.GamePlay.Player
 {
@@ -16,6 +18,7 @@ namespace DEMO.GamePlay.Player
     {
         [SerializeField] private PlayerMovementHandler movementHandler = null;
         [SerializeField] private PlayerAttackHandler attackHandler = null;
+        [SerializeField] private PlayerVoiceDetection voiceDetection = null;
         [SerializeField] private PlayerNetworkData playerNetworkData;
         [SerializeField] private PlayerOutputData playerOutputData;
         private float surviveTime = 0f;
@@ -29,17 +32,6 @@ namespace DEMO.GamePlay.Player
         private float shelterTimer = 0f;
         private const float shelterHealInterval = 5f;
 
-        Recorder rec;
-        private const float hearingDistance = 5f;
-
-        private void Start()
-        {
-            if (playerNetworkData.playerRef == Runner.LocalPlayer)
-            {
-                rec = playerNetworkData.voiceObject.RecorderInUse;
-                rec.TransmitEnabled = false;
-            }
-        }
 
         public override void Spawned()
         {
@@ -94,8 +86,12 @@ namespace DEMO.GamePlay.Player
                 }
             }
 
-            DistanceCheck();
-            AudioCheck();
+            voiceDetection.AudioCheck();
+        }
+
+        public PlayerVoiceDetection GetPlayerVoiceDetection()
+        {
+            return voiceDetection;
         }
 
         #region - Input -
@@ -151,7 +147,7 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.TALK))
             {
-                rec.TransmitEnabled = !rec.TransmitEnabled;
+                voiceDetection.rec.TransmitEnabled = !voiceDetection.rec.TransmitEnabled;
             }
 
             if (pressed.IsSet(InputButtons.RELOAD) && isInShelter)
@@ -161,69 +157,7 @@ namespace DEMO.GamePlay.Player
         }
         #endregion
 
-        #region - Microphone -
-        private void DistanceCheck()
-        {
-            foreach (var player in GamePlayManager.Instance.gamePlayerList)
-            {
-                GameObject playerObject = player.Value.gameObject;
-                if (playerObject != null)
-                {
-                    float distance = Vector3.Distance(transform.position, playerObject.transform.position);
-                    var speaker = player.Value.voiceObject.SpeakerInUse;
-
-                    if (distance <= hearingDistance)
-                    {
-                        rec.TransmitEnabled = rec.TransmitEnabled;
-                        speaker.enabled = true;
-                    }
-                    else
-                    {
-                        rec.TransmitEnabled = false;
-                        speaker.enabled = false;
-                    }
-                }
-            }
-        }
-        
-        private void AudioCheck()
-        {
-            if(rec != null && rec.IsCurrentlyTransmitting)
-            {
-                if(playerNetworkData.playerRef == Runner.LocalPlayer)
-                {
-                    playerNetworkData.uIManager.UpdateMicIconColor(0);
-                    // Use playerRef to test
-                    playerNetworkData.uIManager.UpdateMicTxt(playerNetworkData.playerRefString);
-                }
-                else 
-                {
-                    playerNetworkData.uIManager.UpdateMicIconColor(-1);
-                    playerNetworkData.uIManager.UpdateMicTxt("none");
-                }
-            }
-            else
-            {
-                foreach (var kvp in GamePlayManager.Instance.gamePlayerList)
-                {
-                    PlayerNetworkData playerNetworkDataValue = kvp.Value;
-
-                    if (playerNetworkDataValue.voiceObject.IsSpeaking)
-                    {
-                        playerNetworkData.uIManager.UpdateMicIconColor(1);
-                        playerNetworkData.uIManager.UpdateMicTxt(playerNetworkDataValue.playerRefString);
-                    }
-                    else
-                    {
-                        playerNetworkData.uIManager.UpdateMicIconColor(-1);
-                        playerNetworkData.uIManager.UpdateMicTxt("none");
-                    }
-                }
-            }
-        }
-        #endregion
-
-        #region - On Trigger : Item & Shelter -
+        #region - On Trigger -
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.CompareTag("Item"))
@@ -252,6 +186,17 @@ namespace DEMO.GamePlay.Player
                 shelterTimer = 0f;
                 shelter = null;
                 playerNetworkData.SetShelter(shelter);
+            }
+        }
+        #endregion
+
+        #region - OnCollision -
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if(collision.collider.CompareTag("MapCollision"))
+            {
+                playerOutputData.collisionNo++;
+                Debug.Log(playerNetworkData.playerRefString + "'s collision no. is: " + playerOutputData.collisionNo.ToString());
             }
         }
         #endregion

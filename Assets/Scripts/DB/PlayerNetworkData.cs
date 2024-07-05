@@ -14,9 +14,9 @@ namespace DEMO.DB
 {
     public class PlayerNetworkData : NetworkBehaviour
     {
-        [SerializeField] public Slider hpSlider;
-        [SerializeField] public GameObject minimapIcon;
-        [SerializeField] public VoiceNetworkObject voiceObject;
+        public Slider hpSlider;
+        public GameObject minimapIcon;
+        [SerializeField] private PlayerOutputData playerOutputData;
         private GamePlayManager gamePlayManager = null;
         private ChangeDetector changes;
         public UIManager uIManager = null;
@@ -126,6 +126,12 @@ namespace DEMO.DB
         [Rpc(RpcSources.All, RpcTargets.All)]
 		public void SetPlayerHP_RPC(int hp)
         {
+            if(hp > HP)
+            {
+                playerOutputData.remainHP = HP;
+                Debug.Log(playerRefString + " remain HP is " + playerOutputData.remainHP);
+            }
+
             if(hp >= MaxHP)
             {
                 HP = MaxHP;
@@ -141,6 +147,12 @@ namespace DEMO.DB
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerBullet_RPC(int amount)
         {
+            if(amount > bulletAmount)
+            {
+                playerOutputData.remainBullet = bulletAmount;
+                Debug.Log(playerRefString + " remain bullet is " + playerOutputData.remainBullet);
+            }
+
             if(amount >= MaxBullet)
             {
                 bulletAmount = MaxBullet;
