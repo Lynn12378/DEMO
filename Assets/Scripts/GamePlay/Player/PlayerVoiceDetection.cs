@@ -120,9 +120,8 @@ namespace DEMO.GamePlay.Player
                 if (rec.LevelMeter.CurrentAvgAmp >= rec.VoiceDetectionThreshold)
                 {
                     playerOutputData.totalVoiceDetectionDuration += Time.deltaTime;
+                    Debug.Log(playerNetworkData.playerRefString + " voice detection duration: " + playerOutputData.totalVoiceDetectionDuration);
                 }
-
-                Debug.Log(playerNetworkData.playerRefString + " voice detection duration: " + playerOutputData.totalVoiceDetectionDuration);
             }
         }
         #endregion

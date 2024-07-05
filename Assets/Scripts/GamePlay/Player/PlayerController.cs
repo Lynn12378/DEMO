@@ -89,10 +89,17 @@ namespace DEMO.GamePlay.Player
             voiceDetection.AudioCheck();
         }
 
+        #region - Getter -
         public PlayerVoiceDetection GetPlayerVoiceDetection()
         {
             return voiceDetection;
         }
+
+        public PlayerNetworkData GetPlayerNetworkData()
+        {
+            return playerNetworkData;
+        }
+        #endregion
 
         #region - Input -
         /* FIRE, PICKUP, TALK, RELOAD */
@@ -122,27 +129,7 @@ namespace DEMO.GamePlay.Player
             {
                 if(itemInRange == null){return;}
 
-                var item = itemInRange.GetComponent<Item>();
-
-                // If item is coin, then just add to coinAmount
-                if(item.itemType == Item.ItemType.Coin)
-                {
-                    playerNetworkData.SetPlayerCoin_RPC(playerNetworkData.coinAmount + 10);
-                    itemInRange.DespawnItem_RPC();
-                }
-
-                // If item not coin and enough space    
-                if (playerNetworkData.itemList.Count < 12 && item.itemType != Item.ItemType.Coin)
-                {
-                    playerNetworkData.itemList.Add(item);
-                    playerNetworkData.UpdateItemList();
-
-                    itemInRange.DespawnItem_RPC();
-                }
-                else if(playerNetworkData.itemList.Count >= 12)
-                {
-                    Debug.Log("Inventory is full, cannot pick up item.");
-                }
+                Pickup();                
             }
 
             if (pressed.IsSet(InputButtons.TALK))
@@ -153,6 +140,39 @@ namespace DEMO.GamePlay.Player
             if (pressed.IsSet(InputButtons.RELOAD) && isInShelter)
             {
                 playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount + 5);
+            }
+        }
+        #endregion
+
+        #region - Pickup Item -
+        private void Pickup()
+        {
+            var item = itemInRange.GetComponent<Item>();
+
+            // If item is coin, then just add to coinAmount
+            if(item.itemType == Item.ItemType.Coin)
+            {
+                playerNetworkData.SetPlayerCoin_RPC(playerNetworkData.coinAmount + 10);
+                itemInRange.DespawnItem_RPC();
+            }
+
+            // If item not coin and enough space    
+            if (playerNetworkData.itemList.Count < 12 && item.itemType != Item.ItemType.Coin)
+            {
+                playerNetworkData.itemList.Add(item);
+                playerNetworkData.UpdateItemList();
+
+                if(itemInRange.CompareTag("Placeholder"))                     //////////////////////////////////////////// Items without usage
+                {
+                    playerOutputData.placeholderNo++;
+                }
+
+                itemInRange.DespawnItem_RPC();
+            }
+            else if(playerNetworkData.itemList.Count >= 12)
+            {
+                playerOutputData.fullNo++;
+                Debug.Log("Inventory is full, cannot pick up item.");
             }
         }
         #endregion
@@ -210,6 +230,22 @@ namespace DEMO.GamePlay.Player
         public void TakeDamage(int damage)
         {
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - damage);
+        }
+
+        public void TakeDamage(int damage, PlayerRef shooter)
+        {
+            playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - damage);
+
+            foreach (var kvp in GamePlayManager.Instance.playerOutputList)
+            {
+                PlayerRef playerRefKey = kvp.Key;
+                PlayerOutputData playerOutputDataValue = kvp.Value;
+
+                if (shooter == playerRefKey)
+                {
+                    playerOutputDataValue.bulletCollisionOnLiving++;
+                }
+            }
         }
         #endregion
     }

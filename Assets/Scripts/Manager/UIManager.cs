@@ -6,6 +6,7 @@ using DEMO.GamePlay.Inventory;
 using DEMO.DB;
 using DEMO.UI;
 using DEMO.GamePlay.Player;
+using Fusion;
 
 namespace DEMO.Manager
 {
@@ -39,6 +40,8 @@ namespace DEMO.Manager
         public RectTransform arrowRectTransform;
         public float initialAngleOffset = 90f;
 
+        private PlayerRef playerRef;
+
 
         private void Start()
         {
@@ -52,6 +55,11 @@ namespace DEMO.Manager
             {
                 slot.Initialize(playerNetworkData);
             }
+        }
+
+        public void SetPlayerRef(PlayerRef playerRef)
+        {
+            this.playerRef = playerRef;
         }
 
         #region - Minimap -
@@ -144,6 +152,11 @@ namespace DEMO.Manager
         public void OnOpenRankButton()
         {
             rankPanel.SetActive(!rankPanel.activeSelf);
+
+            if(rankPanel.activeInHierarchy)
+            {
+                GamePlayManager.Instance.AddRankNo(playerRef);
+            }
         }
 
         public void OnOrganizeButton()
@@ -200,6 +213,8 @@ namespace DEMO.Manager
             }
 
             UpdateInventoryUI(items);
+
+            GamePlayManager.Instance.AddOrganizeNo(playerRef);
         }
 
         public void UpdateInventoryUI(List<Item> items)

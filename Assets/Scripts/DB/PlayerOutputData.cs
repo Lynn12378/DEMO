@@ -19,9 +19,14 @@ namespace DEMO.DB
         [Networked] public float surviveTime { get; set; }  // Longest survival time
         public int collisionNo;                             // No. of player's collision with buildings
         public int bulletCollision;                         // No. of player bullet's collision with buildings
+        public int bulletCollisionOnLiving;                 // No. of player shoot another player or animals
         public int remainHP;                                // HP amount remained when refill HP
         public int remainBullet;                            // Bullet amount remained when refill bullet
         public float totalVoiceDetectionDuration;           // Duration of voice detected on player's mic
+        public int organizeNo;                              // No. of player organize inventory
+        public int fullNo;                                  // No. of player's inventory full
+        public int placeholderNo;                           // No. of placeholder items that player pick up
+        public int rankNo;                                  // No. of player open rank panel
 
 
         public override void Spawned()

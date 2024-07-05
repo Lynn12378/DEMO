@@ -70,6 +70,36 @@ namespace DEMO.Manager
 
         public Dictionary<PlayerRef, PlayerOutputData> playerOutputList = new Dictionary<PlayerRef, PlayerOutputData>();
         public Dictionary<PlayerRef, PlayerVoiceDetection> playerVoiceList = new Dictionary<PlayerRef, PlayerVoiceDetection>();
+
+        public void AddOrganizeNo(PlayerRef organizePlayerRef)
+        {
+            foreach (var kvp in playerOutputList)
+            {
+                PlayerRef playerRefKey = kvp.Key;
+                PlayerOutputData playerOutputData = kvp.Value;
+
+                if (playerRefKey == organizePlayerRef)
+                {
+                    playerOutputData.organizeNo++;
+                    Debug.Log(playerRefKey.ToString() + "'s organize no is: " + playerOutputData.organizeNo);
+                }
+            }
+        }
+
+        public void AddRankNo(PlayerRef rankPlayerRef)
+        {
+            foreach (var kvp in playerOutputList)
+            {
+                PlayerRef playerRefKey = kvp.Key;
+                PlayerOutputData playerOutputData = kvp.Value;
+
+                if (playerRefKey == rankPlayerRef)
+                {
+                    playerOutputData.rankNo++;
+                    Debug.Log(playerRefKey.ToString() + "'s rank no is: " + playerOutputData.rankNo);
+                }
+            }
+        }
         
         #endregion
 

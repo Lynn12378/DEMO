@@ -70,6 +70,7 @@ namespace DEMO.DB
             }
 
             uIManager.UpdateMicTxt("none");
+            uIManager.SetPlayerRef(playerRef);
             
             gamePlayManager.UpdatedGamePlayer();
 		}

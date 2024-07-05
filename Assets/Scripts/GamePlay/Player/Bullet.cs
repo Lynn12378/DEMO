@@ -66,6 +66,31 @@ namespace DEMO.GamePlay.Player
                 enemy.TakeDamage(damage, shooterPlayerRef);
                 Runner.Despawn(Object);
             }
+
+            var player = collider.GetComponent<PlayerController>();
+            if(player != null)                  ////////////////////////// team will not shoot each other
+            {
+                player.TakeDamage(damage, shooterPlayerRef);
+                Runner.Despawn(Object);
+            }
+
+            if(collider.CompareTag("Animals"))
+            {
+                // Animal take damage
+
+                foreach (var kvp in GamePlayManager.Instance.playerOutputList)
+                {
+                    PlayerRef playerRefKey = kvp.Key;
+                    PlayerOutputData playerOutputDataValue = kvp.Value;
+
+                    if (shooterPlayerRef == playerRefKey)
+                    {
+                        playerOutputDataValue.bulletCollisionOnLiving++;
+                    }
+                }
+
+                Runner.Despawn(Object);
+            }
         }
         #endregion
     }
