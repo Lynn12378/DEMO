@@ -82,6 +82,11 @@ namespace DEMO.Manager
                         newTeamId++;
                     }
 
+                    if (GamePlayManager.Instance.playerOutputList.TryGetValue(networkInstance.LocalPlayer, out PlayerOutputData playerOutputData))
+                    {
+                        playerOutputData.createTeamNo++;
+                    }
+
                     GamePlayManager.Instance.newTeamID = newTeamId;
                     teamCell.SetPlayerTeamID_RPC(gamePlayManager.newTeamID);            
                     playerNetworkData.SetPlayerTeamID_RPC(gamePlayManager.newTeamID);

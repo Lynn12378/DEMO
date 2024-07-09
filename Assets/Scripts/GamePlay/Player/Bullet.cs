@@ -21,13 +21,15 @@ namespace DEMO.GamePlay.Player
 
         public Vector2 mousePosition;
 
+        private PlayerController shooter;
         private PlayerRef shooterPlayerRef;
 
-        public void Init(Vector2 mousePosition, PlayerRef shooter)
+        public void Init(Vector2 mousePosition, PlayerController shooter)
         {
             life = TickTimer.CreateFromSeconds(Runner, bulletTime);
             this.mousePosition = mousePosition.normalized;
-            shooterPlayerRef = shooter;
+            this.shooter = shooter;
+            shooterPlayerRef = shooter.GetPlayerNetworkData().playerRef;
             transform.Translate(Vector2.zero);
         }
 
@@ -72,7 +74,10 @@ namespace DEMO.GamePlay.Player
             {
                 if(player.GetPlayerNetworkData().playerRef != shooterPlayerRef)
                 {
-                    player.TakeDamage(damage, shooterPlayerRef);
+                    if(player.GetPlayerNetworkData().teamID != shooter.GetPlayerNetworkData().teamID)
+                    {
+                        player.TakeDamage(damage, shooterPlayerRef);
+                    }
                     Runner.Despawn(Object);
                 }
             }

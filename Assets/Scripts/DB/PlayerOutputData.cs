@@ -27,6 +27,10 @@ namespace DEMO.DB
         public int fullNo;                                  // No. of player's inventory full
         public int placeholderNo;                           // No. of placeholder items that player pick up
         public int rankNo;                                  // No. of player open rank panel
+        public int giftNo;                                  // No. of player gift items to others
+        public int createTeamNo;                            // No. of player create new team
+        public int joinTeamNo;                              // No. of player join team
+        public int quitTeamNo;                              // No. of player quit team
 
 
         public override void Spawned()

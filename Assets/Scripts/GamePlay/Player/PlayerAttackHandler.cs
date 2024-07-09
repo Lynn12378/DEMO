@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 
 using Fusion;
+using Unity.VisualScripting;
 
 namespace DEMO.GamePlay.Player
 {
@@ -10,12 +11,18 @@ namespace DEMO.GamePlay.Player
     {
         [SerializeField] private Bullet bulletPrefab = null;
         [SerializeField] private Transform shootPoint = null;
+        private PlayerController playerController;
+
+        public void Init(PlayerController playerController)
+        {
+            this.playerController = playerController;
+        }
 
         public void Shoot(Vector2 mousePosition)
         {
             Quaternion rotation = Quaternion.Euler(shootPoint.rotation.eulerAngles);
             Runner.Spawn(bulletPrefab, shootPoint.position, rotation, Object.InputAuthority,
-                (Runner, NO) => NO.GetComponent<Bullet>().Init(mousePosition, Object.InputAuthority));
+                (Runner, NO) => NO.GetComponent<Bullet>().Init(mousePosition, playerController));
         }
     }
 }

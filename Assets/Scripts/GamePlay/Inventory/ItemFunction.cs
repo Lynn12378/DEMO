@@ -16,6 +16,7 @@ namespace DEMO.GamePlay.Inventory
     {
         private InventorySlot currentSlot;              // Reference to the current InventorySlot
         private PlayerNetworkData playerNetworkData;    // Reference to LocalPlayer.PlayerNetworkData
+        private PlayerOutputData playerOutputData;      // Reference to LocalPlayer.PlayerOutputData
         
         [SerializeField] private GameObject GiftPanel = null;
         [SerializeField] private GameObject GiftPlayerButton = null;
@@ -30,6 +31,13 @@ namespace DEMO.GamePlay.Inventory
             if(pRef == Runner.LocalPlayer)
             {
                 playerNetworkData = pND;
+            }
+
+            var pOD = Runner.GetComponentInChildren<PlayerOutputData>();
+            var pODRef = pOD.playerRef;
+            if(pODRef == Runner.LocalPlayer)
+            {
+                playerOutputData = pOD;
             }
         }
 
@@ -56,6 +64,8 @@ namespace DEMO.GamePlay.Inventory
 
         public void OnGiftItem(PlayerRef playerRef)
         {
+            playerOutputData.giftNo++;
+
             currentSlot.GiftItem(playerNetworkData, playerRef);
             GiftPanel.SetActive(false);
             AfterFunction();

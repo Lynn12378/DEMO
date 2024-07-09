@@ -54,6 +54,11 @@ namespace DEMO.UI
                 {
                     playerNetworkData.SetPlayerTeamID_RPC(Int32.Parse(teamTxt.text.Substring(5,1)));
                     teamBtnTxt.text = "quit";
+
+                    if (GamePlayManager.Instance.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
+                    {
+                        playerOutputData.joinTeamNo++;
+                    }
                 } 
                 else if (teamBtnTxt.text == "quit")
                 {
@@ -61,6 +66,11 @@ namespace DEMO.UI
                     isExpanded = true;
                     inGameManager.toggleExpand(this);
                     playerNetworkData.SetPlayerTeamID_RPC(-1);
+
+                    if (GamePlayManager.Instance.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
+                    {
+                        playerOutputData.quitTeamNo++;
+                    }
 
                     foreach (var pnd in GamePlayManager.Instance.gamePlayerList.Values)
                     {

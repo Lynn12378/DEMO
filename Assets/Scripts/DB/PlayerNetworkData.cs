@@ -227,10 +227,6 @@ namespace DEMO.DB
                     case nameof(foodAmount):
                         uIManager.UpdateFoodSlider(foodAmount, MaxFood);
                         break;
-
-                    case nameof(teamID):
-                        //call UIManager change Team
-                        break;
                 }
             }
         }

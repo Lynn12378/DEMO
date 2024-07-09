@@ -33,6 +33,8 @@ namespace DEMO.GamePlay.Player
         {
             uIManager = FindObjectOfType<UIManager>();
             playerNetworkData.SetUIManager(uIManager);
+
+            attackHandler.Init(this);
         }
 
         private void Respawn() 
