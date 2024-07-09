@@ -9,6 +9,8 @@ TagManager:
   - MapCollision
   - SpawnPoint
   - Shelter
+  - Livings
+  - Placeholder
   layers:
   - Default
   - TransparentFX

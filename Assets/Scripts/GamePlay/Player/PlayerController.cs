@@ -5,12 +5,8 @@ using Fusion.Addons.Physics;
 
 using DEMO.DB;
 using DEMO.Manager;
-using DEMO.GamePlay;
 using DEMO.GamePlay.Inventory;
-using Photon.Voice.Unity;
 using DEMO.Gameplay;
-using TMPro.Examples;
-using System.Collections.Generic;
 
 namespace DEMO.GamePlay.Player
 {

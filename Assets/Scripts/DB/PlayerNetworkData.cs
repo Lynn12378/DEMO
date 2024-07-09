@@ -148,7 +148,7 @@ namespace DEMO.DB
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerBullet_RPC(int amount)
         {
-            if(amount > bulletAmount)
+            if(amount > bulletAmount && amount < MaxBullet)
             {
                 playerOutputData.remainBullet = bulletAmount;
                 Debug.Log(playerRefString + " remain bullet is " + playerOutputData.remainBullet);
@@ -188,6 +188,19 @@ namespace DEMO.DB
         {
             teamID = id;
 		}
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void ReceiveGift_RPC(Item.ItemType itemType)
+        {
+            Item item = new Item
+            {
+                itemType = itemType,
+                quantity = 1
+            };
+            itemList.Add(item);
+
+            UpdateItemList();
+        }
 
         #endregion
 

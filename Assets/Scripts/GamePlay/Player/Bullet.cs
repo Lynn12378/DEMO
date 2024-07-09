@@ -61,20 +61,22 @@ namespace DEMO.GamePlay.Player
             }
 
             var enemy = collider.GetComponent<Enemy>();
+            var player = collider.GetComponent<PlayerController>();
+
             if (enemy != null)
             {
                 enemy.TakeDamage(damage, shooterPlayerRef);
                 Runner.Despawn(Object);
             }
-
-            var player = collider.GetComponent<PlayerController>();
-            if(player != null)                  ////////////////////////// team will not shoot each other
+            else if(player != null)                  ////////////////////////// team will not shoot each other
             {
-                player.TakeDamage(damage, shooterPlayerRef);
-                Runner.Despawn(Object);
+                if(player.GetPlayerNetworkData().playerRef != shooterPlayerRef)
+                {
+                    player.TakeDamage(damage, shooterPlayerRef);
+                    Runner.Despawn(Object);
+                }
             }
-
-            if(collider.CompareTag("Animals"))
+            else if(collider.CompareTag("Livings"))
             {
                 // Animal take damage
 

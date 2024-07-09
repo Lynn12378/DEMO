@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 using Fusion;
+
 using DEMO.DB;
+using DEMO.Manager;
 
 
 namespace DEMO.GamePlay.Inventory
@@ -12,6 +16,10 @@ namespace DEMO.GamePlay.Inventory
     {
         private InventorySlot currentSlot;              // Reference to the current InventorySlot
         private PlayerNetworkData playerNetworkData;    // Reference to LocalPlayer.PlayerNetworkData
+        
+        [SerializeField] private GameObject GiftPanel = null;
+        [SerializeField] private GameObject GiftPlayerButton = null;
+        private List<GameObject> playerButtonList = new List<GameObject>(); 
 
         public void SetSlot(InventorySlot slot)
         {
@@ -46,10 +54,57 @@ namespace DEMO.GamePlay.Inventory
             AfterFunction();
         }
 
-        public void OnGiftItem()
+        public void OnGiftItem(PlayerRef playerRef)
         {
-            currentSlot.GiftItem(playerNetworkData);
+            currentSlot.GiftItem(playerNetworkData, playerRef);
+            GiftPanel.SetActive(false);
             AfterFunction();
+        }
+
+        public void OnGiftClicked()
+        {
+            if (!GiftPanel.activeSelf)
+            {
+                float buttonHeight = 50f;
+                float buttonSpacing = 15f;
+                float initialPosY = -45f;
+
+                GiftPanel.SetActive(true);
+                PlayerRef player = GamePlayManager.Instance.Runner.LocalPlayer;
+
+                foreach (GameObject button in playerButtonList)
+                {
+                    Destroy(button);
+                }
+                playerButtonList.Clear();
+
+                int buttonCount = 0;
+
+                foreach (PlayerNetworkData pnd in GamePlayManager.Instance.gamePlayerList.Values)
+                {
+                    if (GamePlayManager.Instance.gamePlayerList[player].playerRef != pnd.playerRef)
+                    {
+                        GameObject newPlayerButton = Instantiate(GiftPlayerButton);
+                        playerButtonList.Add(newPlayerButton);
+                        newPlayerButton.SetActive(true);
+                        newPlayerButton.transform.SetParent(GiftPanel.transform, false);
+
+                        TextMeshProUGUI playerName = newPlayerButton.GetComponentInChildren<TextMeshProUGUI>();
+                        playerName.text = pnd.playerName;
+
+                        RectTransform btnPos = newPlayerButton.gameObject.GetComponent<RectTransform>();
+                        btnPos.anchoredPosition = new Vector2(btnPos.anchoredPosition.x, initialPosY - (buttonHeight + buttonSpacing) * buttonCount);
+                        buttonCount++;
+
+                        Button buttonComponent = newPlayerButton.GetComponent<Button>();
+                        buttonComponent.onClick.AddListener(() => OnGiftItem(pnd.playerRef));
+                    }
+                }
+            }
+            else
+            {
+                GiftPanel.SetActive(false);
+            }
         }
     }
 }

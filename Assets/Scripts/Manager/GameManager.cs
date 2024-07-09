@@ -51,16 +51,5 @@ namespace DEMO.Manager
                 OnPlayerListUpdated?.Invoke();
             }
         #endregion
-
-        /*#region - playerNetworkData -
-            public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
-            
-            public event Action OnInGamePlayerUpdated = null;
-            public void UpdatedGamePlayer()
-            {
-                OnInGamePlayerUpdated?.Invoke();
-            }
-        #endregion*/
-        
     }
 }

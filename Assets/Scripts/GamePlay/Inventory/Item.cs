@@ -115,6 +115,21 @@ namespace DEMO.GamePlay.Inventory
             DecreaseQuantityOrRemove(playerNetworkData.itemList);
         }
 
+        // Gift Item
+        public void Gift(PlayerNetworkData playerNetworkData, Item.ItemType itemType, PlayerRef targetPlayerRef)
+        {
+            foreach (PlayerNetworkData pnd in GamePlayManager.Instance.gamePlayerList.Values)
+            {
+                if (pnd.playerRef == targetPlayerRef)
+                {
+                    pnd.ReceiveGift_RPC(itemType);
+                    break;
+                }
+            }
+            
+            DecreaseQuantityOrRemove(playerNetworkData.itemList);
+        }
+
         // Decrease quantity or remove item after use
         private void DecreaseQuantityOrRemove(List<Item> itemList)
         {

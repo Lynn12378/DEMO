@@ -41,10 +41,10 @@ namespace DEMO.Manager
             foreach(Image img in tabButtons)
             {
                 img.color = inactiveButtonColor;
-                img.rectTransform.sizeDelta = inactiveButtonSize;
+                img.rectTransform.sizeDelta = new Vector2(img.rectTransform.sizeDelta.x, inactiveButtonSize.y);
             }
             tabButtons[tabID].color = activeButtonColor;
-            tabButtons[tabID].rectTransform.sizeDelta = activeButtonSize;
+            tabButtons[tabID].rectTransform.sizeDelta = new Vector2(tabButtons[tabID].rectTransform.sizeDelta.x, activeButtonSize.y);
 
             foreach(TMP_Text txt in tabButtonTxt)
             {

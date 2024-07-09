@@ -20,6 +20,7 @@ namespace DEMO.Manager
 		[SerializeField] private string gameScene = null;
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameObject teamCellPrefab = null;
+        [SerializeField] private GameObject teamPlayerCellPrefab = null;
         [SerializeField] private Transform contentTrans = null;
         private GamePlayManager gamePlayManager = null;
 		private NetworkRunner networkInstance = null;
@@ -53,8 +54,86 @@ namespace DEMO.Manager
 
         public void CreateTeam()
         {
-            var cell = networkInstance.Spawn(teamCellPrefab, Vector3.zero, Quaternion.identity);
-            cell.GetComponent<TeamCell>().SetPlayerTeamID_RPC(gamePlayManager.newTeamID);
+            if (GamePlayManager.Instance.gamePlayerList.TryGetValue(networkInstance.LocalPlayer, out PlayerNetworkData playerNetworkData))
+            {
+                if (playerNetworkData.teamID == -1)
+                {
+                    var cell = networkInstance.Spawn(teamCellPrefab, Vector3.zero, Quaternion.identity);
+                    TeamCell teamCell = cell.GetComponent<TeamCell>();
+
+                    bool notEmpty = false;
+                    int newTeamId = 1;
+
+                    while (true)
+                    {
+                        notEmpty = false;
+                        foreach (var pnd in GamePlayManager.Instance.gamePlayerList.Values)
+                        {
+                            if (pnd.teamID == newTeamId)
+                            {
+                                notEmpty = true;
+                                break;
+                            }
+                        }
+                        if (!notEmpty)
+                        {
+                            break;
+                        }
+                        newTeamId++;
+                    }
+
+                    GamePlayManager.Instance.newTeamID = newTeamId;
+                    teamCell.SetPlayerTeamID_RPC(gamePlayManager.newTeamID);            
+                    playerNetworkData.SetPlayerTeamID_RPC(gamePlayManager.newTeamID);
+                    teamCell.getTeamBtnTxt().text = "quit";
+                    GamePlayManager.Instance.UpdatedTeamList();
+                } 
+                else
+                {
+                    Debug.Log("Player already in another team!");                    
+                }
+            }
+        }
+
+        public void toggleExpand(TeamCell currentTeamCell)
+        {
+            int index = 0; 
+            
+            if (!currentTeamCell.isExpanded)
+            {
+                foreach (var team in GamePlayManager.Instance.teamList)
+                {
+                    if (team != null && team == currentTeamCell)
+                    {
+                        index = team.GetComponent<RectTransform>().GetSiblingIndex();
+                    } 
+                }
+
+                foreach (var pnd in GamePlayManager.Instance.gamePlayerList.Values)
+                {
+                    if(pnd.teamID == currentTeamCell.teamID)
+                    {
+                        var teamPlayerCell = networkInstance.Spawn(teamPlayerCellPrefab, Vector3.zero, Quaternion.identity);
+                        teamPlayerCell.GetComponent<TeamPlayerCell>().getTeamPlayerCellTxt().text = pnd.playerName;
+                        teamPlayerCell.transform.SetParent(contentTrans, false);
+                        teamPlayerCell.transform.SetSiblingIndex(index + 1);
+
+                        index ++;
+                    }
+                }
+                currentTeamCell.isExpanded = true;
+            }
+            else if (currentTeamCell.isExpanded)
+            {
+                TeamPlayerCell[] tpcs = FindObjectsOfType<TeamPlayerCell>();
+                foreach(TeamPlayerCell tpc in tpcs)
+                {
+                    Destroy(tpc.gameObject);
+                }
+
+                currentTeamCell.isExpanded = false;
+            }
+                        
         }
         #endregion
 
