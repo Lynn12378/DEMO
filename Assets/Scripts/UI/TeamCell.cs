@@ -58,6 +58,7 @@ namespace DEMO.UI
                     if (GamePlayManager.Instance.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
                     {
                         playerOutputData.joinTeamNo++;
+                        Debug.Log(playerOutputData.playerRef.ToString() + " join no. is " + playerOutputData.joinTeamNo);
                     }
                 } 
                 else if (teamBtnTxt.text == "quit")
@@ -70,6 +71,7 @@ namespace DEMO.UI
                     if (GamePlayManager.Instance.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
                     {
                         playerOutputData.quitTeamNo++;
+                        Debug.Log(playerOutputData.playerRef.ToString() + " quit no. is " + playerOutputData.quitTeamNo);
                     }
 
                     foreach (var pnd in GamePlayManager.Instance.gamePlayerList.Values)
@@ -84,11 +86,12 @@ namespace DEMO.UI
                     if (emptyTeam)
                     {
                         GamePlayManager.Instance.teamList.Remove(this);
+                        GamePlayManager.Instance.UpdatedTeamList();
+
                         Destroy(gameObject);
                     }           
                 }
             }
-            GamePlayManager.Instance.UpdatedTeamList();
         }
 
         public void OnExpandBtnClicked()

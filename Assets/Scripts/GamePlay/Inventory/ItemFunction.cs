@@ -65,6 +65,7 @@ namespace DEMO.GamePlay.Inventory
         public void OnGiftItem(PlayerRef playerRef)
         {
             playerOutputData.giftNo++;
+            Debug.Log(playerOutputData.playerRef.ToString() + " gift no. is " + playerOutputData.giftNo);
 
             currentSlot.GiftItem(playerNetworkData, playerRef);
             GiftPanel.SetActive(false);

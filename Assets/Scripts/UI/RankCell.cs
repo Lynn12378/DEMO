@@ -19,7 +19,7 @@ namespace DEMO.UI
 
         public void SetRankTitle(string rank, string playerName, string value)
         {
-            SetText(rankText, rank, 32);
+            SetText(rankText, rank, 30);
             SetText(playerNameText, playerName, 32);
             SetText(valueText, value, value == "Survive Time" ? 28 : 32);
         }

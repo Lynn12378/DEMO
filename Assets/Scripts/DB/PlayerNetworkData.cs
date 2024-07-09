@@ -14,11 +14,12 @@ namespace DEMO.DB
 {
     public class PlayerNetworkData : NetworkBehaviour
     {
+        private ChangeDetector changes;
         public Slider hpSlider;
         public GameObject minimapIcon;
         [SerializeField] private PlayerOutputData playerOutputData;
         private GamePlayManager gamePlayManager = null;
-        private ChangeDetector changes;
+        private MinimapManager minimapManager = null;
         public UIManager uIManager = null;
 
         [Networked] public int playerId { get; private set; }
@@ -40,13 +41,18 @@ namespace DEMO.DB
         public List<Item> itemList = new List<Item>();
         public Shelter shelter; // Reference when in shelter
 
+        public Color localColor;
+
         public override void Spawned()
         {
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
             transform.SetParent(Runner.transform);
 
             gamePlayManager = FindObjectOfType<GamePlayManager>();
-            gamePlayManager.gamePlayerList.Add(Object.InputAuthority, this);       
+            gamePlayManager.gamePlayerList.Add(Object.InputAuthority, this); 
+
+            minimapManager = FindObjectOfType<MinimapManager>();
+            minimapManager.RegisterPlayer(this, minimapIcon);      
   
             if (Object.HasStateAuthority)
             {
@@ -62,15 +68,17 @@ namespace DEMO.DB
             if (playerRef == Runner.LocalPlayer)
             {
                 // Change color of color code, if failed then color = white
-                Color fillColor = ColorUtility.TryParseHtmlString("#00C800", out Color color) ? color : Color.white;
-                hpSlider.fillRect.GetComponent<Image>().color = fillColor;
-                minimapIcon.GetComponent<SpriteRenderer>().color = fillColor;
+                localColor = ColorUtility.TryParseHtmlString("#00C800", out Color color) ? color : Color.white;
+                hpSlider.fillRect.GetComponent<Image>().color = localColor;
+                minimapIcon.GetComponent<SpriteRenderer>().color = localColor;
 
                 uIManager.InitializeItemSlots(this);
             }
 
             uIManager.UpdateMicTxt("none");
             uIManager.SetPlayerRef(playerRef);
+
+            minimapManager.UpdateAllMinimapIconsVisibility(localColor);
             
             gamePlayManager.UpdatedGamePlayer();
 		}
@@ -187,6 +195,8 @@ namespace DEMO.DB
 		public void SetPlayerTeamID_RPC(int id)
         {
             teamID = id;
+
+            minimapManager.UpdateAllMinimapIconsVisibility(localColor);
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

@@ -85,6 +85,7 @@ namespace DEMO.Manager
                     if (GamePlayManager.Instance.playerOutputList.TryGetValue(networkInstance.LocalPlayer, out PlayerOutputData playerOutputData))
                     {
                         playerOutputData.createTeamNo++;
+                        Debug.Log(playerOutputData.playerRef.ToString() + " create no. is " + playerOutputData.createTeamNo);
                     }
 
                     GamePlayManager.Instance.newTeamID = newTeamId;
