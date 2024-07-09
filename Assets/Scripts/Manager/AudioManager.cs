@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.Audio;
+using System;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Sound[] sounds;
+
+    private void Awake()
     {
-        
+        foreach(Sound sound in sounds)
+        {
+            sound.source = gameObject.AddComponent<AudioSource>();
+            sound.source.clip = sound.clip;
+
+            sound.source.volume = sound.volume;
+            sound.source.pitch = sound.pitch;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Play(string audioName)
     {
-        
+        Sound s = Array.Find(sounds, sound => sound.name == audioName);
+        s.source.Play();
     }
 }
