@@ -42,6 +42,7 @@ namespace DEMO.DB
         public Shelter shelter; // Reference when in shelter
 
         public Color localColor;
+        public bool isLocalPlayer;
 
         public override void Spawned()
         {
@@ -52,7 +53,6 @@ namespace DEMO.DB
             gamePlayManager.gamePlayerList.Add(Object.InputAuthority, this); 
 
             minimapManager = FindObjectOfType<MinimapManager>();
-            minimapManager.RegisterPlayer(this, minimapIcon);      
   
             if (Object.HasStateAuthority)
             {
@@ -67,10 +67,13 @@ namespace DEMO.DB
             // Set state for LocalPlayer
             if (playerRef == Runner.LocalPlayer)
             {
+                isLocalPlayer = true;
+
                 // Change color of color code, if failed then color = white
                 localColor = ColorUtility.TryParseHtmlString("#00C800", out Color color) ? color : Color.white;
                 hpSlider.fillRect.GetComponent<Image>().color = localColor;
                 minimapIcon.GetComponent<SpriteRenderer>().color = localColor;
+                minimapIcon.SetActive(false);
 
                 uIManager.InitializeItemSlots(this);
             }
@@ -78,7 +81,7 @@ namespace DEMO.DB
             uIManager.UpdateMicTxt("none");
             uIManager.SetPlayerRef(playerRef);
 
-            minimapManager.UpdateAllMinimapIconsVisibility(localColor);
+            minimapManager.RegisterPlayer(this, minimapIcon);
             
             gamePlayManager.UpdatedGamePlayer();
 		}
@@ -195,8 +198,6 @@ namespace DEMO.DB
 		public void SetPlayerTeamID_RPC(int id)
         {
             teamID = id;
-
-            minimapManager.UpdateAllMinimapIconsVisibility(localColor);
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -236,6 +237,10 @@ namespace DEMO.DB
 
                     case nameof(foodAmount):
                         uIManager.UpdateFoodSlider(foodAmount, MaxFood);
+                        break;
+
+                    case nameof(teamID):
+                        minimapManager.UpdatePlayerMinimapIconVisibility(this);
                         break;
                 }
             }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using DEMO.DB;
+using UnityEngine.Analytics;
 
 namespace DEMO.Manager
 {
@@ -14,6 +15,7 @@ namespace DEMO.Manager
             if (!playerMinimapIcons.ContainsKey(playerData))
             {
                 playerMinimapIcons.Add(playerData, minimapIcon);
+                Debug.Log(playerData.playerRefString + "registered.");
             }
         }
 
@@ -24,9 +26,11 @@ namespace DEMO.Manager
                 playerMinimapIcons.Remove(playerData);
             }
         }
-
+        
         public void UpdatePlayerMinimapIconVisibility(PlayerNetworkData playerData)
         {
+            Debug.Log(playerMinimapIcons.ToString());
+
             foreach (var kvp in playerMinimapIcons)
             {
                 var otherPlayerData = kvp.Key;
@@ -34,45 +38,28 @@ namespace DEMO.Manager
 
                 if (playerData == otherPlayerData) continue;
 
-                bool sameTeam = playerData.teamID == otherPlayerData.teamID;
-                minimapIcon.SetActive(sameTeam);
-            }
-        }
-
-        public void UpdateAllMinimapIconsVisibility(Color localColor)
-        {
-            foreach (var kvp1 in playerMinimapIcons)
-            {
-                var playerData1 = kvp1.Key;
-                var minimapIcon1 = kvp1.Value;
-
-                foreach (var kvp2 in playerMinimapIcons)
+                if(playerData.teamID != -1)
                 {
-                    minimapIcon1.SetActive(true);
-
-                    var playerData2 = kvp2.Key;
-                    var minimapIcon2 = kvp2.Value;
-
-                    if (playerData1 == playerData2)
-                    {
-                        minimapIcon2.SetActive(true);
-                        minimapIcon2.GetComponent<SpriteRenderer>().color = localColor;
-                        continue;
-                    }
-                    
-                    if (playerData1.teamID == -1)
-                    {
-                        // Player with no team only sees their own icon
-                        minimapIcon2.SetActive(false);
-                    }
-                    else
-                    {
-                        // Players in a team see each other
-                        bool sameTeam = playerData1.teamID == playerData2.teamID;
-                        minimapIcon2.SetActive(sameTeam);
-                    }
+                    bool sameTeam = playerData.teamID == otherPlayerData.teamID;
+                    minimapIcon.SetActive(sameTeam);
                 }
             }
         }
+
+        /*public void UpdateAllMinimapIconsVisibility(Color localColor)
+        {
+            Debug.Log("Into update all.");
+            Debug.Log(playerMinimapIcons.ToString());
+
+            foreach (var kvp1 in playerMinimapIcons)
+            {
+                var playerData1 = kvp1.Key;
+                var playerIcon1 = kvp1.Value;
+
+                playerIcon1.GetComponent<SpriteRenderer>().color = localColor;
+
+                UpdatePlayerMinimapIconVisibility(playerData1);
+            }
+        }*/
     }
 }
