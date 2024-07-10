@@ -23,6 +23,7 @@ namespace DEMO.GamePlay.Player
             Quaternion rotation = Quaternion.Euler(shootPoint.rotation.eulerAngles);
             Runner.Spawn(bulletPrefab, shootPoint.position, rotation, Object.InputAuthority,
                 (Runner, NO) => NO.GetComponent<Bullet>().Init(mousePosition, playerController));
+            FindObjectOfType<AudioManager>().Play("Shoot");
         }
     }
 }

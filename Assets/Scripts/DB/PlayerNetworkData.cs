@@ -9,6 +9,7 @@ using DEMO.GamePlay;
 using DEMO.GamePlay.Inventory;
 using Photon.Voice.Fusion;
 using DEMO.Gameplay;
+using Photon.Realtime;
 
 namespace DEMO.DB
 {
@@ -19,7 +20,6 @@ namespace DEMO.DB
         public GameObject minimapIcon;
         [SerializeField] private PlayerOutputData playerOutputData;
         private GamePlayManager gamePlayManager = null;
-        private MinimapManager minimapManager = null;
         public UIManager uIManager = null;
 
         [Networked] public int playerId { get; private set; }
@@ -41,8 +41,7 @@ namespace DEMO.DB
         public List<Item> itemList = new List<Item>();
         public Shelter shelter; // Reference when in shelter
 
-        public Color localColor;
-        public bool isLocalPlayer;
+        Color localColor;
 
         public override void Spawned()
         {
@@ -51,8 +50,6 @@ namespace DEMO.DB
 
             gamePlayManager = FindObjectOfType<GamePlayManager>();
             gamePlayManager.gamePlayerList.Add(Object.InputAuthority, this); 
-
-            minimapManager = FindObjectOfType<MinimapManager>();
   
             if (Object.HasStateAuthority)
             {
@@ -67,22 +64,21 @@ namespace DEMO.DB
             // Set state for LocalPlayer
             if (playerRef == Runner.LocalPlayer)
             {
-                isLocalPlayer = true;
-
                 // Change color of color code, if failed then color = white
                 localColor = ColorUtility.TryParseHtmlString("#00C800", out Color color) ? color : Color.white;
                 hpSlider.fillRect.GetComponent<Image>().color = localColor;
                 minimapIcon.GetComponent<SpriteRenderer>().color = localColor;
-                minimapIcon.SetActive(false);
 
                 uIManager.InitializeItemSlots(this);
+            }
+            else
+            {
+                minimapIcon.SetActive(false);
             }
 
             uIManager.UpdateMicTxt("none");
             uIManager.SetPlayerRef(playerRef);
 
-            minimapManager.RegisterPlayer(this, minimapIcon);
-            
             gamePlayManager.UpdatedGamePlayer();
 		}
 
@@ -121,6 +117,25 @@ namespace DEMO.DB
         {
             uIManager.SetItemList(itemList);
             uIManager.UpdateInventoryUI(itemList);
+        }
+
+        public void UpdateAllMinimapIconsVisibility()
+        {
+            foreach (var gamePlayer in GamePlayManager.Instance.gamePlayerList)
+            {
+                var otherPlayerData = gamePlayer.Value;
+
+                if(this == otherPlayerData) continue;
+
+                if (otherPlayerData.teamID == teamID)
+                {
+                    otherPlayerData.minimapIcon.SetActive(true);
+                }
+                else
+                {
+                    otherPlayerData.minimapIcon.SetActive(false);
+                }
+            }
         }
         #endregion
 
@@ -198,6 +213,8 @@ namespace DEMO.DB
 		public void SetPlayerTeamID_RPC(int id)
         {
             teamID = id;
+
+            UpdateAllMinimapIconsVisibility();
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -237,10 +254,6 @@ namespace DEMO.DB
 
                     case nameof(foodAmount):
                         uIManager.UpdateFoodSlider(foodAmount, MaxFood);
-                        break;
-
-                    case nameof(teamID):
-                        minimapManager.UpdatePlayerMinimapIconVisibility(this);
                         break;
                 }
             }

@@ -1,6 +1,7 @@
 using UnityEngine.Audio;
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class AudioManager : MonoBehaviour
 {
@@ -8,14 +9,20 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        foreach(Sound sound in sounds)
+        foreach(Sound s in sounds)
         {
-            sound.source = gameObject.AddComponent<AudioSource>();
-            sound.source.clip = sound.clip;
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
 
-            sound.source.volume = sound.volume;
-            sound.source.pitch = sound.pitch;
+            s.source.volume = s.volume;
+            s.source.pitch = s.pitch;
+            s.source.loop = s.loop;
         }
+    }
+
+    private void Start()
+    {
+        Play("Theme");
     }
 
     public void Play(string audioName)

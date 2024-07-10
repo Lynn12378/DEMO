@@ -1462,7 +1462,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 30
+  orthographic size: 25
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -6293,7 +6293,6 @@ Transform:
   m_Children:
   - {fileID: 186163863}
   - {fileID: 1721659182}
-  - {fileID: 1550867324}
   - {fileID: 2080284213}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63824,50 +63823,6 @@ MonoBehaviour:
   inactiveTextColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   activeTextColor: {r: 1, g: 1, b: 1, a: 1}
   rankCellPrefab: {fileID: 6178677167560597851, guid: 99ef9e13de721cb4aa5232bdb68877cc, type: 3}
---- !u!1 &1550867323
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1550867324}
-  - component: {fileID: 1550867325}
-  m_Layer: 0
-  m_Name: MinimapManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1550867324
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1550867323}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1033719542}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1550867325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1550867323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf9eb9d5c6f2edb48af33964fc352d67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1562967042
 GameObject:
   m_ObjectHideFlags: 0
@@ -66303,10 +66258,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: Theme
+    clip: {fileID: 8300000, guid: 385fdac5dd815d248b1d2a3bb8092282, type: 3}
+    volume: 0.02
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Walk
+    clip: {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Shoot
+    clip: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Hit
+    clip: {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
+    volume: 0.5
+    pitch: 1
+    loop: 0
     source: {fileID: 0}
 --- !u!1 &2113469540
 GameObject:

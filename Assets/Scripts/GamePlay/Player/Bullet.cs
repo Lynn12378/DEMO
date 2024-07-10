@@ -59,6 +59,7 @@ namespace DEMO.GamePlay.Player
                     }
                 }
 
+                FindObjectOfType<AudioManager>().Play("Hit");
                 Runner.Despawn(Object);
             }
 
@@ -68,6 +69,7 @@ namespace DEMO.GamePlay.Player
             if (enemy != null)
             {
                 enemy.TakeDamage(damage, shooterPlayerRef);
+                FindObjectOfType<AudioManager>().Play("Hit");
                 Runner.Despawn(Object);
             }
             else if(player != null)                  ////////////////////////// team will not shoot each other
@@ -78,6 +80,7 @@ namespace DEMO.GamePlay.Player
                     {
                         player.TakeDamage(damage, shooterPlayerRef);
                     }
+                    FindObjectOfType<AudioManager>().Play("Hit");
                     Runner.Despawn(Object);
                 }
             }
@@ -95,7 +98,7 @@ namespace DEMO.GamePlay.Player
                         playerOutputDataValue.bulletCollisionOnLiving++;
                     }
                 }
-
+                FindObjectOfType<AudioManager>().Play("Hit");
                 Runner.Despawn(Object);
             }
         }

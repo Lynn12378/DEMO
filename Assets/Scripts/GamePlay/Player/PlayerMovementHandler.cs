@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-using Fusion;
 using Fusion.Addons.Physics;
 
 namespace DEMO.GamePlay.Player
@@ -13,11 +10,26 @@ namespace DEMO.GamePlay.Player
         [SerializeField] private Transform Weapon = null;
 
         [SerializeField] private float moveSpeed = 5f;
+        private Vector2 lastVelocity;
+        private float lastPlayTime;
+        private float audioClipLength = 0.667f;
 
         public void Move(NetworkInputData data)
         {
             Vector2 moveVector = data.movementInput.normalized;
-            playerNetworkRigidbody.Rigidbody.velocity = moveVector * moveSpeed;
+            Vector2 newVelocity = moveVector * moveSpeed;
+            playerNetworkRigidbody.Rigidbody.velocity = newVelocity;
+
+            if(newVelocity.magnitude > 0)
+            {
+                if (Time.time - lastPlayTime >= audioClipLength)
+                {
+                    FindObjectOfType<AudioManager>().Play("Walk");
+                    lastPlayTime = Time.time;
+                }
+            }
+            
+            lastVelocity = newVelocity;
         }
 
         public void SetRotation(Vector2 mousePosition)
