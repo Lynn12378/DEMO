@@ -7,6 +7,7 @@ using TMPro;
 using Fusion;
 
 using DEMO.DB;
+using DEMO.Manager;
 
 namespace DEMO.GamePlay.Inventory
 {
@@ -118,6 +119,7 @@ namespace DEMO.GamePlay.Inventory
                 
                 // Decrease player coin
                 playerNetworkData.SetPlayerCoin_RPC(playerNetworkData.coinAmount - totalCost);
+                AudioManager.Instance.Play("Buy");
             }
             else
             {

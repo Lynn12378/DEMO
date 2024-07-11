@@ -3,31 +3,47 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class AudioManager : MonoBehaviour
+namespace DEMO.Manager
 {
-    public Sound[] sounds;
-
-    private void Awake()
+    public class AudioManager : MonoBehaviour
     {
-        foreach(Sound s in sounds)
+        public Sound[] sounds;
+
+        public static AudioManager Instance { get; private set; }
+
+        private void Awake()
         {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
 
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
+            Instance = this;
+
+            DontDestroyOnLoad(gameObject);
+
+            // Initialize audio
+            foreach(Sound s in sounds)
+            {
+                s.source = gameObject.AddComponent<AudioSource>();
+                s.source.clip = s.clip;
+
+                s.source.volume = s.volume;
+                s.source.pitch = s.pitch;
+                s.source.loop = s.loop;
+            }
         }
-    }
 
-    private void Start()
-    {
-        Play("Theme");
-    }
+        private void Start()
+        {
+            Play("Theme");
+        }
 
-    public void Play(string audioName)
-    {
-        Sound s = Array.Find(sounds, sound => sound.name == audioName);
-        s.source.Play();
+        public void Play(string audioName)
+        {
+            Sound s = Array.Find(sounds, sound => sound.name == audioName);
+            s.source.Play();
+        }
     }
 }

@@ -438,7 +438,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -448,7 +448,7 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -753,7 +753,7 @@ GameObject:
   - component: {fileID: 3200382009352126582}
   - component: {fileID: 9157328312114646552}
   - component: {fileID: 4199331920531775570}
-  - component: {fileID: -1909304560376316178}
+  - component: {fileID: 2323656299031385457}
   - component: {fileID: 723907579051755181}
   - component: {fileID: 3935815838663998337}
   - component: {fileID: 7523426437674528838}
@@ -861,7 +861,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &-1909304560376316178
+--- !u!70 &2323656299031385457
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

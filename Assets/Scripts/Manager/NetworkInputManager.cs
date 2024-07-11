@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using Fusion;
 using Fusion.Sockets;
 
-using DEMO.DB;
 using DEMO.GamePlay.Player;
 
 namespace DEMO.Manager

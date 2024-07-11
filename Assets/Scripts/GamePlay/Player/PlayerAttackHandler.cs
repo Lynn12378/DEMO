@@ -4,6 +4,7 @@ using TMPro;
 
 using Fusion;
 using Unity.VisualScripting;
+using DEMO.Manager;
 
 namespace DEMO.GamePlay.Player
 {
@@ -23,7 +24,7 @@ namespace DEMO.GamePlay.Player
             Quaternion rotation = Quaternion.Euler(shootPoint.rotation.eulerAngles);
             Runner.Spawn(bulletPrefab, shootPoint.position, rotation, Object.InputAuthority,
                 (Runner, NO) => NO.GetComponent<Bullet>().Init(mousePosition, playerController));
-            FindObjectOfType<AudioManager>().Play("Shoot");
+            AudioManager.Instance.Play("Shoot");
         }
     }
 }

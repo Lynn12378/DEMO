@@ -87,17 +87,21 @@ namespace DEMO.GamePlay.Inventory
                 default:
                 case ItemType.Bullet:
                     playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount + bulletAdd);
+                    AudioManager.Instance.Play("Use");
                     break;
                 case ItemType.Food:
                     playerNetworkData.SetPlayerFood_RPC(playerNetworkData.foodAmount + foodAdd);
+                    AudioManager.Instance.Play("Eat");
                     break;
                 case ItemType.Health:
                     playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP + boostHealth);
+                    AudioManager.Instance.Play("Heal");
                     break;
                 case ItemType.Wood:
                     if(playerNetworkData.shelter != null)
                     {
                         playerNetworkData.shelter.RepairDurability_RPC();
+                        AudioManager.Instance.Play("Use");
                     }
                     else
                     {
@@ -112,6 +116,7 @@ namespace DEMO.GamePlay.Inventory
         // Discard Item 
         public void Discard(PlayerNetworkData playerNetworkData)
         {
+            AudioManager.Instance.Play("Discard");
             DecreaseQuantityOrRemove(playerNetworkData.itemList);
         }
 
@@ -126,7 +131,8 @@ namespace DEMO.GamePlay.Inventory
                     break;
                 }
             }
-            
+
+            AudioManager.Instance.Play("Gift");
             DecreaseQuantityOrRemove(playerNetworkData.itemList);
         }
 

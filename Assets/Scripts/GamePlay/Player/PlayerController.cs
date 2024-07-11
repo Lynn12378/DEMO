@@ -151,6 +151,7 @@ namespace DEMO.GamePlay.Player
             if(item.itemType == Item.ItemType.Coin)
             {
                 playerNetworkData.SetPlayerCoin_RPC(playerNetworkData.coinAmount + 10);
+                AudioManager.Instance.Play("Pickup");
                 itemInRange.DespawnItem_RPC();
             }
 
@@ -165,6 +166,7 @@ namespace DEMO.GamePlay.Player
                     playerOutputData.placeholderNo++;
                 }
 
+                AudioManager.Instance.Play("Pickup");
                 itemInRange.DespawnItem_RPC();
             }
             else if(playerNetworkData.itemList.Count >= 12)
@@ -233,6 +235,7 @@ namespace DEMO.GamePlay.Player
         public void TakeDamage(int damage, PlayerRef shooter)
         {
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - damage);
+            AudioManager.Instance.Play("Hit");
 
             foreach (var kvp in GamePlayManager.Instance.playerOutputList)
             {

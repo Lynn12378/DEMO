@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using Fusion.Addons.Physics;
+using DEMO.Manager;
 
 namespace DEMO.GamePlay.Player
 {
@@ -24,7 +25,7 @@ namespace DEMO.GamePlay.Player
             {
                 if (Time.time - lastPlayTime >= audioClipLength)
                 {
-                    FindObjectOfType<AudioManager>().Play("Walk");
+                    AudioManager.Instance.Play("Walk");
                     lastPlayTime = Time.time;
                 }
             }
