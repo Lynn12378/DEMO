@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
-using DEMO.Manager;
-
 namespace DEMO.GamePlay.Inventory
 {
     public class ItemSpawner : NetworkBehaviour

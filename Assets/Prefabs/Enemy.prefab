@@ -91,6 +91,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5890930838625094001}
   - component: {fileID: 2731572436894639398}
+  - component: {fileID: 3041365669026767076}
+  - component: {fileID: 6780989921185005495}
   m_Layer: 0
   m_Name: Run 0
   m_TagString: Untagged
@@ -166,6 +168,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3041365669026767076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133025715848262528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: 0
+  m_labelHash: 0
+  m_SpriteKey: 0
+  m_SpriteHash: 571282970
+--- !u!114 &6780989921185005495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133025715848262528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: df468c534fa9877448209c24d3c11961, type: 3}
 --- !u!1 &4680630544809460407
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,7 +554,7 @@ GameObject:
   - component: {fileID: -1909304560376316178}
   - component: {fileID: 7637637205018366213}
   m_Layer: 0
-  m_Name: Zombie
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -662,6 +694,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyNetworkRigidbody: {fileID: 397606304458726309}
+  _enemyID: 0
+  enemyType: 0
+  spriteResolver: {fileID: 3041365669026767076}
+  spriteRenderer: {fileID: 2731572436894639398}
   hPSlider: {fileID: 1422947231120268285}
   _Hp: 0
   moveSpeed: 1

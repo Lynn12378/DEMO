@@ -64,9 +64,11 @@ namespace DEMO.GamePlay.EnemyScript
 
         private void SpawnItemNearSpawnPoint(Transform spawnPoint)
         {
+            int enemyID = Random.Range(0, 4);
             Vector3 spawnPosition = GetSpawnPosition(spawnPoint);
 
-            Runner.Spawn(enemy, spawnPosition, Quaternion.identity);
+            var NO = Runner.Spawn(enemy, spawnPosition, Quaternion.identity);
+            NO.GetComponent<Enemy>().Init(enemyID);
         }
 
         private Vector3 GetSpawnPosition(Transform spawnPoint)
