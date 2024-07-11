@@ -5,7 +5,6 @@ using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
 using Fusion;
 using Fusion.Addons.Physics;
-using DEMO.GamePlay.Player;
 using DEMO.Manager;
 using DEMO.DB;
 
@@ -35,7 +34,10 @@ namespace DEMO.GamePlay
         public int Hp { get; set; }
         private int maxHp = 30;
 
-        [SerializeField] private float moveSpeed;   // 1
+        [SerializeField] private float moveSpeed = 1.0f;
+
+        private Vector3 moveDirection;
+        private bool isMoving = false;
 
 
         #region - Initialize -
@@ -48,6 +50,9 @@ namespace DEMO.GamePlay
             GamePlayManager.Instance.livingsList.Add(this);
 
             Hp = maxHp;
+
+            // Start moving randomly
+            StartCoroutine(RandomMovement());
         }
 
         public void Init(int livingsID)
@@ -102,6 +107,42 @@ namespace DEMO.GamePlay
         public void DespawnLivings_RPC(NetworkObject netObj)
         {
             Runner.Despawn(netObj);
+        }
+        #endregion
+
+        #region - Movement -
+        private IEnumerator RandomMovement()
+        {
+            while (true)
+            {
+                // Randomly choose a direction to move
+                moveDirection = Random.insideUnitCircle.normalized;
+
+                isMoving = true;
+                yield return new WaitForSeconds(Random.Range(1.0f, 3.0f)); // Move for a random duration
+                isMoving = false;
+
+                yield return new WaitForSeconds(Random.Range(1.0f, 3.0f)); // Wait before next movement
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (isMoving)
+            {
+                // Move in the chosen direction
+                Vector3 newPosition = transform.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
+                livingsNetworkRigidbody.Rigidbody.MovePosition(newPosition);
+            }
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            // Reverse direction on collision with map boundaries or obstacles
+            if (collision.gameObject.CompareTag("MapCollision"))
+            {
+                moveDirection = -moveDirection; // Reverse direction
+            }
         }
         #endregion
     }
