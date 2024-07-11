@@ -1582,7 +1582,7 @@ GameObject:
   - component: {fileID: 178602167}
   - component: {fileID: 178602169}
   m_Layer: 5
-  m_Name: Image
+  m_Name: MapUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1605,7 +1605,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1800, y: 800}
+  m_SizeDelta: {x: 1800, y: 1200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &178602167
 MonoBehaviour:

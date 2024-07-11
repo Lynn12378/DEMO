@@ -187,5 +187,32 @@ namespace DEMO.GamePlay.EnemyScript
             Runner.Despawn(netObj);
         }
         #endregion
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                var player = collision.collider.GetComponent<PlayerController>();
+                if (player != null && player.Object.InputAuthority != Object.InputAuthority)
+                {
+                    player.TakeDamage(directDamage);
+                }
+            }
+            else if (collision.CompareTag("Door") && collision.GetComponent<Door>().isOpen)
+            {
+                // 如果門是開著的，殭屍進入SHELTER
+                EnterShelter();
+            }
+            else
+            {
+                SetNewDestination();
+            }
+        }
+
+        private void EnterShelter()
+        {
+            // 殭屍進入SHELTER的處理邏輯
+            Debug.Log("Enemy entered the shelter.");
+        }    
     }
 }
