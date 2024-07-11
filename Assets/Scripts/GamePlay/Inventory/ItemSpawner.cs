@@ -8,8 +8,8 @@ namespace DEMO.GamePlay.Inventory
     public class ItemSpawner : NetworkBehaviour
     {
         [SerializeField] private NetworkObject item;
-        [SerializeField] private int _initialItemCount = 300;
-        [SerializeField] private int _itemPerSpawn = 10; // The number of items to spawn after each delay.
+        [SerializeField] private int _initialItemCount = 350;
+        [SerializeField] private int _itemPerSpawn = 20; // The number of items to spawn after each delay.
         [SerializeField] private float _delayBetweenSpawns = 300.0f;  // The delay between each spawn after the initial spawn. // 5 minutes in seconds
         private bool _initialSpawnCompleted = false; // Flag to indicate whether initial spawning is done.
 
@@ -64,7 +64,7 @@ namespace DEMO.GamePlay.Inventory
 
         private void SpawnItemNearSpawnPoint(Transform spawnPoint)
         {
-            int itemID = Random.Range(0, 5);
+            int itemID = Random.Range(0, 8);
             Vector3 spawnPosition = GetSpawnPosition(spawnPoint);
 
             var NO = Runner.Spawn(item, spawnPosition, Quaternion.identity);

@@ -9,6 +9,7 @@ using DEMO.UI;
 using DEMO.GamePlay.Inventory;
 using DEMO.GamePlay.EnemyScript;
 using DEMO.GamePlay.Player;
+using DEMO.GamePlay;
 
 namespace DEMO.Manager
 {
@@ -117,6 +118,7 @@ namespace DEMO.Manager
         #region - Spawn List -
             public List<Item> itemList = new List<Item>();
             public List<Enemy> enemyList = new List<Enemy>();
+            public List<Livings> livingsList = new List<Livings>();
         #endregion
 
         #region - RankList -

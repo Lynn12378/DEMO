@@ -176,18 +176,29 @@ namespace DEMO.Manager
         {
             // Create dictionary to store item and amount in stack
             Dictionary<Item.ItemType, int> stackedItems = new Dictionary<Item.ItemType, int>();
+            List<Item> placeholderItems = new List<Item>();
 
             foreach (Item item in items)
             {
-                // If item in dict, add amount
-                if (stackedItems.ContainsKey(item.itemType))
+                // If item is a Placeholder, add it to the placeholderItems list
+                if (item.itemType == Item.ItemType.Placeholder1 ||
+                    item.itemType == Item.ItemType.Placeholder2 ||
+                    item.itemType == Item.ItemType.Placeholder3)
                 {
-                    stackedItems[item.itemType] += item.quantity;
+                    placeholderItems.Add(item);
                 }
                 else
                 {
-                    // Else, add item in dict with its amount
-                    stackedItems.Add(item.itemType, item.quantity);
+                    // If item in dict, add amount
+                    if (stackedItems.ContainsKey(item.itemType))
+                    {
+                        stackedItems[item.itemType] += item.quantity;
+                    }
+                    else
+                    {
+                        // Else, add item in dict with its amount
+                        stackedItems.Add(item.itemType, item.quantity);
+                    }
                 }
             }
 
@@ -210,6 +221,12 @@ namespace DEMO.Manager
 
                 // Add into items
                 items.Add(stackedItem);
+            }
+
+            // Add placeholder items to the final items list
+            foreach (Item placeholderItem in placeholderItems)
+            {
+                items.Add(placeholderItem);
             }
 
             UpdateInventoryUI(items);

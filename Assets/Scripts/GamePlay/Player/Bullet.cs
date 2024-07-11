@@ -65,6 +65,7 @@ namespace DEMO.GamePlay.Player
 
             var enemy = collider.GetComponent<Enemy>();
             var player = collider.GetComponent<PlayerController>();
+            var livings = collider.GetComponent<Livings>();
 
             if (enemy != null)
             {
@@ -86,7 +87,7 @@ namespace DEMO.GamePlay.Player
             }
             else if(collider.CompareTag("Livings"))
             {
-                // Animal take damage
+                livings.TakeDamage(damage, shooterPlayerRef);
 
                 foreach (var kvp in GamePlayManager.Instance.playerOutputList)
                 {

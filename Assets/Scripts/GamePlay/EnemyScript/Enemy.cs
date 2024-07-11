@@ -87,7 +87,7 @@ namespace DEMO.GamePlay.EnemyScript
                     hPSlider.maxValue = maxHp;
                     break;
                 case EnemyType.HighHP:
-                    maxHp = 100;
+                    maxHp = 80;
                     Hp = maxHp;
                     hPSlider.maxValue = maxHp;
                     break;

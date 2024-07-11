@@ -9,6 +9,7 @@ using DEMO.Manager;
 using DEMO.DB;
 using DEMO.GamePlay;
 using DEMO.Gameplay;
+using TMPro.Examples;
 
 namespace DEMO.GamePlay.Inventory
 {
@@ -21,6 +22,9 @@ namespace DEMO.GamePlay.Inventory
             Food,
             Health,
             Wood,
+            Placeholder1,
+            Placeholder2,
+            Placeholder3,
             None,
         }
 
@@ -81,6 +85,8 @@ namespace DEMO.GamePlay.Inventory
         // Use Item
         public void Use(PlayerNetworkData playerNetworkData)
         {
+            bool validItem = true;
+
             switch (itemType)
             {
                 default:
@@ -105,11 +111,22 @@ namespace DEMO.GamePlay.Inventory
                     else
                     {
                         Debug.Log("Shelter not found!");
+                        validItem = false;
                     }
+                    break;
+                case ItemType.Placeholder1:
+                case ItemType.Placeholder2:
+                case ItemType.Placeholder3:
+                    ////////////////////// Warning message box
+                    Debug.Log("Cannot use this item.");
+                    validItem = false;
                     break;
             }
 
-            DecreaseQuantityOrRemove(playerNetworkData.itemList);
+            if(validItem)
+            {
+                DecreaseQuantityOrRemove(playerNetworkData.itemList);
+            }
         }
 
         // Discard Item 
