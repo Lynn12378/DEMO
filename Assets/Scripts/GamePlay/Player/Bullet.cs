@@ -77,7 +77,7 @@ namespace DEMO.GamePlay.Player
             {
                 if(player.GetPlayerNetworkData().playerRef != shooterPlayerRef)
                 {
-                    if(player.GetPlayerNetworkData().teamID != shooter.GetPlayerNetworkData().teamID)
+                    if(player.GetPlayerNetworkData().teamID != shooter.GetPlayerNetworkData().teamID || shooter.GetPlayerNetworkData().teamID == -1)
                     {
                         player.TakeDamage(damage, shooterPlayerRef);
                     }
