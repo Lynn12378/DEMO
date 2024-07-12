@@ -31,8 +31,6 @@ namespace DEMO.GamePlay.Player
 
         private MapUIController mapUIController; // 添加这个成员变量
 
-        private Door shelterDoor;
-
         AudioSource speakerSource;
         Recorder rec;
 
@@ -54,13 +52,6 @@ namespace DEMO.GamePlay.Player
             else
             {
                 Debug.Log("MapUIController successfully found.");
-            }
-
-            // 在場景中找到門
-            shelterDoor = FindObjectOfType<Door>();
-            if (shelterDoor == null)
-            {
-                Debug.LogError("Door not found in the scene.");
             }
         }
 
@@ -246,12 +237,6 @@ namespace DEMO.GamePlay.Player
                 isInShelter = true;
                 shelter = collider.GetComponent<Shelter>();
                 playerNetworkData.SetShelter(shelter);
-
-                // 控制門的開關
-                if (shelterDoor != null)
-                {
-                    shelterDoor.OpenDoor();
-                }
             }
         }
 
@@ -268,12 +253,6 @@ namespace DEMO.GamePlay.Player
                 shelterTimer = 0f;
                 shelter = null;
                 playerNetworkData.SetShelter(shelter);
-
-                // 控制門的開關
-                if (shelterDoor != null)
-                {
-                    shelterDoor.CloseDoor();
-                }               
             }
         }
         #endregion

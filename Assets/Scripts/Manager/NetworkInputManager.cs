@@ -40,6 +40,7 @@ namespace DEMO.Manager
             data.buttons.Set(InputButtons.RELOAD, Input.GetKey(KeyCode.T));
             data.buttons.Set(InputButtons.MAP, Input.GetKey(KeyCode.M));
     
+    
             input.Set(data);
         }
 

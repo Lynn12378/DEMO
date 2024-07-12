@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
 using Fusion;
 using Fusion.Addons.Physics;
@@ -12,7 +13,20 @@ namespace DEMO.GamePlay.EnemyScript
 {
     public class Enemy : NetworkBehaviour
     {
+        public enum EnemyType
+        {
+            HighDamage,
+            HighHP,
+            HighSpeed,
+            Normal,
+        }
+
         [SerializeField] private NetworkRigidbody2D enemyNetworkRigidbody = null;
+        [Networked] public int enemyID { get; set;}
+        public EnemyType enemyType;
+        [SerializeField] private SpriteResolver spriteResolver;
+        [SerializeField] public SpriteRenderer spriteRenderer;
+        
         private int directDamage = 10;
         private int damageOverTime = 5;
         private float damageInterval = 3f;  // Interval until next damage
@@ -33,12 +47,13 @@ namespace DEMO.GamePlay.EnemyScript
 
         public PlayerDetection playerDetection;
 
-        // Initialize
+        #region - Initialize -
         public override void Spawned() 
         {
             var enemyTransform = GameObject.Find("Enemy");
             transform.SetParent(enemyTransform.transform, false);
 
+            Init(enemyID);
             GamePlayManager.Instance.enemyList.Add(this);
 
             Hp = maxHp;
@@ -50,6 +65,48 @@ namespace DEMO.GamePlay.EnemyScript
             patrolAlongXAxis = Random.Range(0, 2) == 0 ? true : false;
             SetNewDestination();
         }
+
+        public void Init(int enemyID)
+        {
+            enemyType = (EnemyType) enemyID;
+            spriteResolver.SetCategoryAndLabel("enemy", enemyType.ToString());
+
+            SetEnemyID_RPC(enemyID);
+            SetPropertiesBasedOnType();
+        }
+
+        private void SetPropertiesBasedOnType()
+        {
+            switch (enemyType)
+            {
+                case EnemyType.HighDamage:
+                    directDamage = 20;
+                    damageOverTime = 10;
+                    maxHp = 40;
+                    Hp = maxHp;
+                    hPSlider.maxValue = maxHp;
+                    break;
+                case EnemyType.HighHP:
+                    maxHp = 80;
+                    Hp = maxHp;
+                    hPSlider.maxValue = maxHp;
+                    break;
+                case EnemyType.HighSpeed:
+                    moveSpeed = 1.5f;
+                    damageOverTime = 0;
+                    break;
+                case EnemyType.Normal:
+                    // Keep default values
+                    break;
+            }
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SetEnemyID_RPC(int enemyID)
+        {
+            this.enemyID = enemyID;
+		}
+        #endregion
 
         #region - Patrol & Player Detect -
         public override void FixedUpdateNetwork()
@@ -187,32 +244,5 @@ namespace DEMO.GamePlay.EnemyScript
             Runner.Despawn(netObj);
         }
         #endregion
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.CompareTag("Player"))
-            {
-                var player = collision.collider.GetComponent<PlayerController>();
-                if (player != null && player.Object.InputAuthority != Object.InputAuthority)
-                {
-                    player.TakeDamage(directDamage);
-                }
-            }
-            else if (collision.CompareTag("Door") && collision.GetComponent<Door>().isOpen)
-            {
-                // 如果門是開著的，殭屍進入SHELTER
-                EnterShelter();
-            }
-            else
-            {
-                SetNewDestination();
-            }
-        }
-
-        private void EnterShelter()
-        {
-            // 殭屍進入SHELTER的處理邏輯
-            Debug.Log("Enemy entered the shelter.");
-        }    
     }
 }
