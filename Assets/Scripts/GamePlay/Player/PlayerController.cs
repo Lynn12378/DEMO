@@ -1,8 +1,6 @@
 using System;
 using UnityEngine;
 using Fusion;
-using Fusion.Addons.Physics;
-
 using DEMO.DB;
 using DEMO.Manager;
 using DEMO.GamePlay;
@@ -29,7 +27,8 @@ namespace DEMO.GamePlay.Player
         private float shelterTimer = 0f;
         private const float shelterHealInterval = 5f;
 
-        private MapUIController mapUIController; // 添加这个成员变量
+        private MapUIController mapUIController;
+        private DoorController currentDoor;
 
         AudioSource speakerSource;
         Recorder rec;
@@ -41,9 +40,9 @@ namespace DEMO.GamePlay.Player
                 rec = playerNetworkData.voiceObject.RecorderInUse;
                 rec.TransmitEnabled = false;
             }
-            
+
             speakerSource = playerNetworkData.voiceObject.SpeakerInUse.GetComponent<AudioSource>();
-            mapUIController = FindObjectOfType<MapUIController>(); // 初始化 mapUIController
+            mapUIController = FindObjectOfType<MapUIController>();
 
             if (mapUIController == null)
             {
@@ -61,7 +60,7 @@ namespace DEMO.GamePlay.Player
             playerNetworkData.SetUIManager(uIManager);
         }
 
-        private void Respawn() 
+        private void Respawn()
         {
             transform.position = Vector3.zero;
 
@@ -75,12 +74,12 @@ namespace DEMO.GamePlay.Player
         public override void FixedUpdateNetwork()
         {
             surviveTime += Runner.DeltaTime;
-            if(surviveTime > playerOutputData.surviveTime)
+            if (surviveTime > playerOutputData.surviveTime)
             {
                 playerOutputData.SetSurviveTime_RPC(surviveTime);
             }
 
-            if(playerNetworkData.HP <= 0 || playerNetworkData.foodAmount <= 0)
+            if (playerNetworkData.HP <= 0 || playerNetworkData.foodAmount <= 0)
             {
                 playerOutputData.AddDeathNo_RPC();
                 playerOutputData.SetSurviveTime_RPC(surviveTime);
@@ -92,7 +91,7 @@ namespace DEMO.GamePlay.Player
                 ApplyInput(data);
             }
 
-            if(playerNetworkData.playerRef == Runner.LocalPlayer)
+            if (playerNetworkData.playerRef == Runner.LocalPlayer)
             {
                 uIManager.UpdateMinimapArrow(gameObject.transform);
             }
@@ -112,7 +111,6 @@ namespace DEMO.GamePlay.Player
         }
 
         #region - Input -
-        /* FIRE, PICKUP, TALK, RELOAD */
         private async void ApplyInput(NetworkInputData data)
         {
             NetworkButtons buttons = data.buttons;
@@ -124,7 +122,7 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.FIRE))
             {
-                if(playerNetworkData.bulletAmount > 0)
+                if (playerNetworkData.bulletAmount > 0)
                 {
                     attackHandler.Shoot(data.mousePosition);
                     playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount - 1);
@@ -137,18 +135,16 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.PICKUP))
             {
-                if(itemInRange == null){return;}
+                if (itemInRange == null) { return; }
 
                 var item = itemInRange.GetComponent<Item>();
 
-                // If item is coin, then just add to coinAmount
-                if(item.itemType == Item.ItemType.Coin)
+                if (item.itemType == Item.ItemType.Coin)
                 {
                     playerNetworkData.SetPlayerCoin_RPC(playerNetworkData.coinAmount + 10);
                     itemInRange.DespawnItem_RPC();
                 }
 
-                // If item not coin and enough space    
                 if (playerNetworkData.itemList.Count < 12 && item.itemType != Item.ItemType.Coin)
                 {
                     playerNetworkData.itemList.Add(item);
@@ -156,7 +152,7 @@ namespace DEMO.GamePlay.Player
 
                     itemInRange.DespawnItem_RPC();
                 }
-                else if(playerNetworkData.itemList.Count >= 12)
+                else if (playerNetworkData.itemList.Count >= 12)
                 {
                     Debug.Log("Inventory is full, cannot pick up item.");
                 }
@@ -183,21 +179,28 @@ namespace DEMO.GamePlay.Player
                     Debug.LogError("mapUIController is not assigned.");
                 }
             }
+
+            if (pressed.IsSet(InputButtons.DOOR))
+            {
+                if (currentDoor != null && Object.HasInputAuthority)
+                {
+                    currentDoor.ToggleDoor();
+                }
+            }
         }
         #endregion
 
         #region - Microphone -
         private void AudioCheck()
         {
-            if(rec != null && rec.IsCurrentlyTransmitting)
+            if (rec != null && rec.IsCurrentlyTransmitting)
             {
-                if(playerNetworkData.playerRef == Runner.LocalPlayer)
+                if (playerNetworkData.playerRef == Runner.LocalPlayer)
                 {
                     playerNetworkData.uIManager.UpdateMicIconColor(0);
-                    // Use playerRef to test
                     playerNetworkData.uIManager.UpdateMicTxt(playerNetworkData.playerRefString);
                 }
-                else 
+                else
                 {
                     playerNetworkData.uIManager.UpdateMicIconColor(-1);
                     playerNetworkData.uIManager.UpdateMicTxt("none");
@@ -238,6 +241,11 @@ namespace DEMO.GamePlay.Player
                 shelter = collider.GetComponent<Shelter>();
                 playerNetworkData.SetShelter(shelter);
             }
+
+            if (collider.CompareTag("Door"))
+            {
+                currentDoor = collider.GetComponent<DoorController>();
+            }
         }
 
         private void OnTriggerExit2D(Collider2D collider)
@@ -252,7 +260,11 @@ namespace DEMO.GamePlay.Player
                 isInShelter = false;
                 shelterTimer = 0f;
                 shelter = null;
-                playerNetworkData.SetShelter(shelter);
+            }
+
+            if (collider.CompareTag("Door"))
+            {
+                currentDoor = null;
             }
         }
         #endregion

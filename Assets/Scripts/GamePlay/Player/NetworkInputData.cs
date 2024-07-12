@@ -12,7 +12,8 @@ namespace DEMO.GamePlay.Player
         PICKUP,
         TALK,
         RELOAD,
-        MAP
+        MAP,
+        DOOR
     }
 
     public struct NetworkInputData : INetworkInput
