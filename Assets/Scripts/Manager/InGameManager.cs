@@ -23,6 +23,7 @@ namespace DEMO.Manager
         [SerializeField] private Transform contentTrans = null;
         private GamePlayManager gamePlayManager = null;
 		private NetworkRunner networkInstance = null;
+        private PlayerRef localPlayer;
 
 
         private void Start()
@@ -33,12 +34,34 @@ namespace DEMO.Manager
 
             StartShared();
 
-            gamePlayManager.OnTeamListUpdated += UpdatedTeamList;
+            GamePlayManager.Instance.OnTeamListUpdated += UpdatedTeamList;
+            GamePlayManager.Instance.OnInGamePlayerUpdated += UpdatedGamePlayer;
         }
 
         private void OnDestroy()
         {
             gamePlayManager.OnTeamListUpdated -= UpdatedTeamList;
+            GamePlayManager.Instance.OnInGamePlayerUpdated -= UpdatedGamePlayer;
+        }
+
+        public void UpdatedGamePlayer()//UpdateAllMinimapIconsVisibility()
+        {
+            Debug.Log("UpdatedGamePlayer");
+            var localPND = gamePlayManager.gamePlayerList[localPlayer];
+            foreach (var gamePlayer in gamePlayManager.gamePlayerList.Values)
+            {
+                if(gamePlayer == localPND || localPND.teamID == -1) continue;
+
+                if (gamePlayer.teamID == localPND.teamID)
+                {
+                    gamePlayer.minimapIcon.SetActive(true);
+                    Debug.Log(gamePlayer.playerRef);
+                }
+                else
+                {
+                    gamePlayer.minimapIcon.SetActive(false);
+                }
+            }
         }
 
         #region - OnTeamUpdated -
@@ -180,6 +203,8 @@ namespace DEMO.Manager
 
         public void OnSceneLoadDone(NetworkRunner runner)
         {
+            localPlayer = runner.LocalPlayer;
+
             var spawner = FindObjectOfType<Spawner>();
             spawner.StartSpawners();
         }
