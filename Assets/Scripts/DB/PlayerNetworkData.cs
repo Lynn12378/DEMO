@@ -30,7 +30,7 @@ namespace DEMO.DB
         [Networked] public int foodAmount { get; set; }
         [Networked] public int bulletAmount { get; set; }
         [Networked] public int coinAmount { get; set; }
-        [Networked] public int teamID { get; set; }
+        [Networked] public int teamID { get; private set; }
         
         public int MaxHP = 100;
         public int MaxFood = 100;
@@ -48,7 +48,7 @@ namespace DEMO.DB
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
             transform.SetParent(Runner.transform);
 
-            gamePlayManager = FindObjectOfType<GamePlayManager>();
+            gamePlayManager = GamePlayManager.Instance;
             gamePlayManager.gamePlayerList.Add(Object.InputAuthority, this); 
   
             if (Object.HasStateAuthority)
@@ -79,8 +79,13 @@ namespace DEMO.DB
             uIManager.UpdateMicTxt("none");
             uIManager.SetPlayerRef(playerRef);
 
-            gamePlayManager.UpdatedGamePlayer();
+            // gamePlayManager.UpdatedGamePlayer();
 		}
+
+        public PlayerOutputData GetPlayerOutputData()
+        {
+            return playerOutputData;
+        }
 
         private void Update()
         {
@@ -119,24 +124,7 @@ namespace DEMO.DB
             uIManager.UpdateInventoryUI(itemList);
         }
 
-        public void UpdateAllMinimapIconsVisibility()
-        {
-            foreach (var gamePlayer in GamePlayManager.Instance.gamePlayerList)
-            {
-                var otherPlayerData = gamePlayer.Value;
-
-                if(this == otherPlayerData) continue;
-
-                if (otherPlayerData.teamID == teamID)
-                {
-                    otherPlayerData.minimapIcon.SetActive(true);
-                }
-                else
-                {
-                    otherPlayerData.minimapIcon.SetActive(false);
-                }
-            }
-        }
+        
         #endregion
 
         #region - RPCs -
@@ -213,8 +201,6 @@ namespace DEMO.DB
 		public void SetPlayerTeamID_RPC(int id)
         {
             teamID = id;
-
-            UpdateAllMinimapIconsVisibility();
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -235,11 +221,23 @@ namespace DEMO.DB
         #region - OnChanged Events -
         public override void Render()
         {
-            if(!Object.HasStateAuthority){return;}
             foreach (var change in changes.DetectChanges(this, out var previousBuffer, out var currentBuffer))
             {
                 switch (change)
                 {
+                    case nameof(teamID):
+                        GamePlayManager.Instance.UpdatedGamePlayer();
+                        Debug.Log($"{playerRef} UpdateTeamID");
+                        break;
+                }
+
+                if(!Object.HasStateAuthority){return;}if(!Object.HasStateAuthority){return;}
+                switch (change)
+                {
+                    case nameof(teamID):
+                        GamePlayManager.Instance.UpdatedGamePlayer();
+                        Debug.Log($"{playerRef} UpdateTeamID");
+                        break;
                     case nameof(HP):
                         uIManager.UpdateHPSlider(HP, MaxHP);
                         break;
@@ -251,10 +249,10 @@ namespace DEMO.DB
                     case nameof(coinAmount):
                         uIManager.UpdateCoinAmountTxt(coinAmount);
                         break;
-
                     case nameof(foodAmount):
                         uIManager.UpdateFoodSlider(foodAmount, MaxFood);
                         break;
+                    
                 }
             }
         }

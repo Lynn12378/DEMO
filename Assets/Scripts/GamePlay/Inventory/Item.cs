@@ -106,6 +106,8 @@ namespace DEMO.GamePlay.Inventory
                     if(playerNetworkData.shelter != null)
                     {
                         playerNetworkData.shelter.RepairDurability_RPC();
+                        playerNetworkData.GetPlayerOutputData().repairQuantity++;
+                        Debug.Log(playerNetworkData.playerRefString + " use wood for " + playerNetworkData.GetPlayerOutputData().repairQuantity + " times.");
                         AudioManager.Instance.Play("Use");
                     }
                     else

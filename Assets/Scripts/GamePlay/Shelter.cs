@@ -38,10 +38,22 @@ namespace DEMO.Gameplay
                     if (durability > 0)
                     {
                         durability -= 1;
-                        durabilityTicker = TickTimer.CreateFromSeconds(Runner, 5);
+                        durabilityTicker = TickTimer.CreateFromSeconds(Runner, 12);
+                    }
+                    else
+                    {
+                        EndGame(); // End game when durability = 0
                     }
                 }
             }
+        }
+
+        private void EndGame()
+        {
+            // Update UI panel
+            Debug.Log("Game Over. Restarting game...");
+
+            GamePlayManager.Instance.EndGame();
         }
 
         #region - RPCs -

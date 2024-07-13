@@ -31,6 +31,8 @@ namespace DEMO.DB
         public int createTeamNo;                            // No. of player create new team
         public int joinTeamNo;                              // No. of player join team
         public int quitTeamNo;                              // No. of player quit team
+        public int repairQuantity;                          // Quantity of player given to repair shelter
+        public int restartNo;                               // No. of times shelter durability = 0
 
 
         public override void Spawned()

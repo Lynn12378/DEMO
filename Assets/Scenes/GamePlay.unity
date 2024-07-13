@@ -5858,6 +5858,10 @@ PrefabInstance:
       propertyPath: uIManager
       value: 
       objectReference: {fileID: 1721659183}
+    - target: {fileID: 7129183030330690572, guid: b1ee8c80f885ac2468b9b2fefd902059, type: 3}
+      propertyPath: inGameManager
+      value: 
+      objectReference: {fileID: 186163862}
     - target: {fileID: 7246611174313302419, guid: b1ee8c80f885ac2468b9b2fefd902059, type: 3}
       propertyPath: m_SortingOrder
       value: 3
@@ -65905,6 +65909,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runner: {fileID: 2036895366}
+  voiceClient: {fileID: 2036895368}
+  rec: {fileID: 1933126650181764707}
+  speakerPrefab: {fileID: 7852833417309642521, guid: d5b7c9840a7348f4db62ebf5fa33565a, type: 3}
   newTeamID: 0
   teamList: []
   itemList: []

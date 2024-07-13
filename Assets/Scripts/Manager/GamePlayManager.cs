@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Fusion;
 using Photon.Voice.Unity;
 
@@ -10,6 +11,7 @@ using DEMO.GamePlay.Inventory;
 using DEMO.GamePlay.EnemyScript;
 using DEMO.GamePlay.Player;
 using DEMO.GamePlay;
+using Photon.Voice.Fusion;
 
 namespace DEMO.Manager
 {
@@ -19,6 +21,10 @@ namespace DEMO.Manager
         public static GamePlayManager Instance { get; private set; }
         [SerializeField] private NetworkRunner runner = null;
 
+        [SerializeField] private FusionVoiceClient voiceClient;
+        [SerializeField] private Recorder rec;
+        [SerializeField] private GameObject speakerPrefab;
+
         public NetworkRunner Runner
         {
             get
@@ -27,6 +33,10 @@ namespace DEMO.Manager
                 {
                     runner = gameObject.AddComponent<NetworkRunner>();
                     runner.ProvideInput = true;
+
+                    voiceClient = gameObject.AddComponent<FusionVoiceClient>();
+                    voiceClient.PrimaryRecorder = rec;
+                    voiceClient.SpeakerPrefab = speakerPrefab;
                 }
                 return runner;
             }
@@ -47,6 +57,29 @@ namespace DEMO.Manager
 
             DontDestroyOnLoad(gameObject);
         }
+
+        #region - End game & Reload -
+        public void EndGame()
+        {
+            foreach (var player in playerOutputList)
+            {
+                player.Value.restartNo++;
+                Debug.Log(player.Value.playerRef.ToString() + "'s restart no. is: " + player.Value.restartNo);
+            }
+
+            Destroy(voiceClient);
+            Destroy(runner);
+
+            // Restart game after 2 seconds
+            Invoke("Restart", 2f);
+        }
+
+        private void Restart()                                  ////////////////////// Restart still need refine
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        #endregion
 
         #region - playerNetworkData -
             public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
