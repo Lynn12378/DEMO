@@ -7,6 +7,7 @@ using DEMO.DB;
 using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
 using DEMO.Gameplay;
+using DEMO.UI;
 
 namespace DEMO.GamePlay.Player
 {
@@ -22,6 +23,8 @@ namespace DEMO.GamePlay.Player
         private UIManager uIManager;
         private NetworkButtons buttonsPrevious;
         [SerializeField] private Item itemInRange = null;
+        [SerializeField] private IInteractable interactableInRange = null;
+        private bool isInteracting = false;
 
         [SerializeField] private Shelter shelter;
         private bool isInShelter = false;
@@ -123,11 +126,25 @@ namespace DEMO.GamePlay.Player
                 }
             }
 
-            if (pressed.IsSet(InputButtons.PICKUP))
+            if (pressed.IsSet(InputButtons.PICKUP)) // Spacebar
             {
-                if(itemInRange == null){return;}
-
-                Pickup();                
+                if(itemInRange != null)
+                {
+                    Pickup();
+                }
+                else if(interactableInRange != null && isInteracting == false)
+                {
+                    Interact();
+                    isInteracting = true;
+                }
+                else if (interactableInRange != null && isInteracting)
+                {
+                    EndInteract();
+                }
+                else
+                {
+                    return;
+                }          
             }
 
             if (pressed.IsSet(InputButtons.TALK))
@@ -177,9 +194,29 @@ namespace DEMO.GamePlay.Player
         }
         #endregion
 
+        #region - Interact -
+        private void Interact()
+        {
+            var interactable = interactableInRange;
+            interactable.Interact();
+        }
+
+        private void EndInteract()
+        {
+            MapInteractionManager.Instance.EndInteraction();
+            isInteracting = false;
+        }
+        #endregion
+
         #region - On Trigger -
         private void OnTriggerEnter2D(Collider2D collider)
         {
+            IInteractable interactable = collider.GetComponent<IInteractable>();
+            if (interactable != null)
+            {
+                interactableInRange = interactable;
+            }
+
             if (collider.CompareTag("Item"))
             {
                 itemInRange = collider.GetComponent<Item>();
@@ -195,6 +232,12 @@ namespace DEMO.GamePlay.Player
 
         private void OnTriggerExit2D(Collider2D collider)
         {
+            IInteractable interactable = collider.GetComponent<IInteractable>();
+            if (interactable != null)
+            {
+                interactableInRange = null;
+            }
+
             if (collider.CompareTag("Item"))
             {
                 itemInRange = null;

@@ -7,10 +7,11 @@ using Fusion;
 using Fusion.Addons.Physics;
 using DEMO.Manager;
 using DEMO.DB;
+using DEMO.UI;
 
 namespace DEMO.GamePlay
 {
-    public class Livings : NetworkBehaviour
+    public class Livings : NetworkBehaviour, IInteractable
     {
         public enum LivingsType
         {
@@ -143,6 +144,13 @@ namespace DEMO.GamePlay
             {
                 moveDirection = -moveDirection; // Reverse direction
             }
+        }
+        #endregion
+
+        #region - Interact -
+        public void Interact()
+        {
+            MapInteractionManager.Instance.StartInteraction("Cats");
         }
         #endregion
     }
