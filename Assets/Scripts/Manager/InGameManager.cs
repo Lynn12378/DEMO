@@ -35,7 +35,7 @@ namespace DEMO.Manager
         {
             gameManager = GameManager.Instance;
             gamePlayManager = GamePlayManager.Instance;
-            networkInstance = gamePlayManager.Runner;
+            networkInstance = gameManager.Runner;
             networkInstance.AddCallbacks(this);
 
             //StartShared();
@@ -192,45 +192,10 @@ namespace DEMO.Manager
         #endregion
 
         #region - Start Game -
-        /*public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-        {
-            if (player == runner.LocalPlayer)
-            {
-			    var playerObject = networkInstance.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player);
-                runner.SetPlayerObject(player, playerObject);
-
-                Camera.main.transform.SetParent(playerObject.transform);
-            }
-        }
-
-        public void StartShared()
-        {
-            StartGame(GameMode.Shared, "test111", gameScene);
-        }
-
-        private async void StartGame(GameMode mode, string roomName, string sceneName)
-        {
-            var startGameArgs = new StartGameArgs()
-            {
-                GameMode = mode,
-                PlayerCount = 10,
-                SessionName = roomName,
-                Scene = SceneRef.FromIndex(SceneUtility.GetBuildIndexByScenePath(sceneName)),
-                ObjectProvider = networkInstance.GetComponent<NetworkObjectProviderDefault>(),
-            };
-
-            await networkInstance.StartGame(startGameArgs);
-
-            if (networkInstance.IsServer)
-            {
-                await networkInstance.LoadScene(sceneName);
-            }
-        }*/
-
         private void Init(PlayerRef player)
         {
             var PIF = gameManager.playerList[player];
-            var PND = gameManager.gamePlayerList[player];
+            var PND = gamePlayManager.gamePlayerList[player];
 
             PND.SetPlayerInfo_RPC(PIF.playerId, PIF.playerName);
             PND.SetColorList(PIF.colorList);

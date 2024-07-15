@@ -53,7 +53,7 @@ namespace DEMO.Gameplay
             // Update UI panel
             Debug.Log("Game Over. Restarting game...");
 
-            GamePlayManager.Instance.EndGame();
+            GameManager.Instance.EndGame();
         }
 
         #region - RPCs -

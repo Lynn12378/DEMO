@@ -45,6 +45,8 @@ namespace DEMO.DB
 
         public override void Spawned()
         {
+            Debug.LogWarning(Runner);
+
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
             transform.SetParent(Runner.transform);
 
@@ -54,6 +56,7 @@ namespace DEMO.DB
             if (Object.HasStateAuthority)
             {
                 //SetPlayerInfo_RPC(0,"TEST");
+                SetPlayerRef_RPC();
                 SetPlayerHP_RPC(MaxHP);
                 SetPlayerBullet_RPC(MaxBullet);
                 SetPlayerCoin_RPC(100);
@@ -142,6 +145,12 @@ namespace DEMO.DB
         #endregion
 
         #region - RPCs -
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+		public void SetPlayerRef_RPC()
+        {
+            playerRefString = Runner.LocalPlayer.ToString();
+            playerRef = Runner.LocalPlayer;
+		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerInfo_RPC(int id, string name)

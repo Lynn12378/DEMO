@@ -42,7 +42,7 @@ namespace DEMO.GamePlay.Inventory
 
         public override void Spawned()
         {
-            var itemWorld = Runner.transform.Find("itemWorld");
+            var itemWorld = GameObject.Find("itemWorld");
             transform.SetParent(itemWorld.transform, false);
 
             Init(itemID);

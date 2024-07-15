@@ -1635,6 +1635,8 @@ MonoBehaviour:
   teamCellPrefab: {fileID: 2126801827336115170, guid: bb16bd020c6dab9419608aa1a70fbb34, type: 3}
   teamPlayerCellPrefab: {fileID: 5491392433587640505, guid: fac16fb770a32c845abcdbf269902bd7, type: 3}
   contentTrans: {fileID: 594094078}
+  messageTxt: {fileID: 0}
+  messageCellPrefab: {fileID: 0}
 --- !u!4 &186163863
 Transform:
   m_ObjectHideFlags: 0
@@ -62081,51 +62083,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1342035360}
   m_CullTransparentMesh: 1
---- !u!1 &1342776556
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1342776558}
-  - component: {fileID: 1342776557}
-  m_Layer: 0
-  m_Name: VoiceLogger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1342776557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342776556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a86f533fd9917dd4da8601e9eb542c96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LogLevel: 2
---- !u!4 &1342776558
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1342776556}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1349764324
 GameObject:
   m_ObjectHideFlags: 0
@@ -66123,9 +66080,8 @@ GameObject:
   - component: {fileID: 2036895365}
   - component: {fileID: 2036895366}
   - component: {fileID: 2036895367}
-  - component: {fileID: 2036895368}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GamePlayManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66145,7 +66101,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 853419679}
-  - {fileID: 1240923780758404123}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2036895366
@@ -66172,57 +66127,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d6788e1c34e0c49ac1457b9b903665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runner: {fileID: 2036895366}
-  voiceClient: {fileID: 2036895368}
-  rec: {fileID: 1933126650181764707}
-  speakerPrefab: {fileID: 7852833417309642521, guid: d5b7c9840a7348f4db62ebf5fa33565a, type: 3}
+  Runner: {fileID: 0}
   newTeamID: 0
   teamList: []
   itemList: []
   enemyList: []
   livingsList: []
   rankList: []
---- !u!114 &2036895368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2036895364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33a38d73a8571ce438052dd31e09df5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DisconnectAfterKeepAlive: 0
-  KeepAliveInBackground: 60000
-  ApplyDontDestroyOnLoad: 1
-  runInBackground: 1
-  statsResetInterval: 1000
-  speakerPrefab: {fileID: 7852833417309642521, guid: d5b7c9840a7348f4db62ebf5fa33565a, type: 3}
-  primaryRecorder: {fileID: 1933126650181764707}
-  usePrimaryRecorder: 0
-  cppCompatibilityMode: 0
-  Settings:
-    AppIdRealtime: 
-    AppIdFusion: 
-    AppIdChat: 
-    AppIdVoice: 
-    AppVersion: 
-    UseNameServer: 1
-    FixedRegion: 
-    Server: 
-    Port: 0
-    ProxyServer: 
-    Protocol: 0
-    EnableProtocolFallback: 1
-    AuthMode: 0
-    EnableLobbyStatistics: 0
-    NetworkLogging: 1
-  ShowSettings: 1
-  AutoConnectAndJoin: 1
-  UseFusionAppSettings: 1
-  UseFusionAuthValues: 1
 --- !u!1 &2043427374
 GameObject:
   m_ObjectHideFlags: 0
@@ -66876,64 +66787,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138329183}
   m_CullTransparentMesh: 1
---- !u!4 &1240923780758404123
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5403650588683825382}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2036895365}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1933126650181764707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5403650588683825382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91175dcc15224463780e01a8a98b1b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  voiceDetection: 1
-  voiceDetectionThreshold: 0.01
-  voiceDetectionDelayMs: 200
-  interestGroup: 0
-  useTargetPlayers: 0
-  targetPlayers: 
-  debugEchoMode: 0
-  reliableMode: 0
-  encrypt: 0
-  transmitEnabled: 0
-  samplingRate: 48000
-  frameDuration: 20000
-  bitrate: 30000
-  sourceType: 0
-  microphoneType: 0
-  audioClip: {fileID: 0}
-  loopAudioClip: 1
-  recordingEnabled: 1
-  audioSessionParameters:
-    Category: 4
-    Mode: 1
-    CategoryOptions: 0800000004000000
-  editorAudioSessionPreset: 1
-  androidMicrophoneSettings:
-    EnableAEC: 1
-    EnableAGC: 1
-    EnableNS: 1
-  stopRecordingWhenPaused: 0
-  useOnAudioFilterRead: 0
-  useMicrophoneTypeFallback: 1
-  recordWhenJoined: 1
 --- !u!224 &2162595946311128509 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4608537451426742330, guid: 430b275ab1a3ff14bb9006b5158a27bd, type: 3}
@@ -67160,23 +67013,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1266e8aeaba8e84aadaae3d61e653d8, type: 3}
---- !u!1 &5403650588683825382
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1240923780758404123}
-  - component: {fileID: 1933126650181764707}
-  m_Layer: 0
-  m_Name: Recorder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1001 &6558943474599150040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67415,4 +67251,3 @@ SceneRoots:
   - {fileID: 1229375877}
   - {fileID: 497839}
   - {fileID: 2043427375}
-  - {fileID: 1342776558}
