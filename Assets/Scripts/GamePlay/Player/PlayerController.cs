@@ -28,7 +28,7 @@ namespace DEMO.GamePlay.Player
         private const float shelterHealInterval = 5f;
 
         private MapUIController mapUIController;
-        private DoorController currentDoor;
+        private DoorController Door;
 
         AudioSource speakerSource;
         Recorder rec;
@@ -180,12 +180,10 @@ namespace DEMO.GamePlay.Player
                 }
             }
 
-            if (pressed.IsSet(InputButtons.DOOR))
-            {
-                if (currentDoor != null && Object.HasInputAuthority)
-                {
-                    currentDoor.ToggleDoor();
-                }
+            if (pressed.IsSet(InputButtons.DOOR) && Door != null)
+            {   
+                Door.ToggleDoor();
+                Debug.LogError("GO!");
             }
         }
         #endregion
@@ -244,7 +242,8 @@ namespace DEMO.GamePlay.Player
 
             if (collider.CompareTag("Door"))
             {
-                currentDoor = collider.GetComponent<DoorController>();
+                Door = collider.GetComponent<DoorController>();
+                Debug.LogError("Good");
             }
         }
 
@@ -264,7 +263,8 @@ namespace DEMO.GamePlay.Player
 
             if (collider.CompareTag("Door"))
             {
-                currentDoor = null;
+                Door = null;
+                Debug.LogError("NoGood");
             }
         }
         #endregion

@@ -32,6 +32,8 @@ namespace DEMO.Manager
 
         [SerializeField] private GameObject inventoryPanel = null;
         [SerializeField] private Transform slotsBackground = null;
+
+
         private InventorySlot[] inventorySlots;
         private List<Item> tempItemList;
 

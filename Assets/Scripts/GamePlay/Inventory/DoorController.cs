@@ -3,84 +3,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
-using DEMO.Manager;
-
-namespace DEMO.GamePlay.Inventory
+namespace DEMO.GamePlay
 {
     public class DoorController : NetworkBehaviour
     {
-        // 使用Networked属性让IsOpen在网络上同步
-        [Networked]
-        public bool IsOpen { get; private set; } = false;  // 门的初始状态是关闭的
+        [Networked] public bool IsOpen { get; set; } = false;
+        
+        [SerializeField] private GameObject door = null;
+        private Renderer doorRenderer; // 用于引用门的 Renderer 组件
+        private ChangeDetector changes;
 
-        private Collider2D doorCollider;
-
-        // 在Awake方法中获取门的Collider2D组件
-        private void Awake()
+        public override void Spawned()
         {
-            doorCollider = GetComponent<Collider2D>();
-            Debug.LogError(1);
-        }
+            changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
 
-        // 当有物体进入触发器时调用
-        private void OnTriggerEnter2D(Collider2D collider)
-        {
-            UpdateDoorCollision(collider);
-            Debug.LogError(2);
-        }
-
-        // 当有物体离开触发器时调用
-        private void OnTriggerExit2D(Collider2D collider)
-        {
-            UpdateDoorCollision(collider);
-            Debug.LogError(3);
-        }
-
-        // 更新门与其他物体的碰撞状态
-        private void UpdateDoorCollision(Collider2D collider)
-        {
-            if (collider.CompareTag("Player") || collider.CompareTag("Enemy"))
+            if (door != null)
             {
-                // 根据门的状态来忽略或启用碰撞
-                Physics2D.IgnoreCollision(collider, doorCollider, IsOpen);
+                doorRenderer = door.GetComponent<Renderer>(); // 获取 Renderer 组件
+                UpdateDoorState(IsOpen);
+                Debug.Log("找到門的GameObject!");
+            }
+            else
+            {
+                Debug.LogError("找不到門的GameObject!");
             }
         }
 
-        // 切换门的状态
-        private void ToggleDoorState()
+        private void UpdateDoorState(bool isOpen)
+        {
+            if (doorRenderer != null)
+            {
+                doorRenderer.enabled = !isOpen; // 控制 Renderer 的可见性
+                Debug.Log("門的狀態: " + (doorRenderer.enabled ? "關閉" : "打開"));
+                Debug.Log("這裡OK");
+            }
+            else
+            {
+                Debug.LogError("找不到Renderer组件!");
+            }
+        }
+
+        public void ToggleDoor()
         {
             IsOpen = !IsOpen;
+            SetIsOpen_RPC(IsOpen);
+            Debug.Log("ToggleDoor被调用");
+        }
 
-            // 遍历所有与门重叠的碰撞体，并更新它们的碰撞状态
-            foreach (Collider2D collider in Physics2D.OverlapBoxAll(transform.position, doorCollider.bounds.size, 0f))
+        #region - RPCs -
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SetIsOpen_RPC(bool isOpen)
+        {
+            this.IsOpen = isOpen;
+            UpdateDoorState(isOpen);
+            Debug.LogError("SetIsOpen_RPC被调用，IsOpen状态: " + isOpen);
+        }
+
+        #endregion
+
+        #region - OnChanged Events -
+
+        public override void Render()
+        {
+            foreach (var change in changes.DetectChanges(this, out var previousBuffer, out var currentBuffer))
             {
-                if (collider.CompareTag("Player") || collider.CompareTag("Enemy"))
+                if (change == nameof(IsOpen))
                 {
-                    Physics2D.IgnoreCollision(collider, doorCollider, IsOpen);
-                    Debug.LogError(4);
+                    UpdateDoorState(IsOpen);
+                    Debug.LogError("Render方法检测到IsOpen状态变化: " + IsOpen);
                 }
             }
         }
 
-        // 使用RPC方法在网络上同步门的开关状态
-        [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-        private void ToggleDoorRpc()
-        {
-            ToggleDoorState();
-            Debug.LogError(5);
-        }
-
-        // 当玩家按下按键时调用该方法
-        public void ToggleDoor()
-        {
-            if (Object.HasInputAuthority)
-            {
-                ToggleDoorRpc();
-            }
-            else
-            {
-                Debug.LogError("Local simulation is not allowed to send this RPC.");
-            }
-        }
+        #endregion
     }
 }
