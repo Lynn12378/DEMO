@@ -25,6 +25,9 @@ namespace DEMO.Manager
 		private NetworkRunner networkInstance = null;
         private PlayerRef localPlayer;
 
+        [SerializeField] private TMP_Text messageTxt = null;
+        [SerializeField] private GameObject messageCellPrefab = null;
+
 
         private void Start()
         {
@@ -42,6 +45,12 @@ namespace DEMO.Manager
         {
             gamePlayManager.OnTeamListUpdated -= UpdatedTeamList;
             GamePlayManager.Instance.OnInGamePlayerUpdated -= UpdatedGamePlayer;
+        }
+
+        public void CreateMessage()
+        {
+            var cell = networkInstance.Spawn(messageCellPrefab, Vector3.zero, Quaternion.identity);
+            cell.GetComponent<MessageCell>().SetMessage_RPC(networkInstance.LocalPlayer.ToString(), messageTxt.text);
         }
 
         public void UpdatedGamePlayer()//UpdateAllMinimapIconsVisibility()

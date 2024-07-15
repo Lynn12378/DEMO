@@ -5,11 +5,8 @@ using UnityEngine.UI;
 using Fusion;
 
 using DEMO.Manager;
-using DEMO.GamePlay;
 using DEMO.GamePlay.Inventory;
-using Photon.Voice.Fusion;
 using DEMO.Gameplay;
-using Photon.Realtime;
 
 namespace DEMO.DB
 {
@@ -22,6 +19,8 @@ namespace DEMO.DB
         private GamePlayManager gamePlayManager = null;
         public UIManager uIManager = null;
 
+        [SerializeField] public PlayerOutfitsHandler playerOutfitsHandler = null;
+
         [Networked] public int playerId { get; private set; }
         [Networked] public PlayerRef playerRef { get; private set; }
         [Networked] public string playerRefString { get; private set; }
@@ -31,6 +30,8 @@ namespace DEMO.DB
         [Networked] public int bulletAmount { get; set; }
         [Networked] public int coinAmount { get; set; }
         [Networked] public int teamID { get; private set; }
+        [Networked][Capacity(2)] public NetworkArray<Color> colorList => default;
+        [Networked][Capacity(10)] public NetworkArray<string> outfits => default;
         
         public int MaxHP = 100;
         public int MaxFood = 100;
@@ -40,7 +41,6 @@ namespace DEMO.DB
 
         public List<Item> itemList = new List<Item>();
         public Shelter shelter; // Reference when in shelter
-
         Color localColor;
 
         public override void Spawned()
@@ -53,13 +53,19 @@ namespace DEMO.DB
   
             if (Object.HasStateAuthority)
             {
-                SetPlayerInfo_RPC(0,"TEST");
+                //SetPlayerInfo_RPC(0,"TEST");
                 SetPlayerHP_RPC(MaxHP);
                 SetPlayerBullet_RPC(MaxBullet);
                 SetPlayerCoin_RPC(100);
                 SetPlayerFood_RPC(MaxFood);
                 SetPlayerTeamID_RPC(-1);
             }
+
+            playerOutfitsHandler.Init();
+
+            if(outfits.Get(0) != ""){UpdatedOutfits();}
+            playerOutfitsHandler.SetSkinColor(colorList[0]);
+            playerOutfitsHandler.SetHairColor(colorList[1]);
 
             // Set state for LocalPlayer
             if (playerRef == Runner.LocalPlayer)
@@ -124,7 +130,15 @@ namespace DEMO.DB
             uIManager.UpdateInventoryUI(itemList);
         }
 
-        
+        public void UpdatedOutfits()
+        {
+            var i = 0;
+            foreach(var resolver in playerOutfitsHandler.resolverList)
+            {
+                playerOutfitsHandler.ChangeOutfit(resolver.GetCategory(),outfits[i]);
+                i+=1;
+            }
+        }
         #endregion
 
         #region - RPCs -
@@ -216,6 +230,23 @@ namespace DEMO.DB
             UpdateItemList();
         }
 
+        public void SetColorList(List<Color> colors)
+        {
+            colorList.Clear();
+            colorList.Set(0, colors[0]);
+            colorList.Set(1, colors[1]);
+		}
+
+        public void SetOutfits(List<string> outfits)
+        {
+            this.outfits.Clear();
+
+            for(int i = 0; i < outfits.Count; i++)
+            {
+                this.outfits.Set(i, outfits[i]);
+            }
+		}
+
         #endregion
 
         #region - OnChanged Events -
@@ -252,23 +283,16 @@ namespace DEMO.DB
                     case nameof(foodAmount):
                         uIManager.UpdateFoodSlider(foodAmount, MaxFood);
                         break;
-                    
+                    case nameof(outfits):
+                            UpdatedOutfits();
+                            break;
+                    case nameof(colorList):
+                        playerOutfitsHandler.SetSkinColor(colorList[0]);
+                        playerOutfitsHandler.SetHairColor(colorList[1]);
+                        break;
                 }
             }
         }
         #endregion
-
-        // Test for debug
-        public string ShowList()
-        {
-            string result = "Inventory: ";
-
-            for(int i=0; i < itemList.Count; i++)
-            {
-                result += "ItemType: " + itemList[i].itemType + "; Quantity: " + itemList[i].quantity;
-            }
-
-            return result;
-        }
     }
 }

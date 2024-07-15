@@ -7,67 +7,100 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using TMPro;
 
+using DEMO.UI;
 using DEMO.Manager;
 
 namespace DEMO.DB
 {
     public class PlayerDBHandler : DBMgr
     {
-        [SerializeField] PanelManager panelManager = null;
-        [SerializeField] private TMP_Text playerNameTxt = null;
-        [SerializeField] private TMP_Text playerPasswordTxt = null;
-        [SerializeField] private PlayerInfo playerInfo = null;
+        [SerializeField] private TMP_Text LPlayerNameTxt;
+        [SerializeField] private TMP_Text LPlayerPasswordTxt;
+
+        [SerializeField] private TMP_Text SPlayerNameTxt;
+        [SerializeField] private TMP_Text SPlayerPasswordTxt;
+
+        [SerializeField] private TMP_Text messageTxt;
+        [SerializeField] private List<GameObject> dialog = new List<GameObject>();
+
+        [SerializeField] private List<GameObject> lobby = new List<GameObject>();
+        [SerializeField] private List<GameObject> CreateRolePanel = new List<GameObject>();
+        
+        [SerializeField] private PlayerInfo playerInfo;
+        private PanelManager panelManager;
+
+        private void Start()
+        {
+            panelManager = FindObjectOfType<PanelManager>();
+        }
 
         public void Login()
         {
             action = "login";
+            SetPlayerName(LPlayerNameTxt.text);
+            SetPlayerPassword(LPlayerPasswordTxt.text);
             StartCoroutine(SendData());
         }
         
         public void SignUp()
         {
             action = "signUp";
+            SetPlayerName(SPlayerNameTxt.text);
+            SetPlayerPassword(SPlayerPasswordTxt.text);
             StartCoroutine(SendData());
         }
 
-        private new IEnumerator SendData()
+        public void Create()
         {
-            SetPlayerName();
-            SetPlayerPassword();
+            action = "create";
+            SetOufits();
+            StartCoroutine(SendData());
+        }
 
+        public new IEnumerator SendData()
+        {
             formData = new List<IMultipartFormSection>
             {
-                new MultipartFormDataSection("Player_name", playerInfo.Player_name),
-                new MultipartFormDataSection("Player_password", playerInfo.Player_password)
+                new MultipartFormDataSection("PlayerInfo", playerInfo.ToJson()),
             };
 
             SetForm(formData, "Player", action);
-
             yield return StartCoroutine(base.SendData());
 
             string responseText = base.GetResponseText();
+            Debug.Log(responseText);
             JObject jsonResponse = JObject.Parse(responseText);
 
-            //登入註冊
             if (!string.IsNullOrEmpty(responseText))
             {
                 var status = jsonResponse["status"].ToString();
-
-                Debug.Log(responseText);
                 if (status == "Success")
                 {
-                    int Player_id = Int32.Parse(jsonResponse["Player_id"].ToString());
-                    SetPlayerID(Player_id);
-                    
-                    GameManager.playerInfo = playerInfo;
-                    panelManager.OnActiveLobbyPanel();
+                    if(action == "signUp")
+                    {
+                        int Player_id = Int32.Parse(jsonResponse["Player_id"].ToString());
+                        SetPlayerID(Player_id);
+                        panelManager.OnActivePanel(CreateRolePanel);
+                    }else if(action == "login"){
+                        var playerInfoJS = jsonResponse["PlayerInfo"].ToString();
+                        playerInfo.FromJson(playerInfoJS);
+                        panelManager.OnActivePanel(lobby);
+                    }else{
+                        panelManager.OnActivePanel(lobby);
+                    }
                 }
-                var message = jsonResponse["message"].ToString();
-                Debug.Log(message);
+                else
+                {
+                    panelManager.OnActivePanel(dialog);
+                }
+                
+                GameManager.playerInfo = playerInfo;
+
+                messageTxt.text = jsonResponse["message"].ToString();
             }
             else
             {
-                Debug.Log("Error: No response from server.");
+                messageTxt.text = "Error: No response from server.";
             }
         }
 
@@ -76,14 +109,24 @@ namespace DEMO.DB
             playerInfo.Player_id = Player_id;
         }
 
-        public void SetPlayerName()
+        public void SetPlayerName(string text)
         {
-            playerInfo.Player_name = playerNameTxt.text.Trim('\u200b');
+            playerInfo.Player_name = text.Trim('\u200b');
         }
 
-        public void SetPlayerPassword()
+        public void SetPlayerPassword(string text)
         {
-            playerInfo.Player_password = playerPasswordTxt.text.Trim('\u200b');
+            playerInfo.Player_password = text.Trim('\u200b');
+        }
+
+        public void SetOufits()
+        {
+            var playerOutfitsHandler = FindObjectOfType<PlayerOutfitsHandler>();
+            playerInfo.outfits = new List<string>();
+            foreach(var resolver in playerOutfitsHandler.resolverList)
+            {
+                playerInfo.outfits.Add(resolver.GetLabel().ToString());
+            }
         }
     }
 }

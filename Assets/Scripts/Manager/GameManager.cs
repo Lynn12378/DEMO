@@ -4,6 +4,7 @@ using UnityEngine;
 using Fusion;
 
 using DEMO.DB;
+using DEMO.UI;
 
 namespace DEMO.Manager
 {
@@ -50,6 +51,24 @@ namespace DEMO.Manager
             {
                 OnPlayerListUpdated?.Invoke();
             }
+        #endregion
+
+        #region - playerNetworkData -
+
+        public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
+
+        #endregion
+
+        #region - Messages -
+
+        public List<MessageCell> messages = new List<MessageCell>();
+
+        public event Action OnMessagesUpdated = null;
+        public void UpdatedMessages()
+        {
+            OnMessagesUpdated?.Invoke();
+        }
+        
         #endregion
     }
 }

@@ -78,17 +78,6 @@ namespace DEMO.GamePlay
             SetLivingsHP_RPC(Hp);
             if (Hp <= 0)
             {
-                foreach (var kvp in GamePlayManager.Instance.playerOutputList)
-                {
-                    PlayerRef playerRefKey = kvp.Key;
-                    PlayerOutputData playerOutputDataValue = kvp.Value;
-
-                    if (shooter == playerRefKey)
-                    {
-                        playerOutputDataValue.AddKillNo_RPC();
-                    }
-                }
-
                 DespawnLivings_RPC(Object);
             }
         }

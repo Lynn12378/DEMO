@@ -8,66 +8,74 @@ using Fusion;
 using Fusion.Sockets;
 using TMPro;
 
-using DEMO.DB;
+using DEMO.Manager;
 using DEMO.UI;
 
 namespace DEMO.Manager
 {
-    public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
+    public class InGameManager1 : MonoBehaviour, INetworkRunnerCallbacks
     {
-        [SerializeField] private TMP_InputField roomName = null;
-        [SerializeField] private string roomScene = null;
-        [SerializeField] private int maxPlayer;
-
+        [SerializeField] private GameObject playerPrefab;
         private GameManager gameManager = null;
-        private NetworkRunner runner = null;
+		private NetworkRunner runner = null;
+
+        [SerializeField] private Transform contentTrans = null;
+        [SerializeField] private TMP_Text messageTxt = null;
+        [SerializeField] private GameObject messageCellPrefab = null;
+
+        public void UpdatedMessages()
+        {
+            foreach(var message in gameManager.messages)
+            {
+                message.transform.SetParent(contentTrans, false);
+            }
+        }
+
+        public void CreateMessage()
+        {
+            var cell = runner.Spawn(messageCellPrefab, Vector3.zero, Quaternion.identity);
+            cell.GetComponent<MessageCell>().SetMessage_RPC(runner.LocalPlayer.ToString(), messageTxt.text);
+        }
 
         private void Start()
         {
             gameManager = GameManager.Instance;
             runner = gameManager.Runner;
             runner.AddCallbacks(this);
+            
+            gameManager.OnMessagesUpdated += UpdatedMessages;
         }
 
-        public void JoinRoom()
+        private void OnDestroy()
         {
-            StartGame(GameMode.Shared, roomName.text, roomScene, false);
+            gameManager.OnMessagesUpdated -= UpdatedMessages;
         }
 
-        public void RandomRoom()
+        private void Init(PlayerRef player)
         {
-            StartGame(GameMode.Shared, null, roomScene, true);
+            var PIF = gameManager.playerList[player];
+            var PND = gameManager.gamePlayerList[player];
+            var i = 0;
+
+            PND.SetPlayerInfo_RPC(PIF.playerId, PIF.playerName);
+            PND.SetColorList(PIF.colorList);
+            PND.SetOutfits(PIF.outfits);
+
+            PIF.Despawned();
         }
 
-        private async void StartGame(GameMode mode, string roomName, string sceneName, bool isRandom)
+        public void OnSceneLoadDone(NetworkRunner runner)
         {
-            var startGameArgs = new StartGameArgs()
-            {
-                GameMode = mode,
-                PlayerCount = maxPlayer,
-                SessionName = roomName,
-                Scene = SceneRef.FromIndex(SceneUtility.GetBuildIndexByScenePath(sceneName)),
-                ObjectProvider = runner.GetComponent<NetworkObjectProviderDefault>(),
-                MatchmakingMode = isRandom ? 0 : null,
-            };
-
-            await runner.StartGame(startGameArgs);
-
-            if (runner.IsServer)
-            {
-                await runner.LoadScene(sceneName);
-            }
+            var player = runner.LocalPlayer;
+            var playerObject = runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player);
+            
+            runner.SetPlayerObject(player, playerObject);
+            Camera.main.transform.SetParent(playerObject.transform);
+            Init(player);
         }
 
-        public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-		{
-            if (player == runner.LocalPlayer)
-            {
-			    runner.Spawn(GameManager.playerInfo, Vector3.zero, Quaternion.identity, player);
-            }
-        }
-
-        #region /-- Unused Function --/
+		#region /-- Unused Function --/
+            public void OnPlayerJoined(NetworkRunner runner, PlayerRef player){}
             public void OnPlayerLeft(NetworkRunner runner, PlayerRef player){}
             public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason){}
             public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player){}
@@ -79,12 +87,11 @@ namespace DEMO.Manager
             public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request,byte[] token){}
             public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason){}
             public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message){}
+            public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList){}
             public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data){}
             public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken){}
             public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data){}
             public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress){}
-            public void OnSceneLoadDone(NetworkRunner runner){}
-            public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList){}
             public void OnSceneLoadStart(NetworkRunner runner){}
         #endregion
     }

@@ -20,7 +20,7 @@ namespace DEMO.Manager
 		[SerializeField] private TMP_InputField roomName = null;
 		[SerializeField] private string roomScene = null;
 		[SerializeField] private string gameScene = null;
-		private NetworkRunner networkInstance = null;
+		private NetworkRunner runner = null;
         private GameManager gameManager = null;
 
         private PlayerInfo playerInfo;
@@ -29,12 +29,10 @@ namespace DEMO.Manager
         private void Start()
         {
             gameManager = GameManager.Instance;
-            networkInstance = gameManager.Runner;
-            networkInstance.AddCallbacks(this);
-
-            playerInfo = GameManager.playerInfo;
-			roomName.text = networkInstance.SessionInfo.Name;
-
+            runner = gameManager.Runner;
+            runner.AddCallbacks(this);
+            
+			roomName.text = runner.SessionInfo.Name;
             GameManager.Instance.OnPlayerListUpdated += UpdatePlayerList;
         }
 
@@ -76,32 +74,32 @@ namespace DEMO.Manager
 
 		public async void StartGamePlay()
         {
-			if (networkInstance.IsSceneAuthority) {
-				await networkInstance.UnloadScene(SceneRef.FromIndex(SceneUtility.GetBuildIndexByScenePath(roomScene)));
-  				await networkInstance.LoadScene(SceneRef.FromIndex(SceneUtility.GetBuildIndexByScenePath(gameScene)), LoadSceneMode.Additive);
+			if (runner.IsSceneAuthority) {
+				await runner.UnloadScene(SceneRef.FromIndex(SceneUtility.GetBuildIndexByScenePath(roomScene)));
+  				await runner.LoadScene(SceneRef.FromIndex(SceneUtility.GetBuildIndexByScenePath(gameScene)), LoadSceneMode.Additive);
 			}
         }
 
         public void OnReadyBtnClicked()
         {
-            if (gameManager.playerList.TryGetValue(networkInstance.LocalPlayer, out PlayerInfo playerInfo))
+            if (gameManager.playerList.TryGetValue(runner.LocalPlayer, out PlayerInfo playerInfo))
             {
                 playerInfo.SetIsReady_RPC();
             }
         }
 
-        public void OnPlayerJoined(NetworkRunner runner, PlayerRef player){}
-
-		public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-		{
-			if (networkInstance.IsServer)
+        public void OnLeaveBtnClicked()
+        {
+            if (gameManager.playerList.TryGetValue(runner.LocalPlayer, out PlayerInfo playerInfo))
             {
-                networkInstance.Despawn(playerInfo.Object);
+                runner.Despawn(playerInfo.Object);
                 GameManager.Instance.UpdatePlayerList();
             }
-		}
+        }
 
 		#region /-- Unused Function --/
+            public void OnPlayerJoined(NetworkRunner runner, PlayerRef player){}
+            public void OnPlayerLeft(NetworkRunner runner, PlayerRef player){}
             public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason){}
             public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player){}
             public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player){}
