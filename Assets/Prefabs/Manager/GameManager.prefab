@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4548837514599443781}
   - component: {fileID: 5493886838805833379}
-  - component: {fileID: 7859317483397426942}
   - component: {fileID: 7768649088180152523}
   - component: {fileID: 1177263148877951555}
   - component: {fileID: 136085819052934268}
@@ -50,23 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: -1199893898, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7859317483397426942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4858603629664805205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9fd79d79a0fb459ababab9a78f00caa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _physicsAuthority: 2
-  _physicsTiming: 3
-  ClientPhysicsSimulation: 0
-  DeltaTimeMultiplier: 1
-  SetUnityFixedTimestep: 0
 --- !u!114 &7768649088180152523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +88,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runner: {fileID: 5493886838805833379}
+  voiceClient: {fileID: 0}
+  rec: {fileID: 0}
+  speakerPrefab: {fileID: 0}
   messages: []
 --- !u!114 &4426392564516569136
 MonoBehaviour:
