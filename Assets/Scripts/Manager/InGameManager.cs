@@ -21,6 +21,8 @@ namespace DEMO.Manager
         [SerializeField] private GameObject teamCellPrefab = null;
         [SerializeField] private GameObject teamPlayerCellPrefab = null;
         [SerializeField] private Transform contentTrans = null;
+
+        private GameManager gameManager = null;
         private GamePlayManager gamePlayManager = null;
 		private NetworkRunner networkInstance = null;
         private PlayerRef localPlayer;
@@ -31,28 +33,42 @@ namespace DEMO.Manager
 
         private void Start()
         {
+            gameManager = GameManager.Instance;
             gamePlayManager = GamePlayManager.Instance;
             networkInstance = gamePlayManager.Runner;
             networkInstance.AddCallbacks(this);
 
-            StartShared();
+            //StartShared();
 
-            GamePlayManager.Instance.OnTeamListUpdated += UpdatedTeamList;
-            GamePlayManager.Instance.OnInGamePlayerUpdated += UpdatedGamePlayer;
+            gamePlayManager.OnTeamListUpdated += UpdatedTeamList;
+            gamePlayManager.OnInGamePlayerUpdated += UpdatedGamePlayer;
+            gameManager.OnMessagesUpdated += UpdatedMessages;
         }
 
         private void OnDestroy()
         {
             gamePlayManager.OnTeamListUpdated -= UpdatedTeamList;
-            GamePlayManager.Instance.OnInGamePlayerUpdated -= UpdatedGamePlayer;
+            gamePlayManager.OnInGamePlayerUpdated -= UpdatedGamePlayer;
+            gameManager.OnMessagesUpdated += UpdatedMessages;
         }
 
+        #region - Messages - 
         public void CreateMessage()
         {
             var cell = networkInstance.Spawn(messageCellPrefab, Vector3.zero, Quaternion.identity);
             cell.GetComponent<MessageCell>().SetMessage_RPC(networkInstance.LocalPlayer.ToString(), messageTxt.text);
         }
 
+        public void UpdatedMessages()
+        {
+            foreach(var message in gameManager.messages)
+            {
+                message.transform.SetParent(contentTrans, false);
+            }
+        }
+        #endregion
+
+        #region - Minimap -
         public void UpdatedGamePlayer()//UpdateAllMinimapIconsVisibility()
         {
             Debug.Log("UpdatedGamePlayer");
@@ -72,6 +88,7 @@ namespace DEMO.Manager
                 }
             }
         }
+        #endregion
 
         #region - OnTeamUpdated -
         public void UpdatedTeamList()
@@ -175,7 +192,7 @@ namespace DEMO.Manager
         #endregion
 
         #region - Start Game -
-        public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+        /*public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         {
             if (player == runner.LocalPlayer)
             {
@@ -208,10 +225,29 @@ namespace DEMO.Manager
             {
                 await networkInstance.LoadScene(sceneName);
             }
+        }*/
+
+        private void Init(PlayerRef player)
+        {
+            var PIF = gameManager.playerList[player];
+            var PND = gameManager.gamePlayerList[player];
+
+            PND.SetPlayerInfo_RPC(PIF.playerId, PIF.playerName);
+            PND.SetColorList(PIF.colorList);
+            PND.SetOutfits(PIF.outfits);
+
+            PIF.Despawned();
         }
 
         public void OnSceneLoadDone(NetworkRunner runner)
         {
+            var player = runner.LocalPlayer;
+            var playerObject = runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player);
+            
+            runner.SetPlayerObject(player, playerObject);
+            Camera.main.transform.SetParent(playerObject.transform);
+            Init(player);
+
             localPlayer = runner.LocalPlayer;
 
             var spawner = FindObjectOfType<Spawner>();
@@ -221,6 +257,7 @@ namespace DEMO.Manager
         #endregion
        
 		#region /-- Unused Function --/
+            public void OnPlayerJoined(NetworkRunner runner, PlayerRef player){}
             public void OnPlayerLeft(NetworkRunner runner, PlayerRef player){}
             public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason){}
             public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player){}
