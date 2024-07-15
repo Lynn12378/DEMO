@@ -1,0 +1,208 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Hair
+    m_Hash: 1019596327
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Bob
+      m_Hash: 226949024
+      m_Sprite: {fileID: -2820301821919080800, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2820301821919080800, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+    - m_Name: Bun
+      m_Hash: 874332496
+      m_Sprite: {fileID: 4295501058188103027, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 4295501058188103027, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    - m_Name: None
+      m_Hash: 530755569
+      m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Eyes
+    m_Hash: 120101800
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Eyes
+      m_Hash: 120101800
+      m_Sprite: {fileID: -5155233670936492182, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -5155233670936492182, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 1
+  - m_Name: Mouth
+    m_Hash: 520385427
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: wOpen
+      m_Hash: 685127748
+      m_Sprite: {fileID: -1879504886542594016, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1879504886542594016, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+    - m_Name: w
+      m_Hash: 476252946
+      m_Sprite: {fileID: -8935487603649285975, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -8935487603649285975, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: Sleeve(R)
+    m_Hash: 758023166
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Shirt_Long
+      m_Hash: 844153492
+      m_Sprite: {fileID: 1538652291007010509, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1538652291007010509, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+    - m_Name: Suit_Short
+      m_Hash: 688746134
+      m_Sprite: {fileID: 5605682135854199091, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 5605682135854199091, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    - m_Name: None
+      m_Hash: 530755569
+      m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Clothes
+    m_Hash: 1069845776
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Suit_Short
+      m_Hash: 688746134
+      m_Sprite: {fileID: -1864184373177259789, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1864184373177259789, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    - m_Name: Shirt_Long
+      m_Hash: 844153492
+      m_Sprite: {fileID: -1219973000697827008, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1219973000697827008, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: Shoe(R)
+    m_Hash: 914988
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Rosette
+      m_Hash: 125693672
+      m_Sprite: {fileID: -3268046244140215924, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3268046244140215924, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+    - m_Name: Leather
+      m_Hash: 649339590
+      m_Sprite: {fileID: 2130523417716638778, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2130523417716638778, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    - m_Name: None
+      m_Hash: 530755569
+      m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Pant(R)
+    m_Hash: 53453875
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Khaki
+      m_Hash: 752978734
+      m_Sprite: {fileID: 3375282744492801581, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 3375282744492801581, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+    - m_Name: Suit_Long
+      m_Hash: 123285848
+      m_Sprite: {fileID: 1555270335143158051, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1555270335143158051, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    - m_Name: None
+      m_Hash: 530755569
+      m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Sleeve(L)
+    m_Hash: 963623969
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Suit_Short
+      m_Hash: 688746134
+      m_Sprite: {fileID: 5258611321906167884, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 5258611321906167884, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    - m_Name: Shirt_Long
+      m_Hash: 844153492
+      m_Sprite: {fileID: -3505509768946664772, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3505509768946664772, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+    - m_Name: None
+      m_Hash: 530755569
+      m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Shoe(L)
+    m_Hash: 340576755
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Rosette
+      m_Hash: 125693672
+      m_Sprite: {fileID: 6838022752049219709, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 6838022752049219709, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+    - m_Name: Leather
+      m_Hash: 649339590
+      m_Sprite: {fileID: -8039641142160749556, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -8039641142160749556, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    - m_Name: None
+      m_Hash: 530755569
+      m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  - m_Name: Pant(L)
+    m_Hash: 393124844
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Khaki
+      m_Hash: 752978734
+      m_Sprite: {fileID: -39287119324712788, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -39287119324712788, guid: 9cffa544e98c23e479dfe0d5c09e2116, type: 3}
+    - m_Name: Suit_Long
+      m_Hash: 123285848
+      m_Sprite: {fileID: 5005894644446667158, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 5005894644446667158, guid: 6a54693711317e94fa16e1a6184a9a22, type: 3}
+    - m_Name: None
+      m_Hash: 530755569
+      m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 3
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 638545143698376010
+  m_Version: 1

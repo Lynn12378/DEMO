@@ -22,7 +22,7 @@ namespace DEMO.DB
         protected IEnumerator SendData()
         {
             // 設置POST請求的URL
-            string url = "http://localhost/" + table + ".php?Action=" + action;
+            string url = "http://localhost/DEMO/" + table + ".php?Action=" + action;
             
             if (formData == null || table == null)
             {
