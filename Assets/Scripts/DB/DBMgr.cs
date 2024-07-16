@@ -12,6 +12,12 @@ namespace DEMO.DB
         protected string action;
         protected string responseText;
 
+        protected void SetForm(List<IMultipartFormSection> formData, string table)
+        {
+            this.formData = formData;
+            this.table = table;
+        }
+
         protected void SetForm(List<IMultipartFormSection> formData, string table, string action)
         {
             this.formData = formData;
@@ -21,8 +27,18 @@ namespace DEMO.DB
 
         protected IEnumerator SendData()
         {
+            string url = "";
+
             // 設置POST請求的URL
-            string url = "http://localhost/DEMO/" + table + ".php?Action=" + action;
+            if(action != null)
+            {
+                url = "http://localhost/DEMO/" + table + ".php?Action=" + action;
+            }
+            else
+            {
+                url = "http://localhost/DEMO/" + table + ".php";
+            }
+            
             
             if (formData == null || table == null)
             {

@@ -212,10 +212,12 @@ namespace DEMO.Manager
         {
             var PIF = gameManager.playerList[player];
             var PND = gamePlayManager.gamePlayerList[player];
+            var POD = gamePlayManager.playerOutputList[player];
 
             PND.SetPlayerInfo_RPC(PIF.playerId, PIF.playerName);
             PND.SetColorList(PIF.colorList);
             PND.SetOutfits(PIF.outfits);
+            POD.SetPlayerId_RPC(PIF.playerId);
 
             PIF.Despawned();
         }

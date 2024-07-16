@@ -179,7 +179,9 @@ namespace DEMO.GamePlay.Player
                 playerNetworkData.itemList.Add(item);
                 playerNetworkData.UpdateItemList();
 
-                if(itemInRange.CompareTag("Placeholder"))                     //////////////////////////////////////////// Items without usage
+                if (item.itemType == Item.ItemType.Placeholder1 || 
+                    item.itemType == Item.ItemType.Placeholder2 || 
+                    item.itemType == Item.ItemType.Placeholder3)
                 {
                     playerOutputData.placeholderNo++;
                 }

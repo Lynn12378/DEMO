@@ -14,9 +14,9 @@ namespace DEMO.Manager
 {
     public class GamePlayManager : MonoBehaviour
     {
-        /// 代替GameManager
         public static GamePlayManager Instance { get; private set; }
         public NetworkRunner Runner;
+        [SerializeField] private PlayerOutputDBHandler playerOutputDBHandler;
 
         private void Awake()
         {
@@ -83,6 +83,20 @@ namespace DEMO.Manager
                 {
                     playerOutputData.rankNo++;
                     Debug.Log(playerRefKey.ToString() + "'s rank no is: " + playerOutputData.rankNo);
+                }
+            }
+        }
+
+        public void OnSendPOD()
+        {
+            foreach (var kvp in playerOutputList)
+            {
+                PlayerRef playerRefKey = kvp.Key;
+                PlayerOutputData playerOutputData = kvp.Value;
+
+                if (playerRefKey == Runner.LocalPlayer)
+                {
+                    playerOutputDBHandler.SendPOD(playerOutputData);
                 }
             }
         }
