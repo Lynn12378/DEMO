@@ -182,8 +182,14 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.DOOR) && Door != null)
             {   
-                Door.ToggleDoor();
-                Debug.LogError("GO!");
+                if (Door != null)
+                {
+                    Door.ToggleDoor();
+                }
+                else
+                {
+                    Debug.LogError("没有可用的 DoorController");
+                }
             }
         }
         #endregion
@@ -242,8 +248,16 @@ namespace DEMO.GamePlay.Player
 
             if (collider.CompareTag("Door"))
             {
+                Debug.LogError("??");
                 Door = collider.GetComponent<DoorController>();
-                Debug.LogError("Good");
+                if (Door != null)
+                {
+                    Debug.LogError("Good");
+                }
+                else
+                {
+                    Debug.LogError("DoorController 组件未找到");
+                }
             }
         }
 
