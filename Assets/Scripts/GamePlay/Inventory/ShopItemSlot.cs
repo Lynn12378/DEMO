@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.U2D.Animation;
 using TMPro;
-using Fusion;
 
 using DEMO.DB;
 using DEMO.Manager;

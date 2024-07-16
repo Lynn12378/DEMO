@@ -6,6 +6,7 @@ using Fusion;
 using Fusion.Addons.Physics;
 
 using DEMO.GamePlay.EnemyScript;
+using DEMO.GamePlay.Interactable;
 using DEMO.Manager;
 using DEMO.DB;
 

@@ -9,7 +9,6 @@ using Fusion;
 using DEMO.DB;
 using DEMO.Manager;
 
-
 namespace DEMO.GamePlay.Inventory
 {
     public class ItemFunction : NetworkBehaviour

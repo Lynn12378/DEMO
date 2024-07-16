@@ -1,3 +1,7 @@
+<?php
+$player_id = intval($_GET['player_id']);
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

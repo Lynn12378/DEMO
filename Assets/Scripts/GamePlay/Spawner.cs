@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
+using DEMO.GamePlay.Interactable;
+
 namespace DEMO.GamePlay
 {
     public class Spawner : NetworkBehaviour

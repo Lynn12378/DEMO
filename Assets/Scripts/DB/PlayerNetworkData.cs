@@ -45,8 +45,6 @@ namespace DEMO.DB
 
         public override void Spawned()
         {
-            Debug.LogWarning(Runner);
-
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
             transform.SetParent(Runner.transform);
 
@@ -55,7 +53,6 @@ namespace DEMO.DB
   
             if (Object.HasStateAuthority)
             {
-                //SetPlayerInfo_RPC(0,"TEST");
                 SetPlayerRef_RPC();
                 SetPlayerHP_RPC(MaxHP);
                 SetPlayerBullet_RPC(MaxBullet);
@@ -71,7 +68,7 @@ namespace DEMO.DB
             playerOutfitsHandler.SetHairColor(colorList[1]);*/
 
             // Set state for LocalPlayer
-            if (playerRef == Runner.LocalPlayer)
+            if (Object.HasInputAuthority)
             {
                 // Change color of color code, if failed then color = white
                 localColor = ColorUtility.TryParseHtmlString("#00C800", out Color color) ? color : Color.white;
@@ -87,8 +84,6 @@ namespace DEMO.DB
 
             uIManager.UpdateMicTxt("none");
             uIManager.SetPlayerRef(playerRef);
-
-            // gamePlayManager.UpdatedGamePlayer();
 		}
 
         public PlayerOutputData GetPlayerOutputData()
@@ -276,7 +271,6 @@ namespace DEMO.DB
                 {
                     case nameof(teamID):
                         GamePlayManager.Instance.UpdatedGamePlayer();
-                        Debug.Log($"{playerRef} UpdateTeamID");
                         break;
                     case nameof(HP):
                         uIManager.UpdateHPSlider(HP, MaxHP);

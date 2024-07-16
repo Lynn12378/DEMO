@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Fusion;
 using Fusion.Sockets;
 using TMPro;
@@ -21,6 +18,7 @@ namespace DEMO.Manager
         [SerializeField] private GameObject teamCellPrefab = null;
         [SerializeField] private GameObject teamPlayerCellPrefab = null;
         [SerializeField] private Transform contentTrans = null;
+        [SerializeField] private Transform messageContentTrans = null;
 
         private GameManager gameManager = null;
         private GamePlayManager gamePlayManager = null;
@@ -30,6 +28,25 @@ namespace DEMO.Manager
         [SerializeField] private TMP_Text messageTxt = null;
         [SerializeField] private GameObject messageCellPrefab = null;
 
+        private string baseUrl = "http://localhost/DEMO/BFI-15.php";
+        public void TestButton()
+        {
+            int playerId = 0;
+
+            foreach (var player in GamePlayManager.Instance.gamePlayerList)
+            {
+                if(player.Key == localPlayer) playerId = player.Value.playerId;
+            }
+
+            // Construct the full URL with the player ID as a parameter
+            string fullUrl = baseUrl + "?player_id=" + playerId.ToString();
+
+            if(playerId != 0)
+            {
+                Application.OpenURL(fullUrl);
+            }
+        }
+
 
         private void Start()
         {
@@ -37,8 +54,6 @@ namespace DEMO.Manager
             gamePlayManager = GamePlayManager.Instance;
             networkInstance = gameManager.Runner;
             networkInstance.AddCallbacks(this);
-
-            //StartShared();
 
             gamePlayManager.OnTeamListUpdated += UpdatedTeamList;
             gamePlayManager.OnInGamePlayerUpdated += UpdatedGamePlayer;
@@ -57,13 +72,16 @@ namespace DEMO.Manager
         {
             var cell = networkInstance.Spawn(messageCellPrefab, Vector3.zero, Quaternion.identity);
             cell.GetComponent<MessageCell>().SetMessage_RPC(networkInstance.LocalPlayer.ToString(), messageTxt.text);
+
+            // Reset message text
+            messageTxt.text = "";
         }
 
         public void UpdatedMessages()
         {
             foreach(var message in gameManager.messages)
             {
-                message.transform.SetParent(contentTrans, false);
+                message.transform.SetParent(messageContentTrans, false);
             }
         }
         #endregion
@@ -71,7 +89,6 @@ namespace DEMO.Manager
         #region - Minimap -
         public void UpdatedGamePlayer()//UpdateAllMinimapIconsVisibility()
         {
-            Debug.Log("UpdatedGamePlayer");
             var localPND = gamePlayManager.gamePlayerList[localPlayer];
             foreach (var gamePlayer in gamePlayManager.gamePlayerList.Values)
             {
@@ -80,7 +97,6 @@ namespace DEMO.Manager
                 if (gamePlayer.teamID == localPND.teamID)
                 {
                     gamePlayer.minimapIcon.SetActive(true);
-                    Debug.Log(gamePlayer.playerRef);
                 }
                 else
                 {

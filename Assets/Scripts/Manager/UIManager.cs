@@ -4,8 +4,6 @@ using UnityEngine.UI;
 using TMPro;
 using DEMO.GamePlay.Inventory;
 using DEMO.DB;
-using DEMO.UI;
-using DEMO.GamePlay.Player;
 using Fusion;
 
 namespace DEMO.Manager

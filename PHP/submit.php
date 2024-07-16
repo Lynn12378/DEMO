@@ -30,9 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $json_answers = json_encode($answers);
 
     // 獲取玩家 ID
-    // $player_id = intval($_POST['player_id']); // 假設玩家 ID 是從表單中 POST 過來的整數
-    // 如果用unity的url直接指定的話，可以用get：
-    $player_id = intval($_GET['player_id']);
+    $player_id = intval($_POST['player_id']);
 
     // 插入到 MySQL 資料庫中
     $sql = "INSERT INTO bfi_responses (player_id, responses) VALUES (?, ?)";

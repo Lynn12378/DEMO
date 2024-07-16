@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using TMPro;
 
-using DEMO.GamePlay;
+using DEMO.GamePlay.Interactable;
 
 namespace DEMO.UI
 {

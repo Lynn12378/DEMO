@@ -1,7 +1,8 @@
 using UnityEngine.Audio;
 using System;
 using UnityEngine;
-using UnityEngine.Rendering;
+
+using DEMO.GamePlay;
 
 namespace DEMO.Manager
 {

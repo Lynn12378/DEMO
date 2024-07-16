@@ -8,9 +8,6 @@ using Fusion;
 using Fusion.Sockets;
 using TMPro;
 
-using DEMO.DB;
-using DEMO.UI;
-
 namespace DEMO.Manager
 {
     public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks

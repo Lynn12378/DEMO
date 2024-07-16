@@ -6,6 +6,7 @@ using Fusion.Addons.Physics;
 using DEMO.DB;
 using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
+using DEMO.GamePlay.Interactable;
 using DEMO.Gameplay;
 using DEMO.UI;
 

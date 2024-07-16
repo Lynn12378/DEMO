@@ -7,9 +7,6 @@ using Fusion;
 
 using DEMO.Manager;
 using DEMO.DB;
-using DEMO.GamePlay;
-using DEMO.Gameplay;
-using TMPro.Examples;
 
 namespace DEMO.GamePlay.Inventory
 {
