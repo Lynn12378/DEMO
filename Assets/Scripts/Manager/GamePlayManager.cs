@@ -28,7 +28,7 @@ namespace DEMO.Manager
 
             Instance = this;
 
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
 
             Runner = GameManager.Instance.Runner;
         }

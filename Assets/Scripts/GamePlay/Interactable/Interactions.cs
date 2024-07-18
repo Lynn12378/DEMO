@@ -8,6 +8,14 @@ namespace DEMO.GamePlay.Interactable
     public class Interactions
     {
         public string name;
-        public string txt;
+        public InteractionType interactionType;
+        public string interactionTxt;
+        [HideInInspector] public string instructionIxt;
+    }
+
+    public enum InteractionType
+    {
+        TextOnly,   // Show text only
+        Feed     // Feed livings
     }
 }

@@ -127,7 +127,7 @@ namespace DEMO.GamePlay.Player
                 }
             }
 
-            if (pressed.IsSet(InputButtons.PICKUP)) // Spacebar
+            if (pressed.IsSet(InputButtons.SPACE)) // Spacebar
             {
                 if(itemInRange != null)
                 {
@@ -146,6 +146,14 @@ namespace DEMO.GamePlay.Player
                 {
                     return;
                 }          
+            }
+
+            if (pressed.IsSet(InputButtons.FEED))
+            {
+                if (isInteracting && MapInteractionManager.Instance.currentInteraction.interactionType == InteractionType.Feed)
+                {
+                    MapInteractionManager.Instance.Feed(playerNetworkData, playerOutputData);
+                }
             }
 
             if (pressed.IsSet(InputButtons.TALK))
@@ -179,9 +187,7 @@ namespace DEMO.GamePlay.Player
                 playerNetworkData.itemList.Add(item);
                 playerNetworkData.UpdateItemList();
 
-                if (item.itemType == Item.ItemType.Placeholder1 || 
-                    item.itemType == Item.ItemType.Placeholder2 || 
-                    item.itemType == Item.ItemType.Placeholder3)
+                if (item.itemId >= 5 && item.itemId <= 13)
                 {
                     playerOutputData.placeholderNo++;
                 }

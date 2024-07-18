@@ -27,8 +27,8 @@ namespace DEMO.DB
         public int collisionNo = 0;                             // No. of player's collision with buildings
         public int bulletCollision = 0;                         // No. of player bullet's collision with buildings
         public int bulletCollisionOnLiving = 0;                 // No. of player shoot another player or animals
-        public int remainHP = 0;                                // ----------HP amount remained when refill HP
-        public int remainBullet = 0;                            // ----------Bullet amount remained when refill bullet
+        public int[] remainHP = null;                           // HP amount remained when refill HP
+        public int[] remainBullet = null;                       // Bullet amount remained when refill bullet
         public float totalVoiceDetectionDuration = 0;           // Duration of voice detected on player's mic
         public int organizeNo = 0;                              // No. of player organize inventory
         public int fullNo = 0;                                  // No. of player's inventory full
@@ -40,6 +40,8 @@ namespace DEMO.DB
         public int quitTeamNo = 0;                              // No. of player quit team
         public int repairQuantity = 0;                          // Quantity of player given to repair shelter
         public int restartNo = 0;                               // No. of times shelter durability = 0
+        public int usePlaceholderNo = 0;                         // No. of player use badge at right building
+        public int feedNo = 0;                                  // No. of player feed livings
 
 
         public override void Spawned()

@@ -11,7 +11,7 @@ namespace DEMO.GamePlay
     {
         [Header("Enemy Spawner Settings")]
         [SerializeField] private NetworkObject enemy;
-        [SerializeField] private int initialEnemyCount = 25;
+        [SerializeField] private int initialEnemyCount = 40;
         [SerializeField] private int enemyPerSpawn = 10;
         [SerializeField] private float delayBetweenEnemySpawns = 900.0f; // 15 minutes in seconds
 
@@ -23,9 +23,10 @@ namespace DEMO.GamePlay
 
         [Header("Living Spawner Settings")]
         [SerializeField] private NetworkObject living;
-        [SerializeField] private int initialLivingCount = 10;
+        [SerializeField] private int initialLivingCount = 15;
         [SerializeField] private int livingPerSpawn = 5;
         [SerializeField] private float delayBetweenLivingSpawns = 600.0f; // 10 minutes in seconds
+        public BoxCollider2D spawnGooseArea;
 
         private bool initialEnemySpawnCompleted = false;
         private bool initialItemSpawnCompleted = false;
@@ -155,7 +156,7 @@ namespace DEMO.GamePlay
 
         private void SpawnItemNearSpawnPoint(Transform spawnPoint)
         {
-            int itemID = Random.Range(0, 8);
+            int itemID = GetRandomItemID();
             Vector3 spawnPosition = GetSpawnPosition(spawnPoint);
 
             var NO = Runner.Spawn(item, spawnPosition, Quaternion.identity);
@@ -164,11 +165,52 @@ namespace DEMO.GamePlay
 
         private void SpawnLivingAtRandomPosition()
         {
-            int livingID = Random.Range(0, 6);
-            Vector3 spawnPosition = GetRandomSpawnPosition();
+            Vector3 spawnPosition;
 
+            int livingID = Random.Range(0, 11);
+
+            if(livingID == 8)
+            {
+                spawnPosition = GetSpawnPositionInArea();
+            }
+            else
+            {
+                spawnPosition = GetRandomSpawnPosition();
+            }
+            
             var NO = Runner.Spawn(living, spawnPosition, Quaternion.identity);
             NO.GetComponent<Livings>().Init(livingID);
+        }
+
+        public void SpawnItemWhenEnemyDied(Transform spawnPoint)
+        {
+            // Randomly spawn 0-3 items
+            int itemCount = Random.Range(0, 4);
+
+            int itemID = GetRandomItemID();
+
+            for (int i = 0; i < itemCount; i++)
+            {
+                Vector3 spawnPosition = GetSpawnPosition(spawnPoint);
+
+                var NO = Runner.Spawn(item, spawnPosition, Quaternion.identity);
+                NO.GetComponent<Inventory.Item>().Init(itemID);
+            }
+        }
+
+        private int GetRandomItemID()
+        {
+            float randomValue = Random.value; // Random float of 0-1
+            if (randomValue < 0.8f)
+            {
+                // 80% prob. to spawn item 0-4
+                return Random.Range(0, 5);
+            }
+            else
+            {
+                // 20% prob. to spawn item 5-13
+                return Random.Range(5, 14);
+            }
         }
         #endregion
 
@@ -192,6 +234,19 @@ namespace DEMO.GamePlay
             float offsetY = Random.Range(-78f, 45f);
 
             return new Vector3(offsetX, offsetY, 0f);
+        }
+
+        private Vector3 GetSpawnPositionInArea()
+        {
+            Bounds bounds = spawnGooseArea.bounds;
+
+            Vector3 randomPosition = new Vector3(
+                Random.Range(bounds.min.x, bounds.max.x),
+                Random.Range(bounds.min.y, bounds.max.y),
+                transform.position.z
+            );
+
+            return randomPosition;
         }
         #endregion
     }

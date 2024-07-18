@@ -7,6 +7,7 @@ using Fusion;
 
 using DEMO.Manager;
 using DEMO.DB;
+using DEMO.GamePlay.Interactable;
 
 namespace DEMO.GamePlay.Inventory
 {
@@ -19,9 +20,15 @@ namespace DEMO.GamePlay.Inventory
             Food,
             Health,
             Wood,
-            Placeholder1,
-            Placeholder2,
-            Placeholder3,
+            Badge_LiberalArts,      // 文院
+            Badge_Science,          // 理院
+            Badge_Engineer,         // 工院
+            Badge_Management,       // 管院
+            Badge_EECS,             // 電機資工
+            Badge_Earth,            // 地科
+            Badge_Hakka,            // 客院
+            Badge_HST,              // 生醫理工
+            Badge_TeachingCenters,  // 總教學中心
             None,
         }
 
@@ -30,6 +37,7 @@ namespace DEMO.GamePlay.Inventory
         [Networked] public int itemID { get; set; }
         [Networked] public int amount { get; set; }
         public ItemType itemType;
+        public int itemId;
         public int quantity;
 
         // Usage of item
@@ -52,6 +60,7 @@ namespace DEMO.GamePlay.Inventory
             this.itemType = (ItemType) itemID;
             spriteResolver.SetCategoryAndLabel("item", this.itemType.ToString());
             quantity = 1;
+            itemId = itemID;
 
             SetItemID_RPC(itemID);
             SetAmount_RPC(1);
@@ -113,12 +122,26 @@ namespace DEMO.GamePlay.Inventory
                         validItem = false;
                     }
                     break;
-                case ItemType.Placeholder1:
-                case ItemType.Placeholder2:
-                case ItemType.Placeholder3:
-                    ////////////////////// Warning message box
-                    Debug.Log("Cannot use this item.");
-                    validItem = false;
+                case ItemType.Badge_LiberalArts:
+                case ItemType.Badge_Science:
+                case ItemType.Badge_Engineer:
+                case ItemType.Badge_Management:
+                case ItemType.Badge_EECS:
+                case ItemType.Badge_Earth:
+                case ItemType.Badge_Hakka:
+                case ItemType.Badge_HST:
+                case ItemType.Badge_TeachingCenters:
+                    if (IsPlayerInCorrectLocation(playerNetworkData, itemType, out Building building))
+                    {
+                        building.AddBadge_RPC();
+                        playerNetworkData.GetPlayerOutputData().usePlaceholderNo++;
+                        AudioManager.Instance.Play("BadgeUse"); ///////////////////////// Add sound
+                    }
+                    else
+                    {
+                        Debug.Log("Cannot use this item here.");
+                        validItem = false;
+                    }
                     break;
             }
 
@@ -126,6 +149,27 @@ namespace DEMO.GamePlay.Inventory
             {
                 DecreaseQuantityOrRemove(playerNetworkData.itemList);
             }
+        }
+
+        private bool IsPlayerInCorrectLocation(PlayerNetworkData playerNetworkData, ItemType itemType, out Building building)
+        {
+            building = null;
+
+            Building[] buildings = FindObjectsOfType<Building>();
+
+            foreach (Building b in buildings)
+            {
+                if (b.GetComponent<Collider2D>().OverlapPoint(playerNetworkData.minimapIcon.transform.position))
+                {
+                    if (itemType == b.badgeType)
+                    {
+                        building = b;
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         // Discard Item 

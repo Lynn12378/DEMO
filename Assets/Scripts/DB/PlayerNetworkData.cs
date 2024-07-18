@@ -7,6 +7,7 @@ using Fusion;
 using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
 using DEMO.Gameplay;
+using System.Linq;
 
 namespace DEMO.DB
 {
@@ -130,8 +131,8 @@ namespace DEMO.DB
 
         public void UpdatedOutfits()
         {
-            var i = 0;
-            /*foreach(var resolver in playerOutfitsHandler.resolverList)
+            /*var i = 0;
+            foreach(var resolver in playerOutfitsHandler.resolverList)
             {
                 playerOutfitsHandler.ChangeOutfit(resolver.GetCategory(),outfits[i]);
                 i+=1;
@@ -152,8 +153,6 @@ namespace DEMO.DB
         {
             playerId = id;
 			playerName = name;
-            playerRefString = Runner.LocalPlayer.ToString();
-            playerRef = Runner.LocalPlayer;
 		}
 
         [Rpc(RpcSources.All, RpcTargets.All)]
@@ -161,7 +160,7 @@ namespace DEMO.DB
         {
             if(hp > HP && hp < MaxHP)
             {
-                playerOutputData.remainHP = HP;
+                playerOutputData.remainHP.Append(HP);
                 Debug.Log(playerRefString + " remain HP is " + playerOutputData.remainHP);
             }
 
@@ -182,7 +181,7 @@ namespace DEMO.DB
         {
             if(amount > bulletAmount && amount < MaxBullet)
             {
-                playerOutputData.remainBullet = bulletAmount;
+                playerOutputData.remainBullet.Append(bulletAmount);
                 Debug.Log(playerRefString + " remain bullet is " + playerOutputData.remainBullet);
             }
 

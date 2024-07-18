@@ -13,7 +13,6 @@ namespace DEMO.Manager
 {
     public class InGameManager : MonoBehaviour, INetworkRunnerCallbacks
     {
-		[SerializeField] private string gameScene = null;
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameObject teamCellPrefab = null;
         [SerializeField] private GameObject teamPlayerCellPrefab = null;

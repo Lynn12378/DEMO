@@ -47,7 +47,15 @@ namespace DEMO.GamePlay.EnemyScript
 
         public PlayerDetection playerDetection;
 
+        [SerializeField] private Spawner spawner;
+
+
         #region - Initialize -
+        private void Start()
+        {
+            spawner = FindObjectOfType<Spawner>();
+        }
+
         public override void Spawned() 
         {
             var enemyTransform = GameObject.Find("Enemy");
@@ -205,7 +213,7 @@ namespace DEMO.GamePlay.EnemyScript
         }
         #endregion
 
-        #region - Hp -
+        #region - Hp & Drop -
         public void TakeDamage(int damage, PlayerRef shooter)
         {
             Hp -= damage;
@@ -241,6 +249,13 @@ namespace DEMO.GamePlay.EnemyScript
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void DespawnEnemy_RPC(NetworkObject netObj)
         {
+            float randomValue = Random.value; // Random float of 0-1
+            if (randomValue < 0.6f)
+            {
+                // 60% prob. to drop 0-3 item when enemy died
+                spawner.SpawnItemWhenEnemyDied(netObj.transform);
+            }
+
             Runner.Despawn(netObj);
         }
         #endregion

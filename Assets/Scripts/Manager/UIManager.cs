@@ -179,9 +179,7 @@ namespace DEMO.Manager
             foreach (Item item in items)
             {
                 // If item is a Placeholder, add it to the placeholderItems list
-                if (item.itemType == Item.ItemType.Placeholder1 ||
-                    item.itemType == Item.ItemType.Placeholder2 ||
-                    item.itemType == Item.ItemType.Placeholder3)
+                if (item.itemId >= 5 && item.itemId <= 13)
                 {
                     placeholderItems.Add(item);
                 }

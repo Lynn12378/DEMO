@@ -18,8 +18,13 @@ namespace DEMO.GamePlay.Interactable
             Cat2,
             Cat3,
             Cat4,
-            Cat5,
-            Cat6,
+            Dog1,
+            Dog2,
+            Dog3,
+            Dog4,
+            Goose,
+            Squirrel,
+            Frog,
         }
 
         [SerializeField] private NetworkRigidbody2D livingsNetworkRigidbody = null;
@@ -138,7 +143,31 @@ namespace DEMO.GamePlay.Interactable
         #region - Interact -
         public void Interact()
         {
-            MapInteractionManager.Instance.StartInteraction("Cats");
+            switch(livingsID)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    MapInteractionManager.Instance.SetCurrentInteraction("Cat");
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    MapInteractionManager.Instance.SetCurrentInteraction("Dog");
+                    break;
+                case 8:
+                    MapInteractionManager.Instance.SetCurrentInteraction("Goose");
+                    break;
+                case 9:
+                    MapInteractionManager.Instance.SetCurrentInteraction("Squirrel");
+                    break;
+                case 10:
+                    MapInteractionManager.Instance.SetCurrentInteraction("Frog");
+                    break;
+            }
+            
         }
         #endregion
     }
