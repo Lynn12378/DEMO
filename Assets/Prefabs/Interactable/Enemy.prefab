@@ -180,8 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 0
-  m_labelHash: 0
+  m_CategoryHash: 0.0048631025
+  m_labelHash: 5.878249e-16
   m_SpriteKey: 0
   m_SpriteHash: 571282970
 --- !u!114 &6780989921185005495
@@ -695,7 +695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyNetworkRigidbody: {fileID: 397606304458726309}
   _enemyID: 0
-  enemyType: 0
+  enemyType: 2
   spriteResolver: {fileID: 3041365669026767076}
   spriteRenderer: {fileID: 2731572436894639398}
   hPSlider: {fileID: 1422947231120268285}
@@ -704,3 +704,4 @@ MonoBehaviour:
   range: 0.3
   maxDistance: 3
   playerDetection: {fileID: 5766282710753272008}
+  spawner: {fileID: 0}

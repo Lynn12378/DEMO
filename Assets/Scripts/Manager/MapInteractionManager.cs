@@ -111,10 +111,5 @@ namespace DEMO.UI
             interactionPanel.SetActive(false);
             currentInteraction = null;
         }
-
-        public bool GetActiveInteractionPanel()
-        {
-            return interactionPanel.activeSelf;
-        }
     }
 }

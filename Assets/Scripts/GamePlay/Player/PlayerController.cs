@@ -31,7 +31,6 @@ namespace DEMO.GamePlay.Player
         private bool isInteracting = false;
 
         [SerializeField] private Shelter shelter;
-        private bool isInShelter = false;
         private float shelterTimer = 0f;
         private const float shelterHealInterval = 5f;
 
@@ -82,13 +81,13 @@ namespace DEMO.GamePlay.Player
                 uIManager.UpdateMinimapArrow(gameObject.transform);
             }
 
-            if (isInShelter)
+            if (shelter != null)
             {
                 shelterTimer += Runner.DeltaTime; // Use Runner.DeltaTime to ensure synchronization
 
                 if (shelterTimer >= shelterHealInterval)
                 {
-                    HealPlayer(10);
+                    playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP + 10);
                     shelterTimer = 0f; // Reset timer
                 }
             }
@@ -143,7 +142,7 @@ namespace DEMO.GamePlay.Player
                     Interact();
                     isInteracting = true;
                 }
-                else if (interactableInRange != null && isInteracting)
+                else if ((interactableInRange != null && isInteracting) || interactableInRange == null)
                 {
                     EndInteract();
                 }
@@ -166,7 +165,7 @@ namespace DEMO.GamePlay.Player
                 voiceDetection.rec.TransmitEnabled = !voiceDetection.rec.TransmitEnabled;
             }
 
-            if (pressed.IsSet(InputButtons.RELOAD) && isInShelter)
+            if (pressed.IsSet(InputButtons.RELOAD) && shelter != null)
             {
                 playerNetworkData.SetPlayerBullet_RPC(playerNetworkData.bulletAmount + 5);
             }
@@ -223,49 +222,41 @@ namespace DEMO.GamePlay.Player
         }
         #endregion
 
-        #region - On Trigger -
-        private void OnTriggerEnter2D(Collider2D collider)
+        #region - On Trigger - /////////////////////////// Stay
+        private void OnTriggerStay2D(Collider2D collider)
         {
             IInteractable interactable = collider.GetComponent<IInteractable>();
+            Item item = collider.GetComponent<Item>();
+            Shelter shelterCollider = collider.GetComponent<Shelter>();
+
             if (interactable != null)
             {
                 interactableInRange = interactable;
             }
-
-            if (collider.CompareTag("Item"))
-            {
-                itemInRange = collider.GetComponent<Item>();
-            }
-
-            if (collider.CompareTag("Shelter"))
-            {
-                isInShelter = true;
-                shelter = collider.GetComponent<Shelter>();
-                playerNetworkData.SetShelter(shelter);
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D collider)
-        {
-            IInteractable interactable = collider.GetComponent<IInteractable>();
-            if (interactable != null)
+            else if (interactable == null)
             {
                 interactableInRange = null;
-                EndInteract();
             }
-
-            if (collider.CompareTag("Item"))
+            
+            if (item != null)
+            {
+                itemInRange = item;
+            }
+            else if(item == null)
             {
                 itemInRange = null;
             }
-
-            if (collider.CompareTag("Shelter"))
+            
+            if (shelterCollider != null)
             {
-                isInShelter = false;
+                shelter = shelterCollider;
+            }
+            else if(shelterCollider == null)
+            {
                 shelterTimer = 0f;
                 shelter = null;
-                playerNetworkData.SetShelter(shelter);
             }
+            playerNetworkData.SetShelter(shelter);
         }
         #endregion
 
@@ -281,11 +272,6 @@ namespace DEMO.GamePlay.Player
         #endregion
 
         #region - Player HP -
-        private void HealPlayer(int healAmount)
-        {
-            playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP + healAmount);
-        }
-
         public void TakeDamage(int damage)
         {
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - damage);

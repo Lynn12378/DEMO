@@ -39,10 +39,11 @@ namespace DEMO.GamePlay.Interactable
         public int Hp { get; set; }
         private int maxHp = 30;
 
-        [SerializeField] private float moveSpeed = 1.0f;
+        [SerializeField] private float moveSpeed = 0.2f;
 
         private Vector3 moveDirection;
         private bool isMoving = false;
+        public bool isInteracting = false;
 
         private MapInteractionManager mapInteractionManager;
 
@@ -174,7 +175,6 @@ namespace DEMO.GamePlay.Interactable
                     mapInteractionManager.SetCurrentInteraction("Frog");
                     break;
             }
-            
         }
         #endregion
     }
