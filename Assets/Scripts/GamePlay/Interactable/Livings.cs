@@ -44,8 +44,15 @@ namespace DEMO.GamePlay.Interactable
         private Vector3 moveDirection;
         private bool isMoving = false;
 
+        private MapInteractionManager mapInteractionManager;
+
 
         #region - Initialize -
+        private void Start()
+        {
+            mapInteractionManager = FindObjectOfType<MapInteractionManager>();
+        }
+
         public override void Spawned() 
         {
             var livingsTransform = GameObject.Find("Livings");
@@ -149,22 +156,22 @@ namespace DEMO.GamePlay.Interactable
                 case 1:
                 case 2:
                 case 3:
-                    MapInteractionManager.Instance.SetCurrentInteraction("Cat");
+                    mapInteractionManager.SetCurrentInteraction("Cat");
                     break;
                 case 4:
                 case 5:
                 case 6:
                 case 7:
-                    MapInteractionManager.Instance.SetCurrentInteraction("Dog");
+                    mapInteractionManager.SetCurrentInteraction("Dog");
                     break;
                 case 8:
-                    MapInteractionManager.Instance.SetCurrentInteraction("Goose");
+                    mapInteractionManager.SetCurrentInteraction("Goose");
                     break;
                 case 9:
-                    MapInteractionManager.Instance.SetCurrentInteraction("Squirrel");
+                    mapInteractionManager.SetCurrentInteraction("Squirrel");
                     break;
                 case 10:
-                    MapInteractionManager.Instance.SetCurrentInteraction("Frog");
+                    mapInteractionManager.SetCurrentInteraction("Frog");
                     break;
             }
             

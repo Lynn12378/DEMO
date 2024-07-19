@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using Fusion.Addons.Physics;
@@ -22,8 +23,10 @@ namespace DEMO.GamePlay.Player
         private float surviveTime = 0f;
 
         private UIManager uIManager;
+        private MapInteractionManager mapInteractionManager;
         private NetworkButtons buttonsPrevious;
         [SerializeField] private Item itemInRange = null;
+        private List<Item> tempItemList;
         [SerializeField] private IInteractable interactableInRange = null;
         private bool isInteracting = false;
 
@@ -35,6 +38,8 @@ namespace DEMO.GamePlay.Player
 
         public override void Spawned()
         {
+            mapInteractionManager = FindObjectOfType<MapInteractionManager>();
+
             uIManager = FindObjectOfType<UIManager>();
             playerNetworkData.SetUIManager(uIManager);
 
@@ -150,9 +155,9 @@ namespace DEMO.GamePlay.Player
 
             if (pressed.IsSet(InputButtons.FEED))
             {
-                if (isInteracting && MapInteractionManager.Instance.currentInteraction.interactionType == InteractionType.Feed)
+                if (isInteracting && mapInteractionManager.currentInteraction.interactionType == InteractionType.Feed)
                 {
-                    MapInteractionManager.Instance.Feed(playerNetworkData, playerOutputData);
+                    mapInteractionManager.Feed(playerNetworkData, playerOutputData);
                 }
             }
 
@@ -213,7 +218,7 @@ namespace DEMO.GamePlay.Player
 
         private void EndInteract()
         {
-            MapInteractionManager.Instance.EndInteraction();
+            mapInteractionManager.EndInteraction();
             isInteracting = false;
         }
         #endregion
@@ -246,6 +251,7 @@ namespace DEMO.GamePlay.Player
             if (interactable != null)
             {
                 interactableInRange = null;
+                EndInteract();
             }
 
             if (collider.CompareTag("Item"))

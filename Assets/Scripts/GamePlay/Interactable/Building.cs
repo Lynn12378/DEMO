@@ -18,8 +18,15 @@ namespace DEMO.GamePlay.Interactable
         public GameObject achievementBadge;
         public Transform achievementSpawnPoint;     // Achievement bagde spawn point
 
-        [Networked] public int currentBadgeCount { get; set; }          /////// public for test
+        [Networked] private int currentBadgeCount { get; set; }
 
+        private MapInteractionManager mapInteractionManager;
+
+
+        private void Start()
+        {
+            mapInteractionManager = FindObjectOfType<MapInteractionManager>();
+        }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void AddBadge_RPC()
@@ -43,7 +50,7 @@ namespace DEMO.GamePlay.Interactable
 
         public void Interact()
         {
-            MapInteractionManager.Instance.SetCurrentInteraction(buildingName);
+            mapInteractionManager.SetCurrentInteraction(buildingName);
         }
     }
 }

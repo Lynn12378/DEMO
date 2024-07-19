@@ -7,7 +7,7 @@ using Fusion;
 using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
 using DEMO.Gameplay;
-using System.Linq;
+using DEMO.UI;
 
 namespace DEMO.DB
 {
@@ -106,6 +106,7 @@ namespace DEMO.DB
             }
         }
 
+        #region - Setter -
         public void SetUIManager(UIManager uIManager)
         {
             this.uIManager = uIManager;
@@ -115,6 +116,7 @@ namespace DEMO.DB
         {
             this.shelter = shelter;
         }
+        #endregion
 
         #region - Update UI -
         // Small slider above
@@ -261,7 +263,6 @@ namespace DEMO.DB
                 {
                     case nameof(teamID):
                         GamePlayManager.Instance.UpdatedGamePlayer();
-                        Debug.Log($"{playerRef} UpdateTeamID");
                         break;
                 }
 
@@ -296,5 +297,14 @@ namespace DEMO.DB
             }
         }
         #endregion
+
+        public void ShowList()
+        {
+            Debug.Log("Item List Contents:");
+            foreach (var item in itemList)
+            {
+                Debug.Log($"Item Type: {item.itemType}, Item ID: {item.itemId}");
+            }
+        }
     }
 }

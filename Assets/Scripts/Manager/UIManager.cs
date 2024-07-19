@@ -228,6 +228,7 @@ namespace DEMO.Manager
                 Item stackedItem = new Item
                 {
                     itemType = itemType,
+                    itemId = (int)itemType,
                     quantity = quantity
                 };
 

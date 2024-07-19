@@ -11,6 +11,7 @@ using DEMO.GamePlay.Interactable;
 
 namespace DEMO.GamePlay.Inventory
 {
+    [System.Serializable]
     public class Item : NetworkBehaviour
     {
         public enum ItemType

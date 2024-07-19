@@ -109,6 +109,7 @@ namespace DEMO.GamePlay.Inventory
                 item = new Item
                 {
                     itemType = itemType,
+                    itemId = (int)itemType,
                     quantity = buyQuantity
                 };
 

@@ -65,6 +65,7 @@ namespace DEMO.GamePlay.EnemyScript
             GamePlayManager.Instance.enemyList.Add(this);
 
             Hp = maxHp;
+            SetEnemyHPSlider_RPC(maxHp);
 
             damageTimer = TickTimer.CreateFromSeconds(Runner, damageInterval);
             patrolTimer = TickTimer.CreateFromSeconds(Runner, patrolInterval);
@@ -92,16 +93,16 @@ namespace DEMO.GamePlay.EnemyScript
                     damageOverTime = 10;
                     maxHp = 40;
                     Hp = maxHp;
-                    SetEnemyHPSlider_RPC(maxHp);
                     break;
                 case EnemyType.HighHP:
                     maxHp = 80;
                     Hp = maxHp;
-                    SetEnemyHPSlider_RPC(maxHp);
                     break;
                 case EnemyType.HighSpeed:
                     moveSpeed = 1.5f;
                     damageOverTime = 0;
+                    maxHp = 30;
+                    Hp = maxHp;
                     break;
                 case EnemyType.Normal:
                     // Keep default values

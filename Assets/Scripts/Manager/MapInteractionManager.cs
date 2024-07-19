@@ -2,37 +2,28 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 using DEMO.GamePlay.Interactable;
 using DEMO.DB;
 using DEMO.Manager;
 using System.ComponentModel;
 using DEMO.GamePlay.Inventory;
+using TMPro.Examples;
 
 namespace DEMO.UI
 {
     public class MapInteractionManager : MonoBehaviour
     {
-        public static MapInteractionManager Instance { get; private set; }
-
         [SerializeField] private GameObject interactionPanel;
         [SerializeField] private TMP_Text interactTxt = null;
         [SerializeField] private TMP_Text instructionTxt = null;
 
-        //public Interactions[] interactions;
         public List<Interactions> interactions = new List<Interactions>();
         public Interactions currentInteraction = null;
 
-        private void Awake()
+        private void Start()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-
             foreach(Interactions i in interactions)
             {
                 SetInstructionIxt(i);
@@ -53,11 +44,6 @@ namespace DEMO.UI
 
         public void SetCurrentInteraction(string name)
         {
-            /*Interactions interaction = Array.Find(interactions, i => i.name == name);
-            currentInteraction = interaction;
-
-            StartInteraction();*/
-
             List<Interactions> matches = interactions.FindAll(i => i.name == name);
 
             if (matches.Count > 0)
@@ -83,14 +69,16 @@ namespace DEMO.UI
 
         public void Feed(PlayerNetworkData PND, PlayerOutputData POD)
         {
+            Debug.Log(PND.ToString());
+            PND.ShowList();
+
             Item food = new Item
             {
-                itemType = Item.ItemType.Food
+                itemType = Item.ItemType.Food,
             };
-
+            
             if(PND.itemList.Contains(food))
             {
-                GamePlayManager.Instance.ShowWarningBox("Into feed.");
                 PND.itemList.Remove(food);
                 PND.UpdateItemList();
                 AudioManager.Instance.Play("Eat");
@@ -107,11 +95,6 @@ namespace DEMO.UI
 
         public void AfterFeed(string name)
         {
-            /*Interactions afterFeed = Array.Find(interactions, i => i.name == "AfterFeed");
-
-            interactTxt.SetText(name + afterFeed.interactionTxt);
-            instructionTxt.SetText(afterFeed.instructionIxt);*/
-
             List<Interactions> afterFeedMatches = interactions.FindAll(i => i.name == "AfterFeed");
 
             if (afterFeedMatches.Count > 0)
