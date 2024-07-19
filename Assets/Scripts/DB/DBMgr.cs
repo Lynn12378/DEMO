@@ -38,8 +38,7 @@ namespace DEMO.DB
             {
                 url = "http://localhost/DEMO/" + table + ".php";
             }
-            
-            
+
             if (formData == null || table == null)
             {
                 Debug.LogError("Form data is not set.");

@@ -112,7 +112,7 @@ namespace DEMO.GamePlay.Inventory
                 case ItemType.Wood:
                     if(playerNetworkData.shelter != null)
                     {
-                        playerNetworkData.shelter.RepairDurability_RPC();
+                        playerNetworkData.shelter.SetDurability_RPC(playerNetworkData.shelter.durability + 2);
                         playerNetworkData.GetPlayerOutputData().repairQuantity++;
                         Debug.Log(playerNetworkData.playerRefString + " use wood for " + playerNetworkData.GetPlayerOutputData().repairQuantity + " times.");
                         AudioManager.Instance.Play("Use");

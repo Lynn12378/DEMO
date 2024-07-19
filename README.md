@@ -1,3 +1,5 @@
 # DEMO
 
-7/13 update PND、InGameMgr
+1. 隨機加入 空房error
+2. 登出登入狀態
+3. 進入房間5人才能開始
