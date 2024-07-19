@@ -198,7 +198,8 @@ namespace DEMO.GamePlay.Player
             else if(playerNetworkData.itemList.Count >= 12)
             {
                 playerOutputData.fullNo++;
-                Debug.Log("Inventory is full, cannot pick up item.");
+                //Debug.Log("Inventory is full, cannot pick up item.");
+                GamePlayManager.Instance.ShowWarningBox("Inventory is full, cannot pick up item.");
             }
         }
         #endregion

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
@@ -17,6 +18,8 @@ namespace DEMO.Manager
         public static GamePlayManager Instance { get; private set; }
         public NetworkRunner Runner;
         [SerializeField] private PlayerOutputDBHandler playerOutputDBHandler;
+        [SerializeField] private UIManager uIManager;
+        private TickTimer warningBoxTimer;
 
         private void Awake()
         {
@@ -28,10 +31,25 @@ namespace DEMO.Manager
 
             Instance = this;
 
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
 
             Runner = GameManager.Instance.Runner;
+            uIManager = FindObjectOfType<UIManager>();
         }
+
+        #region - UI Manager -
+        public void ShowWarningBox(string text)
+        {
+            uIManager.ShowWarningBox(text);
+            StartCoroutine(HideWarningBoxAfterDelay(3.0f));
+        }
+
+        private IEnumerator HideWarningBoxAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            uIManager.HideWarningBox();
+        }
+        #endregion
 
         #region - playerNetworkData -
             public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();

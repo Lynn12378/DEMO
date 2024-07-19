@@ -158,9 +158,9 @@ namespace DEMO.DB
         [Rpc(RpcSources.All, RpcTargets.All)]
 		public void SetPlayerHP_RPC(int hp)
         {
-            if(hp > HP && hp < MaxHP)
+            if(hp > HP && shelter == null)
             {
-                playerOutputData.remainHP.Append(HP);
+                playerOutputData.remainHP.Add(HP);
                 Debug.Log(playerRefString + " remain HP is " + playerOutputData.remainHP);
             }
 
@@ -179,9 +179,9 @@ namespace DEMO.DB
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
 		public void SetPlayerBullet_RPC(int amount)
         {
-            if(amount > bulletAmount && amount < MaxBullet)
+            if(amount > bulletAmount)
             {
-                playerOutputData.remainBullet.Append(bulletAmount);
+                playerOutputData.remainBullet.Add(bulletAmount);
                 Debug.Log(playerRefString + " remain bullet is " + playerOutputData.remainBullet);
             }
 

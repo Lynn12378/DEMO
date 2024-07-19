@@ -90,6 +90,7 @@ namespace DEMO.UI
 
             if(PND.itemList.Contains(food))
             {
+                GamePlayManager.Instance.ShowWarningBox("Into feed.");
                 PND.itemList.Remove(food);
                 PND.UpdateItemList();
                 AudioManager.Instance.Play("Eat");
@@ -99,7 +100,8 @@ namespace DEMO.UI
             }
             else
             {
-                Debug.Log("There is no food in your inventory.");
+                //Debug.Log("There is no food in your inventory.");
+                GamePlayManager.Instance.ShowWarningBox("There is no food in your inventory.");
             }
         }
 

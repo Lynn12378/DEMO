@@ -191,7 +191,7 @@ namespace DEMO.GamePlay
 
             for (int i = 0; i < itemCount; i++)
             {
-                Vector3 spawnPosition = GetSpawnPosition(spawnPoint);
+                Vector3 spawnPosition = GetCloserSpawnPosition(spawnPoint);
 
                 var NO = Runner.Spawn(item, spawnPosition, Quaternion.identity);
                 NO.GetComponent<Inventory.Item>().Init(itemID);
@@ -218,6 +218,19 @@ namespace DEMO.GamePlay
         private Vector3 GetSpawnPosition(Transform spawnPoint)
         {
             float offsetRange = 5.0f;
+            float randomOffsetX = Random.Range(-offsetRange, offsetRange);
+            float randomOffsetY = Random.Range(-offsetRange, offsetRange);
+
+            return new Vector3(
+                spawnPoint.position.x + randomOffsetX,
+                spawnPoint.position.y + randomOffsetY,
+                spawnPoint.position.z
+            );
+        }
+
+        private Vector3 GetCloserSpawnPosition(Transform spawnPoint)
+        {
+            float offsetRange = 1.0f;
             float randomOffsetX = Random.Range(-offsetRange, offsetRange);
             float randomOffsetY = Random.Range(-offsetRange, offsetRange);
 

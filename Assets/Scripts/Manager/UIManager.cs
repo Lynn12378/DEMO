@@ -18,6 +18,9 @@ namespace DEMO.Manager
         [SerializeField] private TMP_Text durabilityTxt = null;
         [SerializeField] private TMP_Text bulletAmountTxt = null;
 
+        [SerializeField] private GameObject warningBoxPanel = null;
+        [SerializeField] private TextMeshProUGUI warningText = null;
+
         [SerializeField] private GameObject micIcon;
         [SerializeField] private TMP_Text micTxt = null;
 
@@ -59,6 +62,19 @@ namespace DEMO.Manager
         {
             this.playerRef = playerRef;
         }
+
+        #region  - Warning Box -
+        public void ShowWarningBox(string text)
+        {
+            warningBoxPanel.SetActive(true);
+            warningText.SetText(text);
+        }
+
+        public void HideWarningBox()
+        {
+            warningBoxPanel.SetActive(false);
+        }
+        #endregion
 
         #region - Minimap -
         public void UpdateMinimapArrow(Transform playerTransform)

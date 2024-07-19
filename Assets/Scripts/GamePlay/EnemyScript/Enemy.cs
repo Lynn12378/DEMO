@@ -92,12 +92,12 @@ namespace DEMO.GamePlay.EnemyScript
                     damageOverTime = 10;
                     maxHp = 40;
                     Hp = maxHp;
-                    hPSlider.maxValue = maxHp;
+                    SetEnemyHPSlider_RPC(maxHp);
                     break;
                 case EnemyType.HighHP:
                     maxHp = 80;
                     Hp = maxHp;
-                    hPSlider.maxValue = maxHp;
+                    SetEnemyHPSlider_RPC(maxHp);
                     break;
                 case EnemyType.HighSpeed:
                     moveSpeed = 1.5f;
@@ -238,6 +238,12 @@ namespace DEMO.GamePlay.EnemyScript
         private void HandleHpChanged()
         {
             hPSlider.value = Hp;
+        }
+
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void SetEnemyHPSlider_RPC(int maxHp)
+        {
+            hPSlider.maxValue = maxHp;
         }
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

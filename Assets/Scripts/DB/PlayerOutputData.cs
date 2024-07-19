@@ -26,9 +26,9 @@ namespace DEMO.DB
         public float surviveTime = 0;                           // Longest survival time
         public int collisionNo = 0;                             // No. of player's collision with buildings
         public int bulletCollision = 0;                         // No. of player bullet's collision with buildings
-        public int bulletCollisionOnLiving = 0;                 // No. of player shoot another player or animals
-        public int[] remainHP = null;                           // HP amount remained when refill HP
-        public int[] remainBullet = null;                       // Bullet amount remained when refill bullet
+        public int bulletCollisionOnLiving = 0;                 // No. of player shoot another player or animals              
+        public List<int> remainHP = new List<int>();            // HP amount remained when refill HP
+        public List<int> remainBullet = new List<int>();        // Bullet amount remained when refill bullet
         public float totalVoiceDetectionDuration = 0;           // Duration of voice detected on player's mic
         public int organizeNo = 0;                              // No. of player organize inventory
         public int fullNo = 0;                                  // No. of player's inventory full
