@@ -16,6 +16,7 @@ namespace DEMO.GamePlay.Interactable
     public enum InteractionType
     {
         TextOnly,   // Show text only
-        Feed     // Feed livings
+        //Feed,       // Feed livings
+        Pet         // Pet livings
     }
 }

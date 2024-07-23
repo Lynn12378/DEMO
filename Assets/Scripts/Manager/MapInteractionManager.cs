@@ -10,6 +10,7 @@ using DEMO.Manager;
 using System.ComponentModel;
 using DEMO.GamePlay.Inventory;
 using TMPro.Examples;
+using DEMO.GamePlay;
 
 namespace DEMO.UI
 {
@@ -22,8 +23,12 @@ namespace DEMO.UI
         public List<Interactions> interactions = new List<Interactions>();
         public Interactions currentInteraction = null;
 
+        private Spawner spawner;
+
         private void Start()
         {
+            spawner = FindObjectOfType<Spawner>();
+
             foreach(Interactions i in interactions)
             {
                 SetInstructionIxt(i);
@@ -36,9 +41,9 @@ namespace DEMO.UI
             {
                 interaction.instructionIxt = " Tap [space] to close ";
             }
-            else
+            else if(interaction.interactionType == InteractionType.Pet)
             {
-                interaction.instructionIxt = " Tap [F] to feed, [space] to close ";
+                interaction.instructionIxt = " Tap [P] to pet, [space] to close ";
             }
         }
 
@@ -67,7 +72,7 @@ namespace DEMO.UI
             instructionTxt.SetText(currentInteraction.instructionIxt);
         }
 
-        public void Feed(PlayerNetworkData PND, PlayerOutputData POD)
+        /*public void Feed(PlayerNetworkData PND, PlayerOutputData POD)
         {
             Debug.Log(PND.ToString());
             PND.ShowList();
@@ -103,6 +108,35 @@ namespace DEMO.UI
                 Interactions afterFeed = afterFeedMatches[UnityEngine.Random.Range(0, afterFeedMatches.Count)];
                 interactTxt.SetText(name + afterFeed.interactionTxt);
                 instructionTxt.SetText(afterFeed.instructionIxt);
+            }
+        }*/
+
+        public void Pet(GameObject go)
+        {
+            float randomValue = UnityEngine.Random.value; // Random float of 0-1
+            if (randomValue < 0.1f)
+            {
+                // 10% prob. to drop 0-1 item when enemy died
+                spawner.SpawnItemAround(go.transform, UnityEngine.Random.Range(0, 2));
+                AfterPet(true);
+            }
+            else
+            {
+                AfterPet(false);
+            }
+        }
+
+        public void AfterPet(bool dropItem)
+        {
+            string interactionName = dropItem ? "AfterPetDrop" : "AfterPet";
+            List<Interactions> afterPetMatches = interactions.FindAll(i => i.name == interactionName);
+
+            if (afterPetMatches.Count > 0)
+            {
+                // Randomly choose an interaction with match name
+                Interactions afterPet = afterPetMatches[UnityEngine.Random.Range(0, afterPetMatches.Count)];
+                interactTxt.SetText(name + afterPet.interactionTxt);
+                instructionTxt.SetText(afterPet.instructionIxt);
             }
         }
 

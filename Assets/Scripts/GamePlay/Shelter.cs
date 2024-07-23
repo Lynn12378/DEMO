@@ -12,7 +12,7 @@ namespace DEMO.Gameplay
     {
         private ChangeDetector changes;
         private int maxDurability = 100;
-        [SerializeField] private BoxCollider2D collider;
+        [SerializeField] private BoxCollider2D doorCollider;
         [SerializeField] private UIManager uIManager;
         [SerializeField] public int repair = 20;
         [Networked] public bool IsOpen { get; set; } = false;
@@ -61,7 +61,7 @@ namespace DEMO.Gameplay
                         uIManager.UpdateDurabilitySlider(durability, maxDurability);
                         break;
                     case nameof(IsOpen):
-                        collider.isTrigger = IsOpen;
+                        doorCollider.isTrigger = IsOpen;
                         break;
                 }
             }

@@ -257,10 +257,10 @@ namespace DEMO.GamePlay.EnemyScript
         public void DespawnEnemy_RPC(NetworkObject netObj)
         {
             float randomValue = Random.value; // Random float of 0-1
-            if (randomValue < 0.6f)
+            if (randomValue < 0.5f)
             {
-                // 60% prob. to drop 0-3 item when enemy died
-                spawner.SpawnItemWhenEnemyDied(netObj.transform);
+                // 50% prob. to drop 0-3 item when enemy died
+                spawner.SpawnItemAround(netObj.transform, Random.Range(0, 4));
             }
 
             Runner.Despawn(netObj);

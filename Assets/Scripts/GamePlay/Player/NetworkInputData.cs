@@ -12,7 +12,8 @@ namespace DEMO.GamePlay.Player
         SPACE,
         TALK,
         RELOAD,
-        FEED
+        FEED,
+        PET
     }
 
     public struct NetworkInputData : INetworkInput

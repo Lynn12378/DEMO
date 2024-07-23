@@ -148,11 +148,19 @@ namespace DEMO.GamePlay.Player
                 }          
             }
 
-            if (pressed.IsSet(InputButtons.FEED))
+            /*if (pressed.IsSet(InputButtons.FEED))
             {
                 if (isInteracting && mapInteractionManager.currentInteraction.interactionType == InteractionType.Feed)
                 {
                     mapInteractionManager.Feed(playerNetworkData, playerOutputData);
+                }
+            }*/
+
+            if (pressed.IsSet(InputButtons.PET))
+            {
+                if (isInteracting && mapInteractionManager.currentInteraction.interactionType == InteractionType.Pet)
+                {
+                    mapInteractionManager.Pet(gameObject);
                 }
             }
 

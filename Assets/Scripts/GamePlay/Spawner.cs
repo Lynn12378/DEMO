@@ -182,11 +182,8 @@ namespace DEMO.GamePlay
             NO.GetComponent<Livings>().Init(livingID);
         }
 
-        public void SpawnItemWhenEnemyDied(Transform spawnPoint)
+        public void SpawnItemAround(Transform spawnPoint, int itemCount)
         {
-            // Randomly spawn 0-3 items
-            int itemCount = Random.Range(0, 4);
-
             int itemID = GetRandomItemID();
 
             for (int i = 0; i < itemCount; i++)
