@@ -28,11 +28,17 @@ namespace DEMO.GamePlay
         [SerializeField] private float delayBetweenLivingSpawns = 600.0f; // 10 minutes in seconds
         public BoxCollider2D spawnGooseArea;
 
+        [Header("Shop Spawner Settings")]
+        [SerializeField] private NetworkObject shop;
+        [SerializeField] private int maxShopCount = 2;
+        [SerializeField] private float shopLifetime = 300.0f; // 5 minutes in seconds
+
         private bool initialEnemySpawnCompleted = false;
         private bool initialItemSpawnCompleted = false;
         private bool initialLivingSpawnCompleted = false;
 
         private List<Transform> spawnPoints;
+        private List<NetworkObject> currentShops = new List<NetworkObject>();
 
         #region - Start -
         private void Start()
@@ -48,103 +54,86 @@ namespace DEMO.GamePlay
 
         public void StartSpawners()
         {
-            SpawnInitialEnemies();
-            SpawnInitialItems();
-            SpawnInitialLivings();
+            SpawnInitialObjects(enemy, initialEnemyCount, enemyPerSpawn, SpawnEnemyNearSpawnPoint);
+            SpawnInitialObjects(item, initialItemCount, itemPerSpawn, SpawnItemNearSpawnPoint);
+            SpawnInitialObjects(living, initialLivingCount, livingPerSpawn, SpawnLivingNearSpawnPoint);
 
-            InvokeRepeating("SpawnDelayedEnemies", delayBetweenEnemySpawns, delayBetweenEnemySpawns);
-            InvokeRepeating("SpawnDelayedItems", delayBetweenItemSpawns, delayBetweenItemSpawns);
-            InvokeRepeating("SpawnDelayedLivings", delayBetweenLivingSpawns, delayBetweenLivingSpawns);
+            InvokeRepeating(nameof(SpawnDelayedEnemies), delayBetweenEnemySpawns, delayBetweenEnemySpawns);
+            InvokeRepeating(nameof(SpawnDelayedItems), delayBetweenItemSpawns, delayBetweenItemSpawns);
+            InvokeRepeating(nameof(SpawnDelayedLivings), delayBetweenLivingSpawns, delayBetweenLivingSpawns);
+            InvokeRepeating(nameof(SpawnShops), 0f, shopLifetime);
+        }
+        #endregion
+
+        #region - Spawn Shops -
+        private void SpawnShops()
+        {
+            // Destroy existing shops
+            foreach (var shop in currentShops)
+            {
+                Runner.Despawn(shop);
+            }
+            currentShops.Clear();
+
+            // Create a temporary list to track available spawn points
+            List<Transform> availableSpawnPoints = new List<Transform>(spawnPoints);
+
+            // Spawn new shops
+            for (int i = 0; i < maxShopCount; i++)
+            {
+                // Select a random spawn point and remove it from the list
+                int spawnIndex = Random.Range(0, availableSpawnPoints.Count);
+                var spawnPoint = availableSpawnPoints[spawnIndex];
+                availableSpawnPoints.RemoveAt(spawnIndex);
+
+                // Spawn the shop
+                var newShop = Runner.Spawn(shop, GetSpawnPosition(spawnPoint), Quaternion.identity);
+                currentShops.Add(newShop);
+            }
         }
         #endregion
 
         #region - Spawn Initial -
-        private void SpawnInitialEnemies()
+        private void SpawnInitialObjects(NetworkObject prefab, int initialCount, int perSpawn, System.Action<Transform> spawnAction)
         {
-            int enemyPerSpawnPoint = Mathf.CeilToInt((float)initialEnemyCount / spawnPoints.Count);
+            int perSpawnPoint = Mathf.CeilToInt((float)initialCount / spawnPoints.Count);
 
             foreach (var spawnPoint in spawnPoints)
             {
-                for (int i = 0; i < enemyPerSpawnPoint; i++)
+                for (int i = 0; i < perSpawnPoint; i++)
                 {
-                    SpawnEnemyNearSpawnPoint(spawnPoint);
+                    spawnAction(spawnPoint);
                 }
             }
 
-            initialEnemySpawnCompleted = true;
-        }
-
-        private void SpawnInitialItems()
-        {
-            int itemsPerSpawnPoint = Mathf.CeilToInt((float)initialItemCount / spawnPoints.Count);
-
-            foreach (var spawnPoint in spawnPoints)
-            {
-                for (int i = 0; i < itemsPerSpawnPoint; i++)
-                {
-                    SpawnItemNearSpawnPoint(spawnPoint);
-                }
-            }
-
-            initialItemSpawnCompleted = true;
-        }
-
-        private void SpawnInitialLivings()
-        {
-            for (int i = 0; i < initialLivingCount; i++)
-            {
-                SpawnLivingAtRandomPosition();
-            }
-
-            initialLivingSpawnCompleted = true;
+            if (prefab == enemy) initialEnemySpawnCompleted = true;
+            if (prefab == item) initialItemSpawnCompleted = true;
+            if (prefab == living) initialLivingSpawnCompleted = true;
         }
         #endregion
 
         #region - Spawn Delayed -
-        private void SpawnDelayedEnemies()
+        private void SpawnDelayedObjects(NetworkObject prefab, int perSpawn, float delay, System.Action<Transform> spawnAction, bool initialSpawnCompleted)
         {
-            if (!initialEnemySpawnCompleted) return;
+            if (!initialSpawnCompleted) return;
 
-            int enemyPerSpawnPoint = Mathf.CeilToInt((float)enemyPerSpawn / spawnPoints.Count / (delayBetweenEnemySpawns / 60));
+            int perSpawnPoint = Mathf.CeilToInt((float)perSpawn / spawnPoints.Count / (delay / 60));
 
             foreach (var spawnPoint in spawnPoints)
             {
-                for (int i = 0; i < enemyPerSpawnPoint; i++)
+                for (int i = 0; i < perSpawnPoint; i++)
                 {
-                    SpawnEnemyNearSpawnPoint(spawnPoint);
+                    spawnAction(spawnPoint);
                 }
             }
         }
 
-        private void SpawnDelayedItems()
-        {
-            if (!initialItemSpawnCompleted) return;
-
-            int itemsPerSpawnPoint = Mathf.CeilToInt((float)itemPerSpawn / spawnPoints.Count / (delayBetweenItemSpawns / 60));
-
-            foreach (var spawnPoint in spawnPoints)
-            {
-                for (int i = 0; i < itemsPerSpawnPoint; i++)
-                {
-                    SpawnItemNearSpawnPoint(spawnPoint);
-                }
-            }
-        }
-
-        private void SpawnDelayedLivings()
-        {
-            if (!initialLivingSpawnCompleted) return;
-
-            int livingsPerSpawnPoint = Mathf.CeilToInt((float)livingPerSpawn / spawnPoints.Count / (delayBetweenLivingSpawns / 60));
-
-            for (int i = 0; i < livingsPerSpawnPoint; i++)
-            {
-                SpawnLivingAtRandomPosition();
-            }
-        }
+        private void SpawnDelayedEnemies() => SpawnDelayedObjects(enemy, enemyPerSpawn, delayBetweenEnemySpawns, SpawnEnemyNearSpawnPoint, initialEnemySpawnCompleted);
+        private void SpawnDelayedItems() => SpawnDelayedObjects(item, itemPerSpawn, delayBetweenItemSpawns, SpawnItemNearSpawnPoint, initialItemSpawnCompleted);
+        private void SpawnDelayedLivings() => SpawnDelayedObjects(living, livingPerSpawn, delayBetweenLivingSpawns, SpawnLivingNearSpawnPoint, initialLivingSpawnCompleted);
         #endregion
 
-        #region - Spawn - 
+        #region - Spawn Near Spawn Points- 
         private void SpawnEnemyNearSpawnPoint(Transform spawnPoint)
         {
             int enemyID = Random.Range(0, 4);
@@ -163,7 +152,7 @@ namespace DEMO.GamePlay
             NO.GetComponent<Inventory.Item>().Init(itemID);
         }
 
-        private void SpawnLivingAtRandomPosition()
+        private void SpawnLivingNearSpawnPoint(Transform spawnPoint)
         {
             Vector3 spawnPosition;
 
@@ -175,7 +164,7 @@ namespace DEMO.GamePlay
             }
             else
             {
-                spawnPosition = GetRandomSpawnPosition();
+                spawnPosition = GetSpawnPosition(spawnPoint);
             }
             
             var NO = Runner.Spawn(living, spawnPosition, Quaternion.identity);
@@ -236,14 +225,6 @@ namespace DEMO.GamePlay
                 spawnPoint.position.y + randomOffsetY,
                 spawnPoint.position.z
             );
-        }
-
-        private Vector3 GetRandomSpawnPosition()
-        {
-            float offsetX = Random.Range(-81f, 163f);
-            float offsetY = Random.Range(-78f, 45f);
-
-            return new Vector3(offsetX, offsetY, 0f);
         }
 
         private Vector3 GetSpawnPositionInArea()

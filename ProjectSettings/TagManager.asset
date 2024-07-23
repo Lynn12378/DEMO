@@ -12,6 +12,7 @@ TagManager:
   - Livings
   - Placeholder
   - SmallCollider
+  - Shop
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - UI
   - Minimap
   - ItemLayer
-  - 
-  - 
+  - LivingsLayer
+  - ShopLayer
   - 
   - 
   - 

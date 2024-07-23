@@ -26,12 +26,13 @@ namespace DEMO.GamePlay.Player
         private MapInteractionManager mapInteractionManager;
         private NetworkButtons buttonsPrevious;
         [SerializeField] private Item itemInRange = null;
-        private List<Item> tempItemList;
         [SerializeField] private IInteractable interactableInRange = null;
         private bool isInteracting = false;
+        [SerializeField] private bool shopInRange = false;
 
         [SerializeField] private Shelter shelter;
         [Networked] private TickTimer shelterTimer { get; set; }
+
 
         public override void Spawned()
         {
@@ -133,6 +134,10 @@ namespace DEMO.GamePlay.Player
                 {
                     Pickup();
                 }
+                else if(shopInRange)
+                {
+                    uIManager.OnOpenShopButton();
+                }
                 else if(interactableInRange != null && isInteracting == false)
                 {
                     Interact();
@@ -227,83 +232,57 @@ namespace DEMO.GamePlay.Player
         #endregion
 
         #region - On Trigger -
-        private void OnTriggerStay2D(Collider2D collider)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
+            // Check for interactable objects
             IInteractable interactable = collider.GetComponent<IInteractable>();
-            Item item = collider.GetComponent<Item>();
-            Shelter shelterCollider = collider.GetComponent<Shelter>();
-
             if (interactable != null)
             {
                 interactableInRange = interactable;
+                Debug.Log("Interactable found.");
             }
-            else if (interactable == null)
-            {
-                interactableInRange = null;
-            }
-            
+
+            // Check for items
+            Item item = collider.GetComponent<Item>();
             if (item != null)
             {
                 itemInRange = item;
             }
-            else if(item == null)
-            {
-                itemInRange = null;
-            }
-            
+
+            // Check for shelter
+            Shelter shelterCollider = collider.GetComponent<Shelter>();
             if (shelterCollider != null)
             {
                 shelterTimer = TickTimer.CreateFromSeconds(Runner, 0);
                 shelter = shelterCollider;
-            }
-            else if(shelterCollider == null)
-            {
-                shelter = null;
-            }
-            playerNetworkData.SetShelter(shelter);
-        }
-
-        /*private void OnTriggerEnter2D(Collider2D collider)
-        {
-            IInteractable interactable = collider.GetComponent<IInteractable>();
-            if (interactable != null)
-            {
-                interactableInRange = interactable;
-            }
-
-            if (collider.CompareTag("Item"))
-            {
-                itemInRange = collider.GetComponent<Item>();
-            }
-
-            if (collider.CompareTag("Shelter"))
-            {
-                shelterTimer = TickTimer.CreateFromSeconds(Runner, 0);
-                shelter = collider.GetComponent<Shelter>();
                 playerNetworkData.SetShelter(shelter);
             }
         }
 
         private void OnTriggerExit2D(Collider2D collider)
         {
+            // Check for interactable objects
             IInteractable interactable = collider.GetComponent<IInteractable>();
-            if (interactable != null)
+            if (interactable != null && interactable == interactableInRange)
             {
                 interactableInRange = null;
-                EndInteract();
             }
 
-            if (collider.CompareTag("Item"))
+            // Check for items
+            Item item = collider.GetComponent<Item>();
+            if (item != null && item == itemInRange)
             {
                 itemInRange = null;
             }
 
-            if (collider.CompareTag("Shelter"))
+            // Check for shelter
+            Shelter shelterCollider = collider.GetComponent<Shelter>();
+            if (shelterCollider != null && shelterCollider == shelter)
             {
                 shelter = null;
                 playerNetworkData.SetShelter(shelter);
             }
-        }*/
+        }
         #endregion
 
         #region - OnCollision -
@@ -313,6 +292,20 @@ namespace DEMO.GamePlay.Player
             {
                 playerOutputData.collisionNo++;
                 Debug.Log(playerNetworkData.playerRefString + "'s collision no. is: " + playerOutputData.collisionNo.ToString());
+            }
+
+            if(collision.collider.CompareTag("Shop"))
+            {
+                shopInRange = true;
+            }
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if(collision.collider.CompareTag("Shop"))
+            {
+                shopInRange = false;
+                uIManager.CloseShopPanel();
             }
         }
         #endregion

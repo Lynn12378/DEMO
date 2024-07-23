@@ -438,7 +438,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -448,7 +448,7 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 375
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -914,6 +914,7 @@ MonoBehaviour:
   playerNetworkData: {fileID: 4796105495841460358}
   playerOutputData: {fileID: 1563144350201532978}
   itemInRange: {fileID: 0}
+  shopInRange: 0
   shelter: {fileID: 0}
 --- !u!114 &3935815838663998337
 MonoBehaviour:

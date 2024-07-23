@@ -147,7 +147,7 @@ namespace DEMO.Manager
         }
         #endregion
 
-        #region - Buttons -
+        #region - Open panels -
         public void OnOpenInventoryButton()
         {
             inventoryPanel.SetActive(!inventoryPanel.activeSelf);
@@ -156,6 +156,11 @@ namespace DEMO.Manager
         public void OnOpenShopButton()
         {
             shopPanel.SetActive(!shopPanel.activeSelf);
+        }
+
+        public void CloseShopPanel()
+        {
+            shopPanel.SetActive(false);
         }
 
         public void OnOpenTeamListButton()

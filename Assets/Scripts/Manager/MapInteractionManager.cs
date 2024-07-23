@@ -49,6 +49,7 @@ namespace DEMO.UI
 
         public void SetCurrentInteraction(string name)
         {
+            Debug.Log("Into SetCurrentInteraction");
             List<Interactions> matches = interactions.FindAll(i => i.name == name);
 
             if (matches.Count > 0)
@@ -67,6 +68,7 @@ namespace DEMO.UI
 
         public void StartInteraction()
         {
+            Debug.Log("Into StartInteraction");
             interactionPanel.SetActive(true);
             interactTxt.SetText(currentInteraction.interactionTxt);
             instructionTxt.SetText(currentInteraction.instructionIxt);

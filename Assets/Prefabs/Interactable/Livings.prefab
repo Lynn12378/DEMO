@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3406636355023206352}
   - component: {fileID: 3419325616677259323}
   - component: {fileID: 2901251472045935224}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 4645108565491443694}
   - component: {fileID: 6861236899378516259}
   - component: {fileID: 9127791899953128691}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 6205895256295338182}
   - component: {fileID: 420299055457738161}
   - component: {fileID: 3705515817384681579}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cat walking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1617882120536746076}
   - component: {fileID: 6212696950128215213}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +367,7 @@ GameObject:
   - component: {fileID: 5642962913224892069}
   - component: {fileID: 1017757671874416377}
   - component: {fileID: 7194801097946343314}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 1743457533721183776}
   - component: {fileID: 407390630981444598}
   - component: {fileID: 1247054201183584299}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Livings
   m_TagString: Livings
   m_Icon: {fileID: 0}
@@ -592,11 +592,11 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.476481, y: 1.476481}
+  m_Size: {x: 1.1, y: 1.1}
   m_Direction: 0
 --- !u!114 &1247054201183584299
 MonoBehaviour:
@@ -618,3 +618,4 @@ MonoBehaviour:
   hPSlider: {fileID: 6212696950128215213}
   _Hp: 0
   moveSpeed: 1
+  isInteracting: 0
