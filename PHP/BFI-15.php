@@ -105,6 +105,29 @@ $player_id = intval($_GET['player_id']);
         {
             background-color: #4cae4c;
         }
+        .feedback-container 
+        {
+            margin-left: 7.5%;
+            margin-bottom: 30px;
+        }
+        .feedback-label 
+        {
+            font-size: 18px;
+            color: black;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .feedback-textarea 
+        {
+            width: 90%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            font-family: 'KaiTi', serif;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: vertical;
+        }
     </style>
     <script>
         function validateForm() 
@@ -176,6 +199,10 @@ $player_id = intval($_GET['player_id']);
                 echo "</div>";
             }
             ?>
+            <div class="feedback-container">
+                <label class="feedback-label" for="feedback">對遊戲的反饋/意見：</label>
+                <textarea id="feedback" name="feedback" class="feedback-textarea"></textarea>
+            </div>
             <input type="hidden" name="player_id" value="<?php echo $player_id; ?>">
             <input type="submit" value="提交" class="submit-btn">
         </form>

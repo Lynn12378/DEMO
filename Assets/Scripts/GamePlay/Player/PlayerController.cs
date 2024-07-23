@@ -138,7 +138,7 @@ namespace DEMO.GamePlay.Player
                     Interact();
                     isInteracting = true;
                 }
-                else if (interactableInRange != null && isInteracting)
+                else if ( (interactableInRange != null && isInteracting) || interactableInRange == null)
                 {
                     EndInteract();
                 }
@@ -219,7 +219,43 @@ namespace DEMO.GamePlay.Player
         #endregion
 
         #region - On Trigger -
-        private void OnTriggerEnter2D(Collider2D collider)
+        private void OnTriggerStay2D(Collider2D collider)
+        {
+            IInteractable interactable = collider.GetComponent<IInteractable>();
+            Item item = collider.GetComponent<Item>();
+            Shelter shelterCollider = collider.GetComponent<Shelter>();
+
+            if (interactable != null)
+            {
+                interactableInRange = interactable;
+            }
+            else if (interactable == null)
+            {
+                interactableInRange = null;
+            }
+            
+            if (item != null)
+            {
+                itemInRange = item;
+            }
+            else if(item == null)
+            {
+                itemInRange = null;
+            }
+            
+            if (shelterCollider != null)
+            {
+                shelterTimer = TickTimer.CreateFromSeconds(Runner, 0);
+                shelter = shelterCollider;
+            }
+            else if(shelterCollider == null)
+            {
+                shelter = null;
+            }
+            playerNetworkData.SetShelter(shelter);
+        }
+
+        /*private void OnTriggerEnter2D(Collider2D collider)
         {
             IInteractable interactable = collider.GetComponent<IInteractable>();
             if (interactable != null)
@@ -259,7 +295,7 @@ namespace DEMO.GamePlay.Player
                 shelter = null;
                 playerNetworkData.SetShelter(shelter);
             }
-        }
+        }*/
         #endregion
 
         #region - OnCollision -

@@ -32,12 +32,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     // 獲取玩家 ID
     $player_id = intval($_POST['player_id']);
 
+    // 獲取反饋意見
+    $feedback = $_POST['feedback'];
+
     // 插入到 MySQL 資料庫中
-    $sql = "INSERT INTO bfi_responses (player_id, responses) VALUES (?, ?)";
+    $sql = "INSERT INTO bfi_responses (player_id, responses, feedback) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     // 綁定參數
-    $stmt->bind_param("is", $player_id, $json_answers);
+    $stmt->bind_param("iss", $player_id, $json_answers, $feedback);
 
     // 執行插入
     $stmt->execute();
