@@ -1,0 +1,3 @@
+RewriteRule ^player$ player.php [L]
+
+RewriteRule ^BFI-15$ BFI-15.php [L]
