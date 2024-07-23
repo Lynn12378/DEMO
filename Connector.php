@@ -18,4 +18,5 @@ function connectDatabase()
 
     return $conn;
 }
+echo connectDatabase();
 ?>
