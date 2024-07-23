@@ -135,7 +135,7 @@ namespace DEMO.UI
             {
                 // Randomly choose an interaction with match name
                 Interactions afterPet = afterPetMatches[UnityEngine.Random.Range(0, afterPetMatches.Count)];
-                interactTxt.SetText(name + afterPet.interactionTxt);
+                interactTxt.SetText(currentInteraction.name + afterPet.interactionTxt);
                 instructionTxt.SetText(afterPet.instructionIxt);
             }
         }
