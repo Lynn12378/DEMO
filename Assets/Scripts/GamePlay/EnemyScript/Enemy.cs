@@ -53,12 +53,12 @@ namespace DEMO.GamePlay.EnemyScript
         #region - Initialize -
         private void Start()
         {
-            gamePlayManager = GamePlayManager.Instance;
             spawner = FindObjectOfType<Spawner>();
         }
 
         public override void Spawned() 
         {
+            gamePlayManager = GamePlayManager.Instance;
             var enemyTransform = GameObject.Find("Enemy");
             transform.SetParent(enemyTransform.transform, false);
 

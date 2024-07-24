@@ -46,13 +46,10 @@ namespace DEMO.GamePlay.Inventory
 
         private GamePlayManager gamePlayManager;
 
-        private void Start()
-        {
-            gamePlayManager = GamePlayManager.Instance;
-        }
-
         public override void Spawned()
         {
+            gamePlayManager = GamePlayManager.Instance;
+
             var itemWorld = GameObject.Find("itemWorld");
             transform.SetParent(itemWorld.transform, false);
 

@@ -21,15 +21,12 @@ namespace DEMO.UI
         private GamePlayManager gamePlayManager;
         public bool isExpanded = false;
 
-        private void Start()
-        {
-            gamePlayManager = GamePlayManager.Instance;
-        }
-
         public override void Spawned()
         {
+            gamePlayManager = GamePlayManager.Instance;
+
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
-            player = gamePlayManager.Runner.LocalPlayer;
+            player = Runner.LocalPlayer;
             gamePlayManager.teamList.Add(this);
             gamePlayManager.UpdatedTeamList();
             inGameManager = FindObjectOfType<InGameManager>();

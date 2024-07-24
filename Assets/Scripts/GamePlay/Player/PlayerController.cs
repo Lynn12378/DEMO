@@ -31,14 +31,9 @@ namespace DEMO.GamePlay.Player
         [Networked] private TickTimer shelterTimer { get; set; }
         private GamePlayManager gamePlayManager;
 
-        private void Start()
-        {
-            gamePlayManager = GamePlayManager.Instance;
-        }
-
-
         public override void Spawned()
         {
+            gamePlayManager = GamePlayManager.Instance;
             mapInteractionManager = FindObjectOfType<MapInteractionManager>();
 
             uIManager = FindObjectOfType<UIManager>();
