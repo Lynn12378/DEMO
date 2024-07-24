@@ -58,8 +58,13 @@ namespace DEMO
         #region - EndGame / Restart -
         public void EndGame()
         {
-            SceneManager.LoadScene(SceneManager.GetSceneByName("EndGame").name);
+            SceneManager.LoadScene("EndGame");
 
+            GoToQuestion();
+        }
+
+        public void GoToQuestion()
+        {
             int playerId = 0;
 
             foreach (var player in GamePlayManager.Instance.gamePlayerList)
