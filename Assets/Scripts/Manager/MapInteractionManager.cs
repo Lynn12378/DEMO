@@ -16,7 +16,7 @@ namespace DEMO.UI
         public List<Interactions> interactions = new List<Interactions>();
         public Interactions currentInteraction = null;
 
-        private Spawner spawner;
+        public Spawner spawner;
 
         private void Start()
         {
@@ -70,8 +70,8 @@ namespace DEMO.UI
             float randomValue = Random.value; // Random float of 0-1
             if (randomValue < 0.1f)
             {
-                // 10% prob. to drop 0-1 item when enemy died
-                spawner.SpawnItemAround(go.transform, Random.Range(0, 2));
+                // 10% prob. to drop 1-2 item when pet animals
+                spawner.SpawnItemAround(go.transform, Random.Range(1,3));
                 AfterPet(true);
             }
             else
