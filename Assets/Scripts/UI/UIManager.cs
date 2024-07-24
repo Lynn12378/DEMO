@@ -6,10 +6,11 @@ using DEMO.GamePlay.Inventory;
 using DEMO.DB;
 using Fusion;
 
-namespace DEMO.Manager
+namespace DEMO.UI
 {
     public class UIManager : MonoBehaviour
     {
+        private GamePlayManager gamePlayManager;
         [SerializeField] Slider HPSlider = null;
         [SerializeField] private TMP_Text HPTxt = null;
         [SerializeField] Slider foodSlider = null;
@@ -46,6 +47,8 @@ namespace DEMO.Manager
 
         private void Start()
         {
+            gamePlayManager = GamePlayManager.Instance;
+
             inventorySlots = slotsBackground.GetComponentsInChildren<InventorySlot>();
         }
 
@@ -174,7 +177,7 @@ namespace DEMO.Manager
 
             if(rankPanel.activeInHierarchy)
             {
-                GamePlayManager.Instance.AddRankNo(playerRef);
+                gamePlayManager.AddRankNo(playerRef);
             }
         }
 
@@ -249,7 +252,7 @@ namespace DEMO.Manager
 
             UpdateInventoryUI(items);
 
-            GamePlayManager.Instance.AddOrganizeNo(playerRef);
+            gamePlayManager.AddOrganizeNo(playerRef);
         }
 
         public void UpdateInventoryUI(List<Item> items)

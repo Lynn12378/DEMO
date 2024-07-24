@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using Fusion;
 
 using DEMO.GamePlay.Inventory;
-using DEMO.Manager;
 using DEMO.UI;
 
 namespace DEMO.GamePlay.Interactable

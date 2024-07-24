@@ -32,7 +32,7 @@ namespace DEMO.Manager
         {
             int playerId = 0;
 
-            foreach (var player in GamePlayManager.Instance.gamePlayerList)
+            foreach (var player in gamePlayManager.gamePlayerList)
             {
                 if(player.Key == localPlayer) playerId = player.Value.playerId;
             }
@@ -55,14 +55,14 @@ namespace DEMO.Manager
             networkInstance.AddCallbacks(this);
 
             gamePlayManager.OnTeamListUpdated += UpdatedTeamList;
-            gamePlayManager.OnInGamePlayerUpdated += UpdatedGamePlayer;
+            gamePlayManager.OnInGamePlayerUpdated += UpdatedPlayerMinimap;
             gameManager.OnMessagesUpdated += UpdatedMessages;
         }
 
         private void OnDestroy()
         {
             gamePlayManager.OnTeamListUpdated -= UpdatedTeamList;
-            gamePlayManager.OnInGamePlayerUpdated -= UpdatedGamePlayer;
+            gamePlayManager.OnInGamePlayerUpdated -= UpdatedPlayerMinimap;
             gameManager.OnMessagesUpdated += UpdatedMessages;
         }
 
@@ -86,7 +86,7 @@ namespace DEMO.Manager
         #endregion
 
         #region - Minimap -
-        public void UpdatedGamePlayer()//UpdateAllMinimapIconsVisibility()
+        public void UpdatedPlayerMinimap()
         {
             var localPND = gamePlayManager.gamePlayerList[localPlayer];
             foreach (var gamePlayer in gamePlayManager.gamePlayerList.Values)
@@ -117,7 +117,7 @@ namespace DEMO.Manager
 
         public void CreateTeam()
         {
-            if (GamePlayManager.Instance.gamePlayerList.TryGetValue(networkInstance.LocalPlayer, out PlayerNetworkData playerNetworkData))
+            if (gamePlayManager.gamePlayerList.TryGetValue(networkInstance.LocalPlayer, out PlayerNetworkData playerNetworkData))
             {
                 if (playerNetworkData.teamID == -1)
                 {
@@ -130,7 +130,7 @@ namespace DEMO.Manager
                     while (true)
                     {
                         notEmpty = false;
-                        foreach (var pnd in GamePlayManager.Instance.gamePlayerList.Values)
+                        foreach (var pnd in gamePlayManager.gamePlayerList.Values)
                         {
                             if (pnd.teamID == newTeamId)
                             {
@@ -145,21 +145,20 @@ namespace DEMO.Manager
                         newTeamId++;
                     }
 
-                    if (GamePlayManager.Instance.playerOutputList.TryGetValue(networkInstance.LocalPlayer, out PlayerOutputData playerOutputData))
+                    if (gamePlayManager.playerOutputList.TryGetValue(networkInstance.LocalPlayer, out PlayerOutputData playerOutputData))
                     {
                         playerOutputData.createTeamNo++;
-                        Debug.Log(playerOutputData.playerRef.ToString() + " create no. is " + playerOutputData.createTeamNo);
                     }
 
-                    GamePlayManager.Instance.newTeamID = newTeamId;
+                    gamePlayManager.newTeamID = newTeamId;
                     teamCell.SetPlayerTeamID_RPC(gamePlayManager.newTeamID);            
                     playerNetworkData.SetPlayerTeamID_RPC(gamePlayManager.newTeamID);
                     teamCell.getTeamBtnTxt().text = "quit";
-                    GamePlayManager.Instance.UpdatedTeamList();
+                    gamePlayManager.UpdatedTeamList();
                 } 
                 else
                 {
-                    Debug.Log("Player already in another team!");                    
+                    gamePlayManager.ShowWarningBox("You are already in another team.");                 
                 }
             }
         }
@@ -170,7 +169,7 @@ namespace DEMO.Manager
             
             if (!currentTeamCell.isExpanded)
             {
-                foreach (var team in GamePlayManager.Instance.teamList)
+                foreach (var team in gamePlayManager.teamList)
                 {
                     if (team != null && team == currentTeamCell)
                     {
@@ -178,7 +177,7 @@ namespace DEMO.Manager
                     } 
                 }
 
-                foreach (var pnd in GamePlayManager.Instance.gamePlayerList.Values)
+                foreach (var pnd in gamePlayManager.gamePlayerList.Values)
                 {
                     if(pnd.teamID == currentTeamCell.teamID)
                     {

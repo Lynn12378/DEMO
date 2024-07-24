@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using Fusion;
 using TMPro;
 
-using DEMO.Manager;
-
 namespace DEMO.UI
 {
     public class MessageCell : NetworkBehaviour

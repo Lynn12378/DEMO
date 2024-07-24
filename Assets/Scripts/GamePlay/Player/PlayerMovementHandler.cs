@@ -11,7 +11,6 @@ namespace DEMO.GamePlay.Player
         [SerializeField] private Transform Weapon = null;
 
         [SerializeField] private float moveSpeed = 5f;
-        private Vector2 lastVelocity;
         private float lastPlayTime;
         private float audioClipLength = 0.667f;
 
@@ -29,8 +28,6 @@ namespace DEMO.GamePlay.Player
                     lastPlayTime = Time.time;
                 }
             }
-            
-            lastVelocity = newVelocity;
         }
 
         public void SetRotation(Vector2 mousePosition)

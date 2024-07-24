@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using DEMO.DB;
-using DEMO.Manager;
 
 namespace DEMO.UI
 {

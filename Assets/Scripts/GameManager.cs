@@ -8,8 +8,9 @@ using Photon.Voice.Unity;
 
 using DEMO.DB;
 using DEMO.UI;
+using Photon.Voice.Fusion.Editor;
 
-namespace DEMO.Manager
+namespace DEMO
 {
     public class GameManager : MonoBehaviour
     {
@@ -59,7 +60,6 @@ namespace DEMO.Manager
             foreach (var player in GamePlayManager.Instance.playerOutputList)
             {
                 player.Value.restartNo++;
-                Debug.Log(player.Value.playerRef.ToString() + "'s restart no. is: " + player.Value.restartNo);
             }
 
             Destroy(voiceClient);
@@ -85,12 +85,6 @@ namespace DEMO.Manager
             {
                 OnPlayerListUpdated?.Invoke();
             }
-        #endregion
-
-        #region - playerNetworkData -
-
-        public Dictionary<PlayerRef, PlayerNetworkData> gamePlayerList = new Dictionary<PlayerRef, PlayerNetworkData>();
-
         #endregion
 
         #region - Messages -

@@ -1,15 +1,8 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Linq;
 
 using DEMO.GamePlay.Interactable;
-using DEMO.DB;
-using DEMO.Manager;
-using System.ComponentModel;
-using DEMO.GamePlay.Inventory;
-using TMPro.Examples;
 using DEMO.GamePlay;
 
 namespace DEMO.UI
@@ -49,13 +42,12 @@ namespace DEMO.UI
 
         public void SetCurrentInteraction(string name)
         {
-            Debug.Log("Into SetCurrentInteraction");
             List<Interactions> matches = interactions.FindAll(i => i.name == name);
 
             if (matches.Count > 0)
             {
                 // Randomly choose an interaction with match name
-                Interactions interaction = matches[UnityEngine.Random.Range(0, matches.Count)];
+                Interactions interaction = matches[Random.Range(0, matches.Count)];
                 currentInteraction = interaction;
 
                 StartInteraction();
@@ -68,58 +60,18 @@ namespace DEMO.UI
 
         public void StartInteraction()
         {
-            Debug.Log("Into StartInteraction");
             interactionPanel.SetActive(true);
             interactTxt.SetText(currentInteraction.interactionTxt);
             instructionTxt.SetText(currentInteraction.instructionIxt);
         }
 
-        /*public void Feed(PlayerNetworkData PND, PlayerOutputData POD)
-        {
-            Debug.Log(PND.ToString());
-            PND.ShowList();
-
-            Item food = new Item
-            {
-                itemType = Item.ItemType.Food,
-            };
-            
-            if(PND.itemList.Contains(food))
-            {
-                PND.itemList.Remove(food);
-                PND.UpdateItemList();
-                AudioManager.Instance.Play("Eat");
-                POD.feedNo++;
-
-                AfterFeed(currentInteraction.name);
-            }
-            else
-            {
-                //Debug.Log("There is no food in your inventory.");
-                GamePlayManager.Instance.ShowWarningBox("There is no food in your inventory.");
-            }
-        }
-
-        public void AfterFeed(string name)
-        {
-            List<Interactions> afterFeedMatches = interactions.FindAll(i => i.name == "AfterFeed");
-
-            if (afterFeedMatches.Count > 0)
-            {
-                // Randomly choose an interaction with match name
-                Interactions afterFeed = afterFeedMatches[UnityEngine.Random.Range(0, afterFeedMatches.Count)];
-                interactTxt.SetText(name + afterFeed.interactionTxt);
-                instructionTxt.SetText(afterFeed.instructionIxt);
-            }
-        }*/
-
         public void Pet(GameObject go)
         {
-            float randomValue = UnityEngine.Random.value; // Random float of 0-1
+            float randomValue = Random.value; // Random float of 0-1
             if (randomValue < 0.1f)
             {
                 // 10% prob. to drop 0-1 item when enemy died
-                spawner.SpawnItemAround(go.transform, UnityEngine.Random.Range(0, 2));
+                spawner.SpawnItemAround(go.transform, Random.Range(0, 2));
                 AfterPet(true);
             }
             else
@@ -136,7 +88,7 @@ namespace DEMO.UI
             if (afterPetMatches.Count > 0)
             {
                 // Randomly choose an interaction with match name
-                Interactions afterPet = afterPetMatches[UnityEngine.Random.Range(0, afterPetMatches.Count)];
+                Interactions afterPet = afterPetMatches[Random.Range(0, afterPetMatches.Count)];
                 interactTxt.SetText(currentInteraction.name + afterPet.interactionTxt);
                 instructionTxt.SetText(afterPet.instructionIxt);
             }

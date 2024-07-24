@@ -7,7 +7,6 @@ using TMPro;
 using Fusion;
 
 using DEMO.DB;
-using DEMO.Manager;
 
 namespace DEMO.GamePlay.Inventory
 {
@@ -20,6 +19,12 @@ namespace DEMO.GamePlay.Inventory
         [SerializeField] private GameObject GiftPanel = null;
         [SerializeField] private GameObject GiftPlayerButton = null;
         private List<GameObject> playerButtonList = new List<GameObject>(); 
+        private GamePlayManager gamePlayManager;
+
+        private void Start()
+        {
+            gamePlayManager = GamePlayManager.Instance;
+        }
 
         public void SetSlot(InventorySlot slot)
         {
@@ -64,7 +69,6 @@ namespace DEMO.GamePlay.Inventory
         public void OnGiftItem(PlayerRef playerRef)
         {
             playerOutputData.giftNo++;
-            Debug.Log(playerOutputData.playerRef.ToString() + " gift no. is " + playerOutputData.giftNo);
 
             currentSlot.GiftItem(playerNetworkData, playerRef);
             GiftPanel.SetActive(false);
@@ -80,7 +84,7 @@ namespace DEMO.GamePlay.Inventory
                 float initialPosY = -45f;
 
                 GiftPanel.SetActive(true);
-                PlayerRef player = GamePlayManager.Instance.Runner.LocalPlayer;
+                PlayerRef player = Runner.LocalPlayer;
 
                 foreach (GameObject button in playerButtonList)
                 {
@@ -90,9 +94,9 @@ namespace DEMO.GamePlay.Inventory
 
                 int buttonCount = 0;
 
-                foreach (PlayerNetworkData pnd in GamePlayManager.Instance.gamePlayerList.Values)
+                foreach (PlayerNetworkData pnd in gamePlayManager.gamePlayerList.Values)
                 {
-                    if (GamePlayManager.Instance.gamePlayerList[player].playerRef != pnd.playerRef)
+                    if (gamePlayManager.gamePlayerList[player].playerRef != pnd.playerRef)
                     {
                         GameObject newPlayerButton = Instantiate(GiftPlayerButton);
                         playerButtonList.Add(newPlayerButton);

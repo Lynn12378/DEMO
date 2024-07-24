@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DEMO.GamePlay.Interactable
@@ -16,7 +14,6 @@ namespace DEMO.GamePlay.Interactable
     public enum InteractionType
     {
         TextOnly,   // Show text only
-        //Feed,       // Feed livings
         Pet         // Pet livings
     }
 }

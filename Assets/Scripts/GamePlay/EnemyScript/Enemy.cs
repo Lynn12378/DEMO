@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
+
 using Fusion;
 using Fusion.Addons.Physics;
+
 using DEMO.GamePlay.Player;
-using DEMO.Manager;
 using DEMO.DB;
 
 namespace DEMO.GamePlay.EnemyScript
@@ -29,8 +28,8 @@ namespace DEMO.GamePlay.EnemyScript
         
         private int directDamage = 10;
         private int damageOverTime = 5;
-        private float damageInterval = 3f;  // Interval until next damage
-        [Networked] private TickTimer damageTimer { get; set; } // Timer to countdown next damage
+        private float damageInterval = 3f;                          // Interval until next damage
+        [Networked] private TickTimer damageTimer { get; set; }     // Timer to countdown next damage
 
         [SerializeField] public Slider hPSlider;
         [Networked] [OnChangedRender(nameof(HandleHpChanged))]
@@ -47,12 +46,14 @@ namespace DEMO.GamePlay.EnemyScript
 
         public PlayerDetection playerDetection;
 
-        [SerializeField] private Spawner spawner;
+        private Spawner spawner;
+        private GamePlayManager gamePlayManager;
 
 
         #region - Initialize -
         private void Start()
         {
+            gamePlayManager = GamePlayManager.Instance;
             spawner = FindObjectOfType<Spawner>();
         }
 
@@ -62,7 +63,7 @@ namespace DEMO.GamePlay.EnemyScript
             transform.SetParent(enemyTransform.transform, false);
 
             Init(enemyID);
-            GamePlayManager.Instance.enemyList.Add(this);
+            gamePlayManager.enemyList.Add(this);
 
             Hp = maxHp;
 
@@ -222,7 +223,7 @@ namespace DEMO.GamePlay.EnemyScript
             SetEnemyHP_RPC(Hp);
             if (Hp <= 0)
             {
-                foreach (var kvp in GamePlayManager.Instance.playerOutputList)
+                foreach (var kvp in gamePlayManager.playerOutputList)
                 {
                     PlayerRef playerRefKey = kvp.Key;
                     PlayerOutputData playerOutputDataValue = kvp.Value;

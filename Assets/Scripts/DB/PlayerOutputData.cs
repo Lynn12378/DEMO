@@ -1,11 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
-
-using DEMO.Manager;
-using DEMO.UI;
-using Unity.VisualScripting;
 
 namespace DEMO.DB
 {
@@ -49,7 +44,7 @@ namespace DEMO.DB
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
             transform.SetParent(Runner.transform);
 
-            gamePlayManager = FindObjectOfType<GamePlayManager>();
+            gamePlayManager = GamePlayManager.Instance;
             gamePlayManager.playerOutputList.Add(Object.InputAuthority, this);
 
             if (Object.HasStateAuthority)
@@ -84,7 +79,6 @@ namespace DEMO.DB
         {
             _killNo++;
             killNo++;
-            Debug.Log(Object.InputAuthority.ToString() + " 's kill no. is " + killNo.ToString());
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
@@ -92,7 +86,6 @@ namespace DEMO.DB
         {
             _deathNo++;
             deathNo++;
-            Debug.Log(Object.InputAuthority.ToString() + " 's death no. is " + deathNo.ToString());
 		}
 
         [Rpc(RpcSources.All, RpcTargets.StateAuthority)]

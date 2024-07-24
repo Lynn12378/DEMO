@@ -16,23 +16,29 @@ namespace DEMO.UI
         [SerializeField] private TMP_Text teamBtnTxt = null;
         [SerializeField] private Button teamBtn = null;  
         [Networked] public int teamID { get; set; } = 0;
-        PlayerRef player;
-        InGameManager inGameManager = null;
-        public bool isExpanded = false; 
+        private PlayerRef player;
+        private InGameManager inGameManager = null;
+        private GamePlayManager gamePlayManager;
+        public bool isExpanded = false;
+
+        private void Start()
+        {
+            gamePlayManager = GamePlayManager.Instance;
+        }
 
         public override void Spawned()
         {
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
-            player= GamePlayManager.Instance.Runner.LocalPlayer;
-            GamePlayManager.Instance.teamList.Add(this);
-            GamePlayManager.Instance.UpdatedTeamList();
+            player = gamePlayManager.Runner.LocalPlayer;
+            gamePlayManager.teamList.Add(this);
+            gamePlayManager.UpdatedTeamList();
             inGameManager = FindObjectOfType<InGameManager>();
         }
 
         public void SetInfo(int id)
         {
             teamTxt.text = $"Team {id}";
-            if (GamePlayManager.Instance.gamePlayerList.TryGetValue(player, out PlayerNetworkData playerNetworkData))
+            if (gamePlayManager.gamePlayerList.TryGetValue(player, out PlayerNetworkData playerNetworkData))
             {
                 if (playerNetworkData.teamID != -1 && playerNetworkData.teamID != id)
                 {
@@ -48,17 +54,16 @@ namespace DEMO.UI
         
         public void OnTeamBtnClicked()
         {        
-            if (GamePlayManager.Instance.gamePlayerList.TryGetValue(player, out PlayerNetworkData playerNetworkData))
+            if (gamePlayManager.gamePlayerList.TryGetValue(player, out PlayerNetworkData playerNetworkData))
             {
                 if (teamBtnTxt.text == "join" && playerNetworkData.teamID == -1)
                 {
                     playerNetworkData.SetPlayerTeamID_RPC(Int32.Parse(teamTxt.text.Substring(5,1)));
                     teamBtnTxt.text = "quit";
 
-                    if (GamePlayManager.Instance.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
+                    if (gamePlayManager.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
                     {
                         playerOutputData.joinTeamNo++;
-                        Debug.Log(playerOutputData.playerRef.ToString() + " join no. is " + playerOutputData.joinTeamNo);
                     }
                 } 
                 else if (teamBtnTxt.text == "quit")
@@ -68,13 +73,12 @@ namespace DEMO.UI
                     inGameManager.toggleExpand(this);
                     playerNetworkData.SetPlayerTeamID_RPC(-1);
 
-                    if (GamePlayManager.Instance.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
+                    if (gamePlayManager.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
                     {
                         playerOutputData.quitTeamNo++;
-                        Debug.Log(playerOutputData.playerRef.ToString() + " quit no. is " + playerOutputData.quitTeamNo);
                     }
 
-                    foreach (var pnd in GamePlayManager.Instance.gamePlayerList.Values)
+                    foreach (var pnd in gamePlayManager.gamePlayerList.Values)
                     {
                         if (pnd.teamID == Int32.Parse(teamTxt.text.Substring(5,1)))
                         {
@@ -85,8 +89,8 @@ namespace DEMO.UI
                     
                     if (emptyTeam)
                     {
-                        GamePlayManager.Instance.teamList.Remove(this);
-                        GamePlayManager.Instance.UpdatedTeamList();
+                        gamePlayManager.teamList.Remove(this);
+                        gamePlayManager.UpdatedTeamList();
 
                         Destroy(gameObject);
                     }           
@@ -123,7 +127,7 @@ namespace DEMO.UI
                     switch (change)
                     {
                         case nameof(teamID):
-                            GamePlayManager.Instance.UpdatedTeamList();
+                            gamePlayManager.UpdatedTeamList();
                             break;
                     }
                 }

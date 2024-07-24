@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using Fusion;
 
 namespace DEMO.GamePlay.Player
@@ -12,7 +9,6 @@ namespace DEMO.GamePlay.Player
         SPACE,
         TALK,
         RELOAD,
-        FEED,
         PET
     }
 

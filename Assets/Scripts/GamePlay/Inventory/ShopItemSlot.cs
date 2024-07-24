@@ -123,7 +123,7 @@ namespace DEMO.GamePlay.Inventory
             }
             else
             {
-                Debug.Log("Not enough coin.");
+                GamePlayManager.Instance.ShowWarningBox("You don't have enough coin to buy this item.");
             }
         }
     }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,6 @@ using Photon.Voice.Unity;
 using Photon.Voice.Fusion;
 
 using DEMO.DB;
-using DEMO.Manager;
 
 namespace DEMO.GamePlay.Player
 {
@@ -19,10 +17,13 @@ namespace DEMO.GamePlay.Player
 
         public Recorder rec;
         [SerializeField] private List<PlayerController> playersInRange = new List<PlayerController>();
+
+        private GamePlayManager gamePlayManager;
         
         private void Start()
         {
-            GamePlayManager.Instance.playerVoiceList.Add(Object.InputAuthority, this);   
+            gamePlayManager = GamePlayManager.Instance;
+            gamePlayManager.playerVoiceList.Add(Object.InputAuthority, this);   
 
             if (playerNetworkData.playerRef == Runner.LocalPlayer)
             {
@@ -51,7 +52,7 @@ namespace DEMO.GamePlay.Player
             }
             else
             {
-                foreach (var kvp in GamePlayManager.Instance.playerVoiceList)
+                foreach (var kvp in gamePlayManager.playerVoiceList)
                 {
                     PlayerVoiceDetection playerVoiceDetection = kvp.Value;
 
@@ -120,7 +121,6 @@ namespace DEMO.GamePlay.Player
                 if (rec.LevelMeter.CurrentAvgAmp >= rec.VoiceDetectionThreshold)
                 {
                     playerOutputData.totalVoiceDetectionDuration += Time.deltaTime;
-                    Debug.Log(playerNetworkData.playerRefString + " voice detection duration: " + playerOutputData.totalVoiceDetectionDuration);
                 }
             }
         }

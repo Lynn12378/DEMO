@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
-using Fusion.Addons.Physics;
 
 using DEMO.DB;
 using DEMO.Manager;
@@ -32,6 +29,12 @@ namespace DEMO.GamePlay.Player
 
         [SerializeField] private Shelter shelter;
         [Networked] private TickTimer shelterTimer { get; set; }
+        private GamePlayManager gamePlayManager;
+
+        private void Start()
+        {
+            gamePlayManager = GamePlayManager.Instance;
+        }
 
 
         public override void Spawned()
@@ -124,7 +127,7 @@ namespace DEMO.GamePlay.Player
                 }
                 else
                 {
-                    Debug.Log("Not enough bullet!");
+                    gamePlayManager.ShowWarningBox("Please refill bullet.");
                 }
             }
 
@@ -152,14 +155,6 @@ namespace DEMO.GamePlay.Player
                     return;
                 }          
             }
-
-            /*if (pressed.IsSet(InputButtons.FEED))
-            {
-                if (isInteracting && mapInteractionManager.currentInteraction.interactionType == InteractionType.Feed)
-                {
-                    mapInteractionManager.Feed(playerNetworkData, playerOutputData);
-                }
-            }*/
 
             if (pressed.IsSet(InputButtons.PET))
             {
@@ -211,8 +206,7 @@ namespace DEMO.GamePlay.Player
             else if(playerNetworkData.itemList.Count >= 12)
             {
                 playerOutputData.fullNo++;
-                //Debug.Log("Inventory is full, cannot pick up item.");
-                GamePlayManager.Instance.ShowWarningBox("Inventory is full, cannot pick up item.");
+                gamePlayManager.ShowWarningBox("Inventory is full, cannot pick up item.");
             }
         }
         #endregion
@@ -239,7 +233,6 @@ namespace DEMO.GamePlay.Player
             if (interactable != null)
             {
                 interactableInRange = interactable;
-                Debug.Log("Interactable found.");
             }
 
             // Check for items
@@ -321,7 +314,7 @@ namespace DEMO.GamePlay.Player
             playerNetworkData.SetPlayerHP_RPC(playerNetworkData.HP - damage);
             AudioManager.Instance.Play("Hit");
 
-            foreach (var kvp in GamePlayManager.Instance.playerOutputList)
+            foreach (var kvp in gamePlayManager.playerOutputList)
             {
                 PlayerRef playerRefKey = kvp.Key;
                 PlayerOutputData playerOutputDataValue = kvp.Value;

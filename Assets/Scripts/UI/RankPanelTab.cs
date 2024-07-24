@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-using DEMO.UI;
 using DEMO.DB;
 
-namespace DEMO.Manager
+namespace DEMO.UI
 {
-    public class TabManager : MonoBehaviour
+    public class RankPanelTab : MonoBehaviour
     {
         public GameObject[] tabs;
         public Image[] tabButtons;
@@ -84,7 +83,6 @@ namespace DEMO.Manager
                     CalculateAndDisplayRank(GamePlayManager.Instance.playerOutputList.Values, (a, b) => b.surviveTime.CompareTo(a.surviveTime), tabID);
                     break;
                 default:
-                    Debug.LogWarning("Invalid tabID: " + tabID);
                     break;
             }
         }
@@ -114,13 +112,10 @@ namespace DEMO.Manager
             for (int i = 0; i < sortedList.Count; i++)
             {
                 PlayerOutputData data = sortedList[i];
-                //string playerName = GamePlayManager.Instance.GetPlayerNameByRef(data.playerRef);
+                string playerName = GamePlayManager.Instance.GetPlayerNameByRef(data.playerRef);
 
                 RankCell cell = Instantiate(rankCellPrefab, tabs[tabID].transform);
-                //cell.SetRankData(i + 1, playerName, GetRankValueByTabID(data, tabID));
-
-                // Use playerRef to test
-                cell.SetRankData(i + 1, data.playerRef.ToString(), GetRankValueByTabID(data, tabID));
+                cell.SetRankData(i + 1, playerName, GetRankValueByTabID(data, tabID));
             }
         }
 

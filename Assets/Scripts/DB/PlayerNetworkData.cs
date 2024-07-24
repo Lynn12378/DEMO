@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Fusion;
 
-using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
 using DEMO.Gameplay;
 using DEMO.UI;
@@ -262,7 +260,7 @@ namespace DEMO.DB
                 switch (change)
                 {
                     case nameof(teamID):
-                        GamePlayManager.Instance.UpdatedGamePlayer();
+                        gamePlayManager.UpdatedGamePlayer();
                         break;
                 }
 
@@ -270,7 +268,7 @@ namespace DEMO.DB
                 switch (change)
                 {
                     case nameof(teamID):
-                        GamePlayManager.Instance.UpdatedGamePlayer();
+                        gamePlayManager.UpdatedGamePlayer();
                         break;
                     case nameof(HP):
                         uIManager.UpdateHPSlider(HP, MaxHP);

@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.U2D.Animation;
 using TMPro;
 using Fusion;
-using DEMO;
-using System.ComponentModel;
-using UnityEngine.U2D.Animation;
+
 using DEMO.DB;
-using Unity.VisualScripting;
 
 namespace DEMO.GamePlay.Inventory
 {
@@ -75,7 +73,7 @@ namespace DEMO.GamePlay.Inventory
             if (occupied && !onClickPanel.activeSelf)
             {
                 // Change color of color code, if failed then color = white
-                Color slotColor = UnityEngine.ColorUtility.TryParseHtmlString("#B6B6B6", out Color color) ? color : Color.white;
+                Color slotColor = ColorUtility.TryParseHtmlString("#B6B6B6", out Color color) ? color : Color.white;
                 slotButton.GetComponent<Image>().color = slotColor;
 
                 onClickPanel.SetActive(true);

@@ -1,10 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.U2D.Animation;
 using Fusion;
-
-using DEMO.Manager;
 
 namespace DEMO.DB
 {
@@ -33,7 +29,7 @@ namespace DEMO.DB
                 SetPlayerInfo_RPC();
             }
 
-            transform.SetParent(GameManager.Instance.transform);
+            transform.SetParent(gameManager.transform);
             gameManager.playerList.Add(Object.InputAuthority, this);
             gameManager.UpdatePlayerList();
 		}

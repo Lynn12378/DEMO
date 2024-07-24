@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Fusion;
@@ -33,12 +31,12 @@ namespace DEMO.Manager
             runner.AddCallbacks(this);
             
 			roomName.text = runner.SessionInfo.Name;
-            GameManager.Instance.OnPlayerListUpdated += UpdatePlayerList;
+            gameManager.OnPlayerListUpdated += UpdatePlayerList;
         }
 
         private void OnDestroy()
         {
-            GameManager.Instance.OnPlayerListUpdated -= UpdatePlayerList;
+            gameManager.OnPlayerListUpdated -= UpdatePlayerList;
         }
 
         public void UpdatePlayerList()
@@ -51,7 +49,7 @@ namespace DEMO.Manager
 
             playerCells.Clear();
 
-            foreach(var player in GameManager.Instance.playerList)
+            foreach(var player in gameManager.playerList)
             {
                 var cell = Instantiate(playerCellPrefab, contentTrans);
                 var playerInfo = player.Value;
@@ -93,7 +91,7 @@ namespace DEMO.Manager
             if (gameManager.playerList.TryGetValue(runner.LocalPlayer, out PlayerInfo playerInfo))
             {
                 runner.Despawn(playerInfo.Object);
-                GameManager.Instance.UpdatePlayerList();
+                gameManager.UpdatePlayerList();
             }
         }
 

@@ -6,12 +6,13 @@ using Fusion;
 
 using DEMO.DB;
 using DEMO.UI;
+using DEMO.Manager;
 using DEMO.GamePlay.Inventory;
 using DEMO.GamePlay.EnemyScript;
 using DEMO.GamePlay.Player;
 using DEMO.GamePlay.Interactable;
 
-namespace DEMO.Manager
+namespace DEMO
 {
     public class GamePlayManager : MonoBehaviour
     {
@@ -85,7 +86,6 @@ namespace DEMO.Manager
                 if (playerRefKey == organizePlayerRef)
                 {
                     playerOutputData.organizeNo++;
-                    Debug.Log(playerRefKey.ToString() + "'s organize no is: " + playerOutputData.organizeNo);
                 }
             }
         }
@@ -100,7 +100,6 @@ namespace DEMO.Manager
                 if (playerRefKey == rankPlayerRef)
                 {
                     playerOutputData.rankNo++;
-                    Debug.Log(playerRefKey.ToString() + "'s rank no is: " + playerOutputData.rankNo);
                 }
             }
         }

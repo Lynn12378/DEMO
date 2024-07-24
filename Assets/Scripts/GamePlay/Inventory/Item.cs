@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
@@ -46,13 +44,20 @@ namespace DEMO.GamePlay.Inventory
         private int foodAdd = 20;
         private int boostHealth = 20;
 
+        private GamePlayManager gamePlayManager;
+
+        private void Start()
+        {
+            gamePlayManager = GamePlayManager.Instance;
+        }
+
         public override void Spawned()
         {
             var itemWorld = GameObject.Find("itemWorld");
             transform.SetParent(itemWorld.transform, false);
 
             Init(itemID);
-            GamePlayManager.Instance.itemList.Add(this);
+            gamePlayManager.itemList.Add(this);
         }
 
         #region - Initialize Item - 
@@ -114,12 +119,11 @@ namespace DEMO.GamePlay.Inventory
                     {
                         playerNetworkData.shelter.SetDurability_RPC(playerNetworkData.shelter.durability + 2);
                         playerNetworkData.GetPlayerOutputData().repairQuantity++;
-                        Debug.Log(playerNetworkData.playerRefString + " use wood for " + playerNetworkData.GetPlayerOutputData().repairQuantity + " times.");
                         AudioManager.Instance.Play("Use");
                     }
                     else
                     {
-                        Debug.Log("Shelter not found!");
+                        gamePlayManager.ShowWarningBox("Please go to shelter to use this item.");
                         validItem = false;
                     }
                     break;
@@ -140,7 +144,7 @@ namespace DEMO.GamePlay.Inventory
                     }
                     else
                     {
-                        Debug.Log("Cannot use this item here.");
+                        gamePlayManager.ShowWarningBox("You can't use this item here.");
                         validItem = false;
                     }
                     break;
@@ -183,7 +187,7 @@ namespace DEMO.GamePlay.Inventory
         // Gift Item
         public void Gift(PlayerNetworkData playerNetworkData, Item.ItemType itemType, PlayerRef targetPlayerRef)
         {
-            foreach (PlayerNetworkData pnd in GamePlayManager.Instance.gamePlayerList.Values)
+            foreach (PlayerNetworkData pnd in gamePlayManager.gamePlayerList.Values)
             {
                 if (pnd.playerRef == targetPlayerRef)
                 {

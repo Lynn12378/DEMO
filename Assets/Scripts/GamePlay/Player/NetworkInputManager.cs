@@ -34,7 +34,6 @@ namespace DEMO.Manager
             data.buttons.Set(InputButtons.SPACE, Input.GetKey(KeyCode.Space));
             data.buttons.Set(InputButtons.TALK, Input.GetKey(KeyCode.Tab));
             data.buttons.Set(InputButtons.RELOAD, Input.GetKey(KeyCode.T));
-            data.buttons.Set(InputButtons.FEED, Input.GetKey(KeyCode.F));
             data.buttons.Set(InputButtons.PET, Input.GetKey(KeyCode.P));
     
             input.Set(data);

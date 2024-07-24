@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 using Fusion;
-using Fusion.Addons.Physics;
 
 using DEMO.GamePlay.EnemyScript;
 using DEMO.GamePlay.Interactable;
@@ -24,6 +21,12 @@ namespace DEMO.GamePlay.Player
 
         private PlayerController shooter;
         private PlayerRef shooterPlayerRef;
+        private GamePlayManager gamePlayManager;
+
+        private void Start()
+        {
+            gamePlayManager = GamePlayManager.Instance;
+        }
 
         public void Init(Vector2 mousePosition, PlayerController shooter)
         {
@@ -48,7 +51,7 @@ namespace DEMO.GamePlay.Player
         {
             if(collider.CompareTag("MapCollision"))
             {
-                foreach (var kvp in GamePlayManager.Instance.playerOutputList)
+                foreach (var kvp in gamePlayManager.playerOutputList)
                 {
                     PlayerRef playerRefKey = kvp.Key;
                     PlayerOutputData playerOutputDataValue = kvp.Value;
@@ -56,7 +59,6 @@ namespace DEMO.GamePlay.Player
                     if (shooterPlayerRef == playerRefKey)
                     {
                         playerOutputDataValue.bulletCollision++;
-                        Debug.Log(playerRefKey.ToString() + "'s bullet collision is: " + playerOutputDataValue.bulletCollision.ToString());
                     }
                 }
 
@@ -90,7 +92,7 @@ namespace DEMO.GamePlay.Player
             {
                 livings.TakeDamage(damage, shooterPlayerRef);
 
-                foreach (var kvp in GamePlayManager.Instance.playerOutputList)
+                foreach (var kvp in gamePlayManager.playerOutputList)
                 {
                     PlayerRef playerRefKey = kvp.Key;
                     PlayerOutputData playerOutputDataValue = kvp.Value;

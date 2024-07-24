@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
+
 using Fusion;
 using Fusion.Addons.Physics;
-using DEMO.Manager;
+
 using DEMO.UI;
 
 namespace DEMO.GamePlay.Interactable
