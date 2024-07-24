@@ -27,25 +27,6 @@ namespace DEMO.Manager
         [SerializeField] private TMP_Text messageTxt = null;
         [SerializeField] private GameObject messageCellPrefab = null;
 
-        private string baseUrl = "http://localhost/DEMO/BFI-15.php";
-        public void TestButton()
-        {
-            int playerId = 0;
-
-            foreach (var player in gamePlayManager.gamePlayerList)
-            {
-                if(player.Key == localPlayer) playerId = player.Value.playerId;
-            }
-
-            // Construct the full URL with the player ID as a parameter
-            string fullUrl = baseUrl + "?player_id=" + playerId.ToString();
-
-            if(playerId != 0)
-            {
-                Application.OpenURL(fullUrl);
-            }
-        }
-
 
         private void Start()
         {
@@ -230,6 +211,8 @@ namespace DEMO.Manager
             Init(player);
 
             localPlayer = runner.LocalPlayer;
+
+            gamePlayManager.gameStartTime = Time.time;
 
             var spawner = FindObjectOfType<Spawner>();
             spawner.StartSpawners();

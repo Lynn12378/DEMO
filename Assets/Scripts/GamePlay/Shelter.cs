@@ -31,6 +31,10 @@ namespace DEMO.Gameplay
                 SetDurability_RPC(durability - 1);
                 durabilityTicker = TickTimer.CreateFromSeconds(Runner, 5);
             }
+            else
+            {
+                GameManager.Instance.RestartGame();
+            }
         }
 
         #region - RPCs -

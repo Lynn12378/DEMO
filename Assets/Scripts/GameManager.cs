@@ -13,6 +13,8 @@ namespace DEMO
 {
     public class GameManager : MonoBehaviour
     {
+        private string baseUrl = "http://localhost/DEMO/BFI-15.php";
+
         public static GameManager Instance { get; private set; }
         [SerializeField] private NetworkRunner runner = null;
 
@@ -53,8 +55,28 @@ namespace DEMO
             DontDestroyOnLoad(gameObject);
         }
 
-        #region - End game & Reload -
+        #region - EndGame / Restart -
         public void EndGame()
+        {
+            SceneManager.LoadScene(SceneManager.GetSceneByName("EndGame").name);
+
+            int playerId = 0;
+
+            foreach (var player in GamePlayManager.Instance.gamePlayerList)
+            {
+                if(player.Key == Runner.LocalPlayer) playerId = player.Value.playerId;
+            }
+
+            // Construct the full URL with the player ID as a parameter
+            string fullUrl = baseUrl + "?player_id=" + playerId.ToString();
+
+            if(playerId != 0)
+            {
+                Application.OpenURL(fullUrl);
+            }
+        }
+
+        public void RestartGame()
         {
             foreach (var player in GamePlayManager.Instance.playerOutputList)
             {

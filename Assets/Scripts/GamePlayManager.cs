@@ -20,7 +20,9 @@ namespace DEMO
         public NetworkRunner Runner;
         [SerializeField] private PlayerOutputDBHandler playerOutputDBHandler;
         [SerializeField] private UIManager uIManager;
-        private TickTimer warningBoxTimer;
+
+        public float gameStartTime;
+        private const float gameDuration = 3600f; // 1 hour in seconds
 
         private void Awake()
         {
@@ -38,7 +40,16 @@ namespace DEMO
             uIManager = FindObjectOfType<UIManager>();
         }
 
-        #region - UI Manager -
+        private void Update()
+        {
+            float elapsedTime = Time.time - gameStartTime;
+            if (elapsedTime >= gameDuration)
+            {
+                GameManager.Instance.EndGame();
+            }
+        }
+
+        #region - Warning Box -
         public void ShowWarningBox(string text)
         {
             uIManager.ShowWarningBox(text);
