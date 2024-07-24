@@ -8,7 +8,6 @@ using Photon.Voice.Unity;
 
 using DEMO.DB;
 using DEMO.UI;
-using Photon.Voice.Fusion.Editor;
 
 namespace DEMO
 {

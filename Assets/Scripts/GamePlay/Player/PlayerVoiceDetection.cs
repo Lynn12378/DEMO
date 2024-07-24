@@ -41,8 +41,7 @@ namespace DEMO.GamePlay.Player
                 if(playerNetworkData.playerRef == Runner.LocalPlayer)
                 {
                     playerNetworkData.uIManager.UpdateMicIconColor(0);
-                    // Use playerRef to test
-                    playerNetworkData.uIManager.UpdateMicTxt(playerNetworkData.playerRefString);
+                    playerNetworkData.uIManager.UpdateMicTxt(playerNetworkData.playerName);
                 }
                 else 
                 {
@@ -59,7 +58,7 @@ namespace DEMO.GamePlay.Player
                     if (playerVoiceDetection.voiceObject.IsSpeaking)
                     {
                         playerNetworkData.uIManager.UpdateMicIconColor(1);
-                        playerNetworkData.uIManager.UpdateMicTxt(kvp.Key.ToString());
+                        playerNetworkData.uIManager.UpdateMicTxt(kvp.Value.playerNetworkData.playerName);
                     }
                     else
                     {
