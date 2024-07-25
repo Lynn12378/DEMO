@@ -146,13 +146,6 @@ namespace DEMO
             public List<Item> itemList = new List<Item>();
             public List<Enemy> enemyList = new List<Enemy>();
             public List<Livings> livingsList = new List<Livings>();
-
-            public void ClearAllSpawnLists()
-            {
-                itemList.Clear();
-                enemyList.Clear();
-                livingsList.Clear();
-            }
         #endregion
 
         #region - RankList -

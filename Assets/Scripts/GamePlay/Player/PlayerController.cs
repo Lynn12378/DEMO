@@ -55,10 +55,13 @@ namespace DEMO.GamePlay.Player
 
         public void Restart()
         {
+            playerOutputData.restartNo++;
+            playerOutputData.AddDeathNo_RPC();
+
             transform.position = Vector3.zero;
 
             playerNetworkData.Restart();
-
+            
             surviveTime = 0f;
         }
 

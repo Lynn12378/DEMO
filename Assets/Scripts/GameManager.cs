@@ -23,7 +23,6 @@ namespace DEMO
         [SerializeField] private NetworkRunner runner = null;
         [SerializeField] private PlayerController[] players;
         [SerializeField] private Shelter shelter;
-        [SerializeField] private Spawner spawner;
 
         public NetworkRunner Runner
         {
@@ -86,22 +85,7 @@ namespace DEMO
         {
             players = FindObjectsOfType<PlayerController>();
             shelter = FindObjectOfType<Shelter>();
-            spawner = FindObjectOfType<Spawner>();
 
-            if(runner.IsSceneAuthority)
-            {
-                foreach (var player in GamePlayManager.Instance.playerOutputList)
-                {
-                    player.Value.restartNo++;
-                }
-
-                // Restart after 2 seconds
-                Invoke("Restart", 2f);
-            }
-        }
-
-        private void Restart()
-        {
             if(runner.IsSceneAuthority)
             {
                 shelter.Restart();
@@ -109,12 +93,10 @@ namespace DEMO
                 foreach (PlayerController player in players)
                 {
                     player.Restart();
+                    break;
                 }
-
-                //spawner.Restart();
             }
         }
-
         #endregion
 
         #region - playerInfo -

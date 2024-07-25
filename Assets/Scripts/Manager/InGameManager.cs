@@ -53,6 +53,11 @@ namespace DEMO.Manager
             var cell = networkInstance.Spawn(messageCellPrefab, Vector3.zero, Quaternion.identity);
             cell.GetComponent<MessageCell>().SetMessage_RPC(networkInstance.LocalPlayer.ToString(), messageTxt.text);
 
+            foreach(var player in gamePlayManager.playerOutputList)
+            {
+                if(player.Key == networkInstance.LocalPlayer) player.Value.sendMessageNo++;
+            }
+
             // Reset message text
             messageTxt.text = "";
         }

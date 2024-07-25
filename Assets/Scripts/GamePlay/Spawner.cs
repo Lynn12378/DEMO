@@ -11,7 +11,7 @@ namespace DEMO.GamePlay
     {
         [Header("Enemy Spawner Settings")]
         [SerializeField] private NetworkObject enemy;
-        [SerializeField] private int initialEnemyCount = 40;
+        [SerializeField] private int initialEnemyCount = 80;
         [SerializeField] private int enemyPerSpawn = 10;
         [SerializeField] private float delayBetweenEnemySpawns = 900.0f; // 15 minutes in seconds
 
@@ -52,13 +52,6 @@ namespace DEMO.GamePlay
             }
         }
 
-        public void Restart()
-        {
-            GamePlayManager.Instance.ClearAllSpawnLists();
-
-            StartSpawners();
-        }
-
         public void StartSpawners()
         {
             SpawnInitialObjects(enemy, initialEnemyCount, enemyPerSpawn, SpawnEnemyNearSpawnPoint);
@@ -68,7 +61,7 @@ namespace DEMO.GamePlay
             InvokeRepeating(nameof(SpawnDelayedEnemies), delayBetweenEnemySpawns, delayBetweenEnemySpawns);
             InvokeRepeating(nameof(SpawnDelayedItems), delayBetweenItemSpawns, delayBetweenItemSpawns);
             InvokeRepeating(nameof(SpawnDelayedLivings), delayBetweenLivingSpawns, delayBetweenLivingSpawns);
-            //InvokeRepeating(nameof(SpawnShops), 0f, shopLifetime);
+            InvokeRepeating(nameof(SpawnShops), 0f, shopLifetime);
         }
         #endregion
 
@@ -78,10 +71,7 @@ namespace DEMO.GamePlay
             // Destroy existing shops
             foreach (var shop in currentShops)
             {
-                if(Runner != null)
-                {
-                    Runner.Despawn(shop);
-                }
+                Runner.Despawn(shop);
             }
             currentShops.Clear();
 

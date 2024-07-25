@@ -35,8 +35,9 @@ namespace DEMO.DB
         public int quitTeamNo = 0;                              // No. of player quit team
         public int repairQuantity = 0;                          // Quantity of player given to repair shelter
         public int restartNo = 0;                               // No. of times shelter durability = 0
-        public int usePlaceholderNo = 0;                         // No. of player use badge at right building
+        public int usePlaceholderNo = 0;                        // No. of player use badge at right building
         public int feedNo = 0;                                  // No. of player feed livings
+        public int sendMessageNo = 0;                           // No. of player send text message
 
 
         public override void Spawned()
