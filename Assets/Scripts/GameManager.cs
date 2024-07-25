@@ -21,6 +21,9 @@ namespace DEMO
 
         public static GameManager Instance { get; private set; }
         [SerializeField] private NetworkRunner runner = null;
+        [SerializeField] private PlayerController[] players;
+        [SerializeField] private Shelter shelter;
+        [SerializeField] private Spawner spawner;
 
         public NetworkRunner Runner
         {
@@ -81,7 +84,11 @@ namespace DEMO
         #region - Restart -
         public void RestartGame()
         {
-            if(runner.IsServer)
+            players = FindObjectsOfType<PlayerController>();
+            shelter = FindObjectOfType<Shelter>();
+            spawner = FindObjectOfType<Spawner>();
+
+            if(runner.IsSceneAuthority)
             {
                 foreach (var player in GamePlayManager.Instance.playerOutputList)
                 {
@@ -95,19 +102,16 @@ namespace DEMO
 
         private void Restart()
         {
-            if(runner.IsServer)
+            if(runner.IsSceneAuthority)
             {
-                PlayerController[] players = FindObjectsOfType<PlayerController>();
+                shelter.Restart();
+
                 foreach (PlayerController player in players)
                 {
                     player.Restart();
                 }
 
-                Shelter shelter = FindObjectOfType<Shelter>();
-                shelter.Restart();
-
-                Spawner spawner = FindObjectOfType<Spawner>();
-                spawner.Restart();
+                //spawner.Restart();
             }
         }
 

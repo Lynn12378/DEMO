@@ -68,7 +68,7 @@ namespace DEMO.GamePlay
             InvokeRepeating(nameof(SpawnDelayedEnemies), delayBetweenEnemySpawns, delayBetweenEnemySpawns);
             InvokeRepeating(nameof(SpawnDelayedItems), delayBetweenItemSpawns, delayBetweenItemSpawns);
             InvokeRepeating(nameof(SpawnDelayedLivings), delayBetweenLivingSpawns, delayBetweenLivingSpawns);
-            InvokeRepeating(nameof(SpawnShops), 0f, shopLifetime);
+            //InvokeRepeating(nameof(SpawnShops), 0f, shopLifetime);
         }
         #endregion
 
@@ -78,7 +78,10 @@ namespace DEMO.GamePlay
             // Destroy existing shops
             foreach (var shop in currentShops)
             {
-                Runner.Despawn(shop);
+                if(Runner != null)
+                {
+                    Runner.Despawn(shop);
+                }
             }
             currentShops.Clear();
 

@@ -32,7 +32,7 @@ namespace DEMO.Gameplay
                 durabilityTicker = TickTimer.CreateFromSeconds(Runner, 5);
             }
             
-            if(durability <= 0)
+            if(durability == 0)
             {
                 GameManager.Instance.RestartGame();
             }
