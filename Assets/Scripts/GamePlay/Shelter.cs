@@ -31,7 +31,8 @@ namespace DEMO.Gameplay
                 SetDurability_RPC(durability - 1);
                 durabilityTicker = TickTimer.CreateFromSeconds(Runner, 5);
             }
-            else
+            
+            if(durability <= 0)
             {
                 GameManager.Instance.RestartGame();
             }

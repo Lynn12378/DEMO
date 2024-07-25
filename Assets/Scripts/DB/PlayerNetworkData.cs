@@ -83,6 +83,7 @@ namespace DEMO.DB
 
             uIManager.UpdateMicTxt("none");
             uIManager.SetPlayerRef(playerRef);
+            uIManager.UpdatePlayerName(playerName);
 		}
 
         public PlayerOutputData GetPlayerOutputData()

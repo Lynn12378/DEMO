@@ -22,6 +22,9 @@ namespace DEMO.UI
         [SerializeField] private GameObject warningBoxPanel = null;
         [SerializeField] private TextMeshProUGUI warningText = null;
 
+        [SerializeField] private GameObject playerImage;
+        [SerializeField] private TMP_Text playerNameTxt = null;
+
         [SerializeField] private GameObject micIcon;
         [SerializeField] private TMP_Text micTxt = null;
 
@@ -91,6 +94,11 @@ namespace DEMO.UI
         #endregion
 
         #region - PlayerNetworkData UI -
+        public void UpdatePlayerName(string playerName)
+        {
+            playerNameTxt.SetText(playerName);
+        }
+
         public void UpdateHPSlider(int HP, int maxHP)
         {
             HPSlider.value = HP;

@@ -120,7 +120,7 @@ namespace DEMO.GamePlay.Inventory
                     }
                     else
                     {
-                        gamePlayManager.ShowWarningBox("Please go to shelter to use this item.");
+                        gamePlayManager.ShowWarningBox("這個物品只能在基地使用。");
                         validItem = false;
                     }
                     break;
@@ -141,7 +141,7 @@ namespace DEMO.GamePlay.Inventory
                     }
                     else
                     {
-                        gamePlayManager.ShowWarningBox("You can't use this item here.");
+                        gamePlayManager.ShowWarningBox("這個物品不能在這裡使用。");
                         validItem = false;
                     }
                     break;

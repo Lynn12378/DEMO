@@ -34,7 +34,7 @@ namespace DEMO.UI
 
         public void SetInfo(int id)
         {
-            teamTxt.text = $"Team {id}";
+            teamTxt.text = $"隊伍 {id}";
             if (gamePlayManager.gamePlayerList.TryGetValue(player, out PlayerNetworkData playerNetworkData))
             {
                 if (playerNetworkData.teamID != -1 && playerNetworkData.teamID != id)
@@ -44,7 +44,7 @@ namespace DEMO.UI
                 else if (playerNetworkData.teamID != id)
                 {
                     teamBtn.gameObject.SetActive(true);
-                    teamBtnTxt.text = "join";
+                    teamBtnTxt.text = "加入";
                 }      
             }
         }
@@ -53,17 +53,17 @@ namespace DEMO.UI
         {        
             if (gamePlayManager.gamePlayerList.TryGetValue(player, out PlayerNetworkData playerNetworkData))
             {
-                if (teamBtnTxt.text == "join" && playerNetworkData.teamID == -1)
+                if (teamBtnTxt.text == "加入" && playerNetworkData.teamID == -1)
                 {
                     playerNetworkData.SetPlayerTeamID_RPC(Int32.Parse(teamTxt.text.Substring(5,1)));
-                    teamBtnTxt.text = "quit";
+                    teamBtnTxt.text = "退出";
 
                     if (gamePlayManager.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
                     {
                         playerOutputData.joinTeamNo++;
                     }
                 } 
-                else if (teamBtnTxt.text == "quit")
+                else if (teamBtnTxt.text == "退出")
                 {
                     bool emptyTeam = true;
                     isExpanded = true;

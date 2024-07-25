@@ -134,12 +134,12 @@ namespace DEMO.Manager
                     gamePlayManager.newTeamID = newTeamId;
                     teamCell.SetPlayerTeamID_RPC(gamePlayManager.newTeamID);            
                     playerNetworkData.SetPlayerTeamID_RPC(gamePlayManager.newTeamID);
-                    teamCell.getTeamBtnTxt().text = "quit";
+                    teamCell.getTeamBtnTxt().text = "退出";
                     gamePlayManager.UpdatedTeamList();
                 } 
                 else
                 {
-                    gamePlayManager.ShowWarningBox("You are already in another team.");                 
+                    gamePlayManager.ShowWarningBox("你已經在另一個隊伍了。");                 
                 }
             }
         }

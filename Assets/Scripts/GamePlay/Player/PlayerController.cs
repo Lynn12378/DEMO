@@ -122,7 +122,7 @@ namespace DEMO.GamePlay.Player
                 }
                 else
                 {
-                    gamePlayManager.ShowWarningBox("Please refill bullet.");
+                    gamePlayManager.ShowWarningBox("請填充子彈。");
                 }
             }
 
@@ -201,7 +201,7 @@ namespace DEMO.GamePlay.Player
             else if(playerNetworkData.itemList.Count >= 12)
             {
                 playerOutputData.fullNo++;
-                gamePlayManager.ShowWarningBox("Inventory is full, cannot pick up item.");
+                gamePlayManager.ShowWarningBox("背包已滿，不能撿起物品。");
             }
         }
         #endregion
