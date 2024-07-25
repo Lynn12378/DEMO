@@ -85,7 +85,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Message
+  m_text: "[\u8A0A\u606F]"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6aef2a040585c8a42947a2767b54fcd5, type: 2}
   m_sharedMaterial: {fileID: -433225221499695473, guid: 6aef2a040585c8a42947a2767b54fcd5, type: 2}

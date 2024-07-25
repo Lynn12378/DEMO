@@ -100,18 +100,18 @@ namespace DEMO.UI
         public void UpdateDurabilitySlider(int durability, int maxDurability)
         {
             durabilitySlider.value = durability;
-            durabilityTxt.text = $"Durability: {durability}/{maxDurability}";
+            durabilityTxt.text = $"耐久度: {durability}/{maxDurability}";
         }
 
         public void UpdateFoodSlider(int food, int maxFood)
         {
             foodSlider.value = food;
-            foodTxt.text = $"Food: {food}/{maxFood}";
+            foodTxt.text = $"食物: {food}/{maxFood}";
         }
 
         public void UpdateBulletAmountTxt(int bulletAmount, int maxbulletAmount)
         {
-            bulletAmountTxt.text = $"Bullet amount: {bulletAmount}/{maxbulletAmount}";
+            bulletAmountTxt.text = $"子彈數量: {bulletAmount}/{maxbulletAmount}";
         }
 
         public void UpdateCoinAmountTxt(int coinAmount)
@@ -145,7 +145,7 @@ namespace DEMO.UI
             }
             else
             {
-                micTxt.text = $"Speaking : {playerName}";
+                micTxt.text = $"說話中: {playerName}";
             }
         }
         #endregion

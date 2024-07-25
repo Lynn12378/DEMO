@@ -17,7 +17,7 @@ namespace DEMO.UI
             this.isReady = isReady;
 
             playerNameTxt.text = this.playerName;
-            isReadyTxt.text = this.isReady ? "Ready" : "";
+            isReadyTxt.text = this.isReady ? "準備完成" : "";
         }
     }
 }

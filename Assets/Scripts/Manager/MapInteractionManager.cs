@@ -32,11 +32,11 @@ namespace DEMO.UI
         {
             if(interaction.interactionType == InteractionType.TextOnly)
             {
-                interaction.instructionIxt = " Tap [space] to close ";
+                interaction.instructionIxt = " 按 [空白鍵] 關閉 ";
             }
             else if(interaction.interactionType == InteractionType.Pet)
             {
-                interaction.instructionIxt = " Tap [P] to pet, [space] to close ";
+                interaction.instructionIxt = " 按 [P] 撫摸，按 [空白鍵] 關閉 ";
             }
         }
 
@@ -89,7 +89,7 @@ namespace DEMO.UI
             {
                 // Randomly choose an interaction with match name
                 Interactions afterPet = afterPetMatches[Random.Range(0, afterPetMatches.Count)];
-                interactTxt.SetText(currentInteraction.name + afterPet.interactionTxt);
+                interactTxt.SetText(afterPet.interactionTxt);
                 instructionTxt.SetText(afterPet.instructionIxt);
             }
         }

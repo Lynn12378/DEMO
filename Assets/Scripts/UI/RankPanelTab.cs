@@ -68,7 +68,7 @@ namespace DEMO.UI
 
             // Add rank title
             RankCell titleCell = Instantiate(rankCellPrefab, tabs[tabID].transform);
-            titleCell.SetRankTitle("Rank", "Player Name", GetRankTitleByTabID(tabID));
+            titleCell.SetRankTitle("排名", "玩家暱稱", GetRankTitleByTabID(tabID));
 
             // Calculate rank by tabID
             switch (tabID)
@@ -92,11 +92,11 @@ namespace DEMO.UI
             switch (tabID)
             {
                 case 0:
-                    return "Kill No.";
+                    return "擊殺數量";
                 case 1:
-                    return "Death No.";
+                    return "死亡次數";
                 case 2:
-                    return "Survive Time";
+                    return "生存時長";
                 default:
                     return "";
             }
