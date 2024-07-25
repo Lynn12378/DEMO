@@ -55,10 +55,14 @@ namespace DEMO.GamePlay.Player
 
         public void Restart()
         {
+            playerOutputData.restartNo++;
+            playerOutputData.AddDeathNo_RPC();
+
             transform.position = Vector3.zero;
 
             playerNetworkData.Restart();
-
+            playerOutputData.Restart();
+            
             surviveTime = 0f;
         }
 
@@ -165,6 +169,7 @@ namespace DEMO.GamePlay.Player
                 if (isInteracting && mapInteractionManager.currentInteraction.interactionType == InteractionType.Pet)
                 {
                     mapInteractionManager.Pet(gameObject);
+                    playerOutputData.petNo++;
                 }
             }
 

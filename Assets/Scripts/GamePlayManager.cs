@@ -21,9 +21,6 @@ namespace DEMO
         [SerializeField] private PlayerOutputDBHandler playerOutputDBHandler;
         [SerializeField] private UIManager uIManager;
 
-        public float gameStartTime;
-        private const float gameDuration = 3600f; // 1 hour in seconds
-
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -38,15 +35,6 @@ namespace DEMO
 
             Runner = GameManager.Instance.Runner;
             uIManager = FindObjectOfType<UIManager>();
-        }
-
-        private void Update()
-        {
-            float elapsedTime = Time.time - gameStartTime;
-            if (elapsedTime >= gameDuration)
-            {
-                GameManager.Instance.EndGame();
-            }
         }
 
         #region - Warning Box -
@@ -146,13 +134,6 @@ namespace DEMO
             public List<Item> itemList = new List<Item>();
             public List<Enemy> enemyList = new List<Enemy>();
             public List<Livings> livingsList = new List<Livings>();
-
-            public void ClearAllSpawnLists()
-            {
-                itemList.Clear();
-                enemyList.Clear();
-                livingsList.Clear();
-            }
         #endregion
 
         #region - RankList -

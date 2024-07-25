@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2024-07-25 08:51:30
+-- 生成日期： 2024-07-25 12:55:45
 -- 服务器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -91,17 +91,19 @@ CREATE TABLE `output_data` (
   `repairQuantity` int(11) NOT NULL,
   `restartNo` int(11) NOT NULL,
   `usePlaceholderNo` int(11) NOT NULL,
-  `feedNo` int(11) NOT NULL
+  `petNo` int(11) NOT NULL,
+  `sendMessageNo` int(11) NOT NULL,
+  `durationOfRound` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 转存表中的数据 `output_data`
 --
 
-INSERT INTO `output_data` (`id`, `playerId`, `killNo`, `deathNo`, `surviveTime`, `collisionNo`, `bulletCollision`, `bulletCollisionOnLiving`, `remainHP`, `remainBullet`, `totalVoiceDetectionDuration`, `organizeNo`, `fullNo`, `placeholderNo`, `rankNo`, `giftNo`, `createTeamNo`, `joinTeamNo`, `quitTeamNo`, `repairQuantity`, `restartNo`, `usePlaceholderNo`, `feedNo`) VALUES
-(12, 60, 1, 0, 143.5, 0, 0, 0, '[0,60,80]', '[0]', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(13, 60, 0, 0, 41.2188, 0, 0, 0, '[0]', '[0]', 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(14, 61, 0, 0, 98.5, 0, 0, 0, '[0]', '[0]', 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0);
+INSERT INTO `output_data` (`id`, `playerId`, `killNo`, `deathNo`, `surviveTime`, `collisionNo`, `bulletCollision`, `bulletCollisionOnLiving`, `remainHP`, `remainBullet`, `totalVoiceDetectionDuration`, `organizeNo`, `fullNo`, `placeholderNo`, `rankNo`, `giftNo`, `createTeamNo`, `joinTeamNo`, `quitTeamNo`, `repairQuantity`, `restartNo`, `usePlaceholderNo`, `petNo`, `sendMessageNo`, `durationOfRound`) VALUES
+(12, 60, 1, 0, 143.5, 0, 0, 0, '[0,60,80]', '[0]', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(13, 60, 0, 0, 41.2188, 0, 0, 0, '[0]', '[0]', 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(14, 61, 0, 0, 98.5, 0, 0, 0, '[0]', '[0]', 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -121,7 +123,10 @@ CREATE TABLE `player` (
 
 INSERT INTO `player` (`Player_id`, `Player_name`, `Player_password`) VALUES
 (60, 'demo', '12345'),
-(61, 'demo2', '1111');
+(61, 'demo2', '1111'),
+(64, 'demo3', '12345'),
+(65, 'demo4', '12345'),
+(68, 'demo5', '12345');
 
 --
 -- 转储表的索引
@@ -179,7 +184,7 @@ ALTER TABLE `output_data`
 -- 使用表AUTO_INCREMENT `player`
 --
 ALTER TABLE `player`
-  MODIFY `Player_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `Player_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- 限制导出的表

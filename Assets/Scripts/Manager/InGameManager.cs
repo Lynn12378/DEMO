@@ -218,8 +218,6 @@ namespace DEMO.Manager
 
             localPlayer = runner.LocalPlayer;
 
-            gamePlayManager.gameStartTime = Time.time;
-
             var spawner = FindObjectOfType<Spawner>();
             spawner.StartSpawners();
         }

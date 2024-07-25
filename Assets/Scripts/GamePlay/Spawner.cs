@@ -11,7 +11,7 @@ namespace DEMO.GamePlay
     {
         [Header("Enemy Spawner Settings")]
         [SerializeField] private NetworkObject enemy;
-        [SerializeField] private int initialEnemyCount = 40;
+        [SerializeField] private int initialEnemyCount = 80;
         [SerializeField] private int enemyPerSpawn = 10;
         [SerializeField] private float delayBetweenEnemySpawns = 900.0f; // 15 minutes in seconds
 
@@ -50,13 +50,6 @@ namespace DEMO.GamePlay
             {
                 spawnPoints.Add(spawnPoint.transform);
             }
-        }
-
-        public void Restart()
-        {
-            GamePlayManager.Instance.ClearAllSpawnLists();
-
-            StartSpawners();
         }
 
         public void StartSpawners()

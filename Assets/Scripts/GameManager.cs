@@ -21,6 +21,8 @@ namespace DEMO
 
         public static GameManager Instance { get; private set; }
         [SerializeField] private NetworkRunner runner = null;
+        [SerializeField] private PlayerController[] players;
+        [SerializeField] private Shelter shelter;
 
         public NetworkRunner Runner
         {
@@ -54,6 +56,8 @@ namespace DEMO
         #region - EndGame -
         public void EndGame()
         {
+            GamePlayManager.Instance.OnSendPOD();
+
             SceneManager.LoadScene("EndGame");
 
             GoToQuestion();
@@ -81,36 +85,22 @@ namespace DEMO
         #region - Restart -
         public void RestartGame()
         {
-            if(runner.IsServer)
-            {
-                foreach (var player in GamePlayManager.Instance.playerOutputList)
-                {
-                    player.Value.restartNo++;
-                }
+            GamePlayManager.Instance.OnSendPOD();
+            
+            players = FindObjectsOfType<PlayerController>();
+            shelter = FindObjectOfType<Shelter>();
 
-                // Restart after 2 seconds
-                Invoke("Restart", 2f);
-            }
-        }
-
-        private void Restart()
-        {
-            if(runner.IsServer)
+            if(runner.IsSceneAuthority)
             {
-                PlayerController[] players = FindObjectsOfType<PlayerController>();
+                shelter.Restart();
+
                 foreach (PlayerController player in players)
                 {
                     player.Restart();
+                    break;
                 }
-
-                Shelter shelter = FindObjectOfType<Shelter>();
-                shelter.Restart();
-
-                Spawner spawner = FindObjectOfType<Spawner>();
-                spawner.Restart();
             }
         }
-
         #endregion
 
         #region - playerInfo -
