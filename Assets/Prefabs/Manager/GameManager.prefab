@@ -88,8 +88,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runner: {fileID: 5493886838805833379}
-  voiceClient: {fileID: 0}
-  rec: {fileID: 0}
+  voiceClient: {fileID: 4426392564516569136}
+  rec: {fileID: 9153417108840858371}
   speakerPrefab: {fileID: 0}
   messages: []
 --- !u!114 &4426392564516569136

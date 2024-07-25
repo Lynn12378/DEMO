@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -55,7 +56,7 @@ namespace DEMO
             DontDestroyOnLoad(gameObject);
         }
 
-        #region - EndGame / Restart -
+        #region - EndGame -
         public void EndGame()
         {
             SceneManager.LoadScene("EndGame");
@@ -80,7 +81,9 @@ namespace DEMO
                 Application.OpenURL(fullUrl);
             }
         }
+        #endregion
 
+        #region - Restart -
         public void RestartGame()
         {
             foreach (var player in GamePlayManager.Instance.playerOutputList)
@@ -88,16 +91,30 @@ namespace DEMO
                 player.Value.restartNo++;
             }
 
-            Destroy(voiceClient);
-            Destroy(Runner);
-
             // Restart game after 2 seconds
             Invoke("Restart", 2f);
         }
 
         private void Restart()                                  ////////////////////// Restart still need refine
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            StartCoroutine(RestartCoroutine());
+        }
+
+        private IEnumerator RestartCoroutine()
+        {
+            SceneManager.LoadScene("GamePlay");
+
+            yield return null;
+
+            // Restart NetworkRunner and FusionVoiceClient
+            if (runner != null)
+            {
+                runner.Shutdown(false, ShutdownReason.Ok);
+                runner.StartGame(new StartGameArgs
+                {
+                    /* */
+                });
+            }
         }
 
         #endregion

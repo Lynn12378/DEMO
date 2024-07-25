@@ -55,7 +55,7 @@ namespace DEMO.UI
             {
                 if (teamBtnTxt.text == "加入" && playerNetworkData.teamID == -1)
                 {
-                    playerNetworkData.SetPlayerTeamID_RPC(Int32.Parse(teamTxt.text.Substring(5,1)));
+                    playerNetworkData.SetPlayerTeamID_RPC(Int32.Parse(teamTxt.text.Substring(3,1)));
                     teamBtnTxt.text = "退出";
 
                     if (gamePlayManager.playerOutputList.TryGetValue(player, out PlayerOutputData playerOutputData))
@@ -77,7 +77,7 @@ namespace DEMO.UI
 
                     foreach (var pnd in gamePlayManager.gamePlayerList.Values)
                     {
-                        if (pnd.teamID == Int32.Parse(teamTxt.text.Substring(5,1)))
+                        if (pnd.teamID == Int32.Parse(teamTxt.text.Substring(3,1)))
                         {
                             emptyTeam = false;
                             break;
