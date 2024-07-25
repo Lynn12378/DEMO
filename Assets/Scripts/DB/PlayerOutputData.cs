@@ -36,8 +36,9 @@ namespace DEMO.DB
         public int repairQuantity = 0;                          // Quantity of player given to repair shelter
         public int restartNo = 0;                               // No. of times shelter durability = 0
         public int usePlaceholderNo = 0;                        // No. of player use badge at right building
-        public int feedNo = 0;                                  // No. of player feed livings
+        public int petNo = 0;                                  // No. of player pet livings
         public int sendMessageNo = 0;                           // No. of player send text message
+        public float durationOfRound = 0;                       // Duration of that round when game ends or restarts
 
 
         public override void Spawned()
@@ -52,7 +53,44 @@ namespace DEMO.DB
             {
                 SetPlayerRef_RPC();
             }
+
+            durationOfRound = 0f;
 		}
+
+        public override void FixedUpdateNetwork()
+        {
+            durationOfRound += Runner.DeltaTime;
+        }
+
+        public void Restart()
+        {
+            durationOfRound = 0f;
+            killNo = 0;
+            deathNo = 0;
+            surviveTime = 0;
+            collisionNo = 0;
+            bulletCollision = 0;
+            bulletCollisionOnLiving = 0;
+            remainHP.Clear();
+            remainBullet.Clear();
+            totalVoiceDetectionDuration = 0;
+            organizeNo = 0;
+            fullNo = 0;
+            placeholderNo = 0;
+            rankNo = 0;
+            giftNo = 0;
+            createTeamNo = 0;
+            joinTeamNo = 0;
+            quitTeamNo = 0;
+            repairQuantity = 0;
+            restartNo = 0;
+            usePlaceholderNo = 0;
+            petNo = 0;
+            sendMessageNo = 0;
+            _killNo = 0;
+            _deathNo = 0;
+            _surviveTime = 0f;
+        }
 
         #region - JSON -
         public string ToJson()

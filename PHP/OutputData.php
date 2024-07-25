@@ -33,14 +33,16 @@ if (isset($PlayerOutputData->playerId)) {
     $repairQuantity = (int) $PlayerOutputData->repairQuantity;
     $restartNo = (int) $PlayerOutputData->restartNo;
     $usePlaceholderNo = (int) $PlayerOutputData->usePlaceholderNo;
-    $feedNo = (int) $PlayerOutputData->feedNo;
+    $petNo = (int) $PlayerOutputData->petNo;
+    $sendMessageNo = (int) $PlayerOutputData->sendMessageNo;
+    $durationOfRound = (float) $PlayerOutputData->durationOfRound;
 
     $sql = "INSERT INTO output_data (playerId, killNo, deathNo, surviveTime, collisionNo, bulletCollision, bulletCollisionOnLiving, 
                                     remainHP, remainBullet, totalVoiceDetectionDuration, organizeNo, fullNo, placeholderNo, rankNo, 
-                                    giftNo, createTeamNo, joinTeamNo, quitTeamNo, repairQuantity, restartNo, usePlaceholderNo, feedNo) 
+                                    giftNo, createTeamNo, joinTeamNo, quitTeamNo, repairQuantity, restartNo, usePlaceholderNo, petNo, sendMessageNo, durationOfRound) 
             VALUES ($playerId, $killNo, $deathNo, $surviveTime, $collisionNo, $bulletCollision, $bulletCollisionOnLiving, 
                     '$remainHP', '$remainBullet', $totalVoiceDetectionDuration, $organizeNo, $fullNo, $placeholderNo, $rankNo, 
-                    $giftNo, $createTeamNo, $joinTeamNo, $quitTeamNo, $repairQuantity, $restartNo, $usePlaceholderNo, $feedNo)";}
+                    $giftNo, $createTeamNo, $joinTeamNo, $quitTeamNo, $repairQuantity, $restartNo, $usePlaceholderNo, $petNo, $sendMessageNo, $durationOfRound)";}
 
 $response = array(); // Initialize response array
 

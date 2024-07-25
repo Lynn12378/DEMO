@@ -61,6 +61,7 @@ namespace DEMO.GamePlay.Player
             transform.position = Vector3.zero;
 
             playerNetworkData.Restart();
+            playerOutputData.Restart();
             
             surviveTime = 0f;
         }
@@ -168,6 +169,7 @@ namespace DEMO.GamePlay.Player
                 if (isInteracting && mapInteractionManager.currentInteraction.interactionType == InteractionType.Pet)
                 {
                     mapInteractionManager.Pet(gameObject);
+                    playerOutputData.petNo++;
                 }
             }
 

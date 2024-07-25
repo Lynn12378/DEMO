@@ -56,6 +56,8 @@ namespace DEMO
         #region - EndGame -
         public void EndGame()
         {
+            GamePlayManager.Instance.OnSendPOD();
+
             SceneManager.LoadScene("EndGame");
 
             GoToQuestion();
@@ -83,6 +85,8 @@ namespace DEMO
         #region - Restart -
         public void RestartGame()
         {
+            GamePlayManager.Instance.OnSendPOD();
+            
             players = FindObjectsOfType<PlayerController>();
             shelter = FindObjectOfType<Shelter>();
 
