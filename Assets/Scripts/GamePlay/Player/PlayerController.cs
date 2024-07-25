@@ -53,6 +53,15 @@ namespace DEMO.GamePlay.Player
             surviveTime = 0f;
         }
 
+        public void Restart()
+        {
+            transform.position = Vector3.zero;
+
+            playerNetworkData.Restart();
+
+            surviveTime = 0f;
+        }
+
         public override void FixedUpdateNetwork()
         {
             surviveTime += Runner.DeltaTime;

@@ -52,6 +52,13 @@ namespace DEMO.GamePlay
             }
         }
 
+        public void Restart()
+        {
+            GamePlayManager.Instance.ClearAllSpawnLists();
+
+            StartSpawners();
+        }
+
         public void StartSpawners()
         {
             SpawnInitialObjects(enemy, initialEnemyCount, enemyPerSpawn, SpawnEnemyNearSpawnPoint);

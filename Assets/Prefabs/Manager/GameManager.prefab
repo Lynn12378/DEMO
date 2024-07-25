@@ -90,7 +90,8 @@ MonoBehaviour:
   runner: {fileID: 5493886838805833379}
   voiceClient: {fileID: 4426392564516569136}
   rec: {fileID: 9153417108840858371}
-  speakerPrefab: {fileID: 0}
+  speakerPrefab: {fileID: 7852833417309642521, guid: d5b7c9840a7348f4db62ebf5fa33565a, type: 3}
+  lobbyManager: {fileID: 7181477303227554349, guid: e38a651c7261304418f82da0fdd6573c, type: 3}
   messages: []
 --- !u!114 &4426392564516569136
 MonoBehaviour:

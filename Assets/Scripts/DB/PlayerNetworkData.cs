@@ -36,7 +36,8 @@ namespace DEMO.DB
         public int MaxFood = 100;
         public int MaxBullet = 50;
         private float foodDecreaseInterval = 30f;
-        private float foodDecreaseTimer = 0f;
+        //private float foodDecreaseTimer = 0f;
+        private TickTimer foodDecreaseTimer;
 
         public List<Item> itemList = new List<Item>();
         public Shelter shelter; // Reference when in shelter
@@ -76,10 +77,12 @@ namespace DEMO.DB
 
                 uIManager.InitializeItemSlots(this);
             }
-            else
+            /*else
             {
                 minimapIcon.SetActive(false);
-            }
+            }*/
+
+            foodDecreaseTimer = TickTimer.CreateFromSeconds(Runner, 20);
 
             uIManager.UpdateMicTxt("none");
             uIManager.SetPlayerRef(playerRef);
@@ -91,19 +94,28 @@ namespace DEMO.DB
             return playerOutputData;
         }
 
-        private void Update()
+        public override void FixedUpdateNetwork()
         {
-            foodDecreaseTimer += Time.deltaTime;
-
-            if (foodDecreaseTimer >= foodDecreaseInterval)
+            if (foodDecreaseTimer.Expired(Runner))
             {
-                // Reset timer
-                foodDecreaseTimer = 0f;
-
-                // Decrease food
                 SetPlayerFood_RPC(foodAmount - 1);
+                foodDecreaseTimer = TickTimer.CreateFromSeconds(Runner, 20);
             }
         }
+
+        #region - Restart -
+        public void Restart()
+        {
+            SetPlayerHP_RPC(MaxHP);
+            SetPlayerBullet_RPC(MaxBullet);
+            SetPlayerFood_RPC(MaxFood);
+            SetPlayerCoin_RPC(0);
+            SetPlayerTeamID_RPC(-1);
+
+            itemList.Clear();
+            UpdateItemList();
+        }
+        #endregion
 
         #region - Setter -
         public void SetUIManager(UIManager uIManager)

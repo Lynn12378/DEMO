@@ -21,7 +21,7 @@ namespace DEMO.Gameplay
             changes = GetChangeDetector(ChangeDetector.Source.SimulationState);
 
             SetDurability_RPC(maxDurability);
-            durabilityTicker = TickTimer.CreateFromSeconds(Runner, 1);
+            durabilityTicker = TickTimer.CreateFromSeconds(Runner, 5);
         }
 
         public override void FixedUpdateNetwork()
@@ -36,6 +36,12 @@ namespace DEMO.Gameplay
             {
                 GameManager.Instance.RestartGame();
             }
+        }
+
+        public void Restart()
+        {
+            SetDurability_RPC(maxDurability);
+            durabilityTicker = TickTimer.CreateFromSeconds(Runner, 5);
         }
 
         #region - RPCs -

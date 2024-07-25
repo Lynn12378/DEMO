@@ -9,6 +9,9 @@ using Photon.Voice.Unity;
 
 using DEMO.DB;
 using DEMO.UI;
+using DEMO.GamePlay;
+using DEMO.GamePlay.Player;
+using DEMO.Gameplay;
 
 namespace DEMO
 {
@@ -19,10 +22,6 @@ namespace DEMO
         public static GameManager Instance { get; private set; }
         [SerializeField] private NetworkRunner runner = null;
 
-        [SerializeField] private FusionVoiceClient voiceClient;
-        [SerializeField] private Recorder rec;
-        [SerializeField] private GameObject speakerPrefab;
-
         public NetworkRunner Runner
         {
             get
@@ -31,10 +30,6 @@ namespace DEMO
                 {
                     runner = gameObject.AddComponent<NetworkRunner>();
                     runner.ProvideInput = true;
-
-                    voiceClient = gameObject.AddComponent<FusionVoiceClient>();
-                    voiceClient.PrimaryRecorder = rec;
-                    voiceClient.SpeakerPrefab = speakerPrefab;
                 }
                 return runner;
             }
@@ -86,34 +81,33 @@ namespace DEMO
         #region - Restart -
         public void RestartGame()
         {
-            foreach (var player in GamePlayManager.Instance.playerOutputList)
+            if(runner.IsServer)
             {
-                player.Value.restartNo++;
-            }
-
-            // Restart game after 2 seconds
-            Invoke("Restart", 2f);
-        }
-
-        private void Restart()                                  ////////////////////// Restart still need refine
-        {
-            StartCoroutine(RestartCoroutine());
-        }
-
-        private IEnumerator RestartCoroutine()
-        {
-            SceneManager.LoadScene("GamePlay");
-
-            yield return null;
-
-            // Restart NetworkRunner and FusionVoiceClient
-            if (runner != null)
-            {
-                runner.Shutdown(false, ShutdownReason.Ok);
-                runner.StartGame(new StartGameArgs
+                foreach (var player in GamePlayManager.Instance.playerOutputList)
                 {
-                    /* */
-                });
+                    player.Value.restartNo++;
+                }
+
+                // Restart after 2 seconds
+                Invoke("Restart", 2f);
+            }
+        }
+
+        private void Restart()
+        {
+            if(runner.IsServer)
+            {
+                PlayerController[] players = FindObjectsOfType<PlayerController>();
+                foreach (PlayerController player in players)
+                {
+                    player.Restart();
+                }
+
+                Shelter shelter = FindObjectOfType<Shelter>();
+                shelter.Restart();
+
+                Spawner spawner = FindObjectOfType<Spawner>();
+                spawner.Restart();
             }
         }
 

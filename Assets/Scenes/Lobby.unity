@@ -8480,102 +8480,6 @@ MonoBehaviour:
   panelList:
   - {fileID: 1502042272}
   panelManager: {fileID: 0}
---- !u!1 &884672147
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 884672149}
-  - component: {fileID: 884672151}
-  - component: {fileID: 884672150}
-  - component: {fileID: 884672153}
-  m_Layer: 0
-  m_Name: LobbyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &884672149
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884672147}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &884672150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884672147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebbff73ca0b9e8847b7b462acfdb91da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelList:
-  - {fileID: 1502042272}
-  - {fileID: 509140864}
-  - {fileID: 177798733}
-  - {fileID: 2083871612}
-  - {fileID: 1920791532}
-  - {fileID: 414699386}
-  - {fileID: 711368422}
-  - {fileID: 539816473}
-  boolList: 
---- !u!114 &884672151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884672147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06176e1c5038cb448a6facdc6c53e2b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomName: {fileID: 1222894221}
-  roomScene: Room
-  maxPlayer: 5
---- !u!114 &884672153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884672147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1e011a35d7a7b74cb14f6d40d7ffab5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LPlayerNameTxt: {fileID: 1496173103}
-  LPlayerPasswordTxt: {fileID: 1270880694}
-  SPlayerNameTxt: {fileID: 1830068790}
-  SPlayerPasswordTxt: {fileID: 1778759100}
-  messageTxt: {fileID: 944789994}
-  dialog:
-  - {fileID: 539816473}
-  lobby:
-  - {fileID: 414699386}
-  CreateRolePanel:
-  - {fileID: 2083871612}
-  - {fileID: 1920791532}
-  playerInfo: {fileID: 7972090613091430154, guid: 8890e4e268a42b24bb0583f6e3a5052d, type: 3}
 --- !u!1 &920953312
 GameObject:
   m_ObjectHideFlags: 0
@@ -9231,7 +9135,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 884672153}
+      - m_Target: {fileID: 1868521617387902577}
         m_TargetAssemblyTypeName: DEMO.DB.PlayerDBHandler, Assembly-CSharp
         m_MethodName: Create
         m_Mode: 1
@@ -11254,7 +11158,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 884672151}
+      - m_Target: {fileID: 8686926818880669500}
         m_TargetAssemblyTypeName: DEMO.Manager.LobbyManager, Assembly-CSharp
         m_MethodName: JoinRoom
         m_Mode: 1
@@ -11617,7 +11521,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 884672153}
+      - m_Target: {fileID: 1868521617387902577}
         m_TargetAssemblyTypeName: DEMO.DB.PlayerDBHandler, Assembly-CSharp
         m_MethodName: Login
         m_Mode: 1
@@ -14552,7 +14456,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 884672153}
+      - m_Target: {fileID: 1868521617387902577}
         m_TargetAssemblyTypeName: DEMO.DB.PlayerDBHandler, Assembly-CSharp
         m_MethodName: SignUp
         m_Mode: 1
@@ -17689,7 +17593,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 884672151}
+      - m_Target: {fileID: 8686926818880669500}
         m_TargetAssemblyTypeName: DEMO.Manager.LobbyManager, Assembly-CSharp
         m_MethodName: RandomRoom
         m_Mode: 1
@@ -18485,13 +18389,109 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133451035}
   m_CullTransparentMesh: 1
+--- !u!4 &1018403802187018829
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211223971386902333}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1868521617387902577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211223971386902333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e011a35d7a7b74cb14f6d40d7ffab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LPlayerNameTxt: {fileID: 1496173103}
+  LPlayerPasswordTxt: {fileID: 1270880694}
+  SPlayerNameTxt: {fileID: 1830068790}
+  SPlayerPasswordTxt: {fileID: 1778759100}
+  messageTxt: {fileID: 944789994}
+  dialog:
+  - {fileID: 539816473}
+  lobby:
+  - {fileID: 414699386}
+  CreateRolePanel:
+  - {fileID: 2083871612}
+  - {fileID: 1920791532}
+  playerInfo: {fileID: 7972090613091430154, guid: 8890e4e268a42b24bb0583f6e3a5052d, type: 3}
+--- !u!114 &5126800717021492784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211223971386902333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebbff73ca0b9e8847b7b462acfdb91da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelList:
+  - {fileID: 1502042272}
+  - {fileID: 509140864}
+  - {fileID: 177798733}
+  - {fileID: 2083871612}
+  - {fileID: 1920791532}
+  - {fileID: 414699386}
+  - {fileID: 711368422}
+  - {fileID: 539816473}
+  boolList: 
+--- !u!1 &7211223971386902333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1018403802187018829}
+  - component: {fileID: 8686926818880669500}
+  - component: {fileID: 5126800717021492784}
+  - component: {fileID: 1868521617387902577}
+  m_Layer: 0
+  m_Name: LobbyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &8686926818880669500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7211223971386902333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06176e1c5038cb448a6facdc6c53e2b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomName: {fileID: 1222894221}
+  roomScene: Room
+  maxPlayer: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 2083871613}
-  - {fileID: 884672149}
+  - {fileID: 1018403802187018829}
   - {fileID: 61152975}
   - {fileID: 1121416444}
   - {fileID: 233998359}
