@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 function connectDatabase()
 {
     // 連接mysql
-    $conn = new mysqli("mis-demo-db.clq0ou6gejev.ap-southeast-1.rds.amazonaws.com", "admin_user", "ncumis2024", "mis_demo");
+    $conn = new mysqli("localhost", "Admin", "1234", "demo");
 
     // 檢查連線
     if ($conn->connect_error)

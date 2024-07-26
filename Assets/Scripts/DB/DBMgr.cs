@@ -32,11 +32,11 @@ namespace DEMO.DB
             // 設置POST請求的URL
             if(action != null)
             {
-                url = "http://ec2-13-250-116-99.ap-southeast-1.compute.amazonaws.com/" + table + ".php?Action=" + action;
+                url = " https://d1ca-2403-c300-581d-27e7-49-9dac-6aff-bb67.ngrok-free.app/DEMO" + table + ".php?Action=" + action;
             }
             else
             {
-                url = "http://ec2-13-250-116-99.ap-southeast-1.compute.amazonaws.com/" + table + ".php";
+                url = " https://d1ca-2403-c300-581d-27e7-49-9dac-6aff-bb67.ngrok-free.app/DEMO" + table + ".php";
             }
 
             if (formData == null || table == null)
