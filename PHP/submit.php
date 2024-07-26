@@ -1,17 +1,9 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "demo";
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 
-// 創建連接
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// 檢查連接是否成功
-if ($conn->connect_error) 
-{
-    die("連接失敗: " . $conn->connect_error);
-}
+include 'Connector.php';
 
 // 檢查是否接收到 POST 請求
 if ($_SERVER["REQUEST_METHOD"] == "POST") 

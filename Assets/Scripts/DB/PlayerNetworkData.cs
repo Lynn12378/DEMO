@@ -35,8 +35,6 @@ namespace DEMO.DB
         public int MaxHP = 100;
         public int MaxFood = 100;
         public int MaxBullet = 50;
-        private float foodDecreaseInterval = 30f;
-        //private float foodDecreaseTimer = 0f;
         private TickTimer foodDecreaseTimer;
 
         public List<Item> itemList = new List<Item>();
@@ -77,16 +75,15 @@ namespace DEMO.DB
 
                 uIManager.InitializeItemSlots(this);
             }
-            /*else
+            else
             {
                 minimapIcon.SetActive(false);
-            }*/
-
-            foodDecreaseTimer = TickTimer.CreateFromSeconds(Runner, 20);
+            }
 
             uIManager.UpdateMicTxt("none");
             uIManager.SetPlayerRef(playerRef);
-            uIManager.UpdatePlayerName(playerName);
+
+            foodDecreaseTimer = TickTimer.CreateFromSeconds(Runner, 20);
 		}
 
         public PlayerOutputData GetPlayerOutputData()
@@ -166,6 +163,8 @@ namespace DEMO.DB
         {
             playerId = id;
 			playerName = name;
+
+            uIManager.UpdatePlayerName(playerName);
 		}
 
         [Rpc(RpcSources.All, RpcTargets.All)]
@@ -174,7 +173,6 @@ namespace DEMO.DB
             if(hp > HP && shelter == null)
             {
                 playerOutputData.remainHP.Add(HP);
-                Debug.Log(playerRefString + " remain HP is " + playerOutputData.remainHP);
             }
 
             if(hp >= MaxHP)
@@ -195,7 +193,6 @@ namespace DEMO.DB
             if(amount > bulletAmount)
             {
                 playerOutputData.remainBullet.Add(bulletAmount);
-                Debug.Log(playerRefString + " remain bullet is " + playerOutputData.remainBullet);
             }
 
             if(amount >= MaxBullet)

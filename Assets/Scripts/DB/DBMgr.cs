@@ -32,11 +32,11 @@ namespace DEMO.DB
             // 設置POST請求的URL
             if(action != null)
             {
-                url = "http://localhost/DEMO/" + table + ".php?Action=" + action;
+                url = "http://ec2-13-250-116-99.ap-southeast-1.compute.amazonaws.com/" + table + ".php?Action=" + action;
             }
             else
             {
-                url = "http://localhost/DEMO/" + table + ".php";
+                url = "http://ec2-13-250-116-99.ap-southeast-1.compute.amazonaws.com/" + table + ".php";
             }
 
             if (formData == null || table == null)

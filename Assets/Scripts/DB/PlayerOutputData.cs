@@ -60,6 +60,11 @@ namespace DEMO.DB
         public override void FixedUpdateNetwork()
         {
             durationOfRound += Runner.DeltaTime;
+
+            if(durationOfRound >= 3600f)
+            {
+                GameManager.Instance.EndGame();
+            }
         }
 
         public void Restart()
