@@ -147,6 +147,16 @@ namespace DEMO.DB
                 playerOutfitsHandler.ChangeOutfit(resolver.GetCategory(),outfits[i]);
                 i+=1;
             }
+
+            if(Object.HasStateAuthority)
+            {
+                i = 0;
+                foreach(var resolver in playerOutfitsHandler.resolverList)
+                {
+                    uIManager.ChangeOutfit(resolver);
+                    i+=1;
+                }
+            }
         }
         #endregion
 
@@ -281,7 +291,7 @@ namespace DEMO.DB
                         break;
                 }
 
-                if(!Object.HasStateAuthority){return;}if(!Object.HasStateAuthority){return;}
+                if(!Object.HasStateAuthority){return;}
                 switch (change)
                 {
                     case nameof(teamID):
@@ -300,6 +310,13 @@ namespace DEMO.DB
                         break;
                     case nameof(foodAmount):
                         uIManager.UpdateFoodSlider(foodAmount, MaxFood);
+                        break;
+                    case nameof(outfits):
+                        UpdatedOutfits();
+                        break;
+                    case nameof(colorList):
+                        uIManager.SetSkinColor(colorList[0]);
+                        uIManager.SetHairColor(colorList[1]);
                         break;
                 }
             }

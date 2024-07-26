@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.U2D.Animation;
+using Fusion;
 using TMPro;
+
 using DEMO.GamePlay.Inventory;
 using DEMO.DB;
-using Fusion;
 
 namespace DEMO.UI
 {
@@ -47,7 +49,38 @@ namespace DEMO.UI
 
         private PlayerRef playerRef;
 
+        # region - playerImg -
+        [SerializeField] private List<Image> skinImg = new List<Image>();
+        [SerializeField] private Image hairImg;
+        public List<Image> imgList = new List<Image>();
+        [SerializeField] public SpriteLibrary spriteLibrary;
 
+        public void SetSkinColor(Color color)
+        {
+            foreach(var img in skinImg)
+            {
+                img.color = color;
+            }
+        }
+
+        public void SetHairColor(Color color)
+        {
+            hairImg.color = color;
+        }
+
+        public void ChangeOutfit(SpriteResolver sprite)
+        {
+            foreach(var img in imgList)
+            {
+                if(img.name == sprite.GetCategory())
+                {
+                    Debug.Log("row 63");
+                    img.sprite = spriteLibrary.GetSprite(sprite.GetCategory(), sprite.GetLabel());
+                }
+            }
+        }
+        #endregion
+        
         private void Start()
         {
             gamePlayManager = GamePlayManager.Instance;

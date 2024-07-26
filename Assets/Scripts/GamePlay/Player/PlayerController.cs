@@ -77,7 +77,6 @@ namespace DEMO.GamePlay.Player
             if(playerNetworkData.HP <= 0 || playerNetworkData.foodAmount <= 0)
             {
                 playerOutputData.AddDeathNo_RPC();
-                playerOutputData.SetSurviveTime_RPC(surviveTime);
                 Respawn();
             }
 
