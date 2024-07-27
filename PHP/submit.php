@@ -5,6 +5,14 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 include 'Connector.php';
 
+$conn = connectDatabase();
+
+if (!$conn) 
+{
+    echo "Database connection failed.";
+    return;
+}
+
 // 檢查是否接收到 POST 請求
 if ($_SERVER["REQUEST_METHOD"] == "POST") 
 {
